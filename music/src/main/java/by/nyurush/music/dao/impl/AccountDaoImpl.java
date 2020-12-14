@@ -1,0 +1,119 @@
+package by.nyurush.music.dao.impl;
+
+import by.nyurush.music.dao.AbstractDao;
+import by.nyurush.music.dao.exception.DaoException;
+import by.nyurush.music.entity.Account;
+import by.nyurush.music.service.builder.AccountBuilder;
+import by.nyurush.music.service.builder.UserBuilder;
+import by.nyurush.music.service.exception.ServiceException;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+public class AccountDaoImpl extends AbstractDao<Account> {
+    private static final String FIND_ALL = "SELECT * FROM account";
+    private static final String FIND_BY_ID = "SELECT * FROM account WHERE id=?";
+    private static final String FIND_BY_LOGIN = "SELECT * FROM account WHERE login=?";
+    private static final String CREATE = "INSERT INTO account (login, password, role) VALUES (?, ?, ?)";
+    private static final String UPDATE = "UPDATE account SET login=?, password=?, role=? WHERE id=?";
+    private static final String DELETE = "DELETE FROM account WHERE id=?";
+
+    @Override
+    public List<Account> findAll() throws DaoException {
+        List<Account> accountsList = new ArrayList<>();
+        Account account;
+        try (Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(FIND_ALL);
+            while (resultSet.next()) {
+                account = new UserBuilder().build(resultSet);
+                accountsList.add(account);
+            }
+        } catch (SQLException | ServiceException e) {
+            throw new DaoException(e);
+        }
+        return accountsList;
+    }
+
+    @Override
+    public Optional<Account> findById(Integer id) throws DaoException {
+        Account account = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                account = new AccountBuilder().build(resultSet);
+            }
+        } catch (SQLException | ServiceException e) {
+            throw new DaoException(e);
+        }
+        return Optional.ofNullable(account);
+    }
+
+    @Override
+    public boolean save(Account account) throws DaoException {
+        PreparedStatement preparedStatement;
+        try {
+            try {
+                connection.setAutoCommit(false);
+                if (account.getId() != null) {
+                    preparedStatement = connection.prepareStatement(UPDATE);
+                    preparedStatement.setInt(4, account.getId());
+                } else {
+                    preparedStatement = connection.prepareStatement(CREATE);
+                }
+                preparedStatement.setString(1, account.getLogin());
+                preparedStatement.setString(2, account.getPassword());
+                preparedStatement.setString(3, account.getRole().toString());
+                preparedStatement.execute();
+                connection.commit();
+            } catch (SQLException e) {
+                connection.rollback();
+                throw new SQLException(e);
+            } finally {
+                connection.setAutoCommit(true);
+            }
+        } catch (SQLException e) {
+            throw new DaoException();
+        }
+        return true;
+    }
+
+    @Override
+    public boolean delete(Account account) throws DaoException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE)) {
+            try {
+                connection.setAutoCommit(false);
+                preparedStatement.setLong(1, account.getId());
+                preparedStatement.executeUpdate();
+                connection.commit();
+            } catch (SQLException e) {
+                connection.rollback();
+                throw new SQLException(e);
+            } finally {
+                connection.setAutoCommit(true);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return true;
+    }
+
+    public Optional<Account> findByLogin(String login) throws DaoException {
+        Account account = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_LOGIN)) {
+            preparedStatement.setString(1, login);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                account = new AccountBuilder().build(resultSet);
+            }
+        } catch (SQLException | ServiceException e) {
+            throw new DaoException(e);
+        }
+        return Optional.ofNullable(account);
+    }
+}

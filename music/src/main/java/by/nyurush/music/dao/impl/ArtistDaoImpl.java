@@ -1,0 +1,117 @@
+package by.nyurush.music.dao.impl;
+
+import by.nyurush.music.dao.AbstractDao;
+import by.nyurush.music.dao.exception.DaoException;
+import by.nyurush.music.entity.Artist;
+import by.nyurush.music.service.builder.ArtistBuilder;
+import by.nyurush.music.service.exception.ServiceException;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+public class ArtistDaoImpl extends AbstractDao<Artist> {
+    private static final String FIND_ALL = "SELECT * FROM artist";
+    private static final String FIND_BY_ID = "SELECT * FROM artist WHERE id = ?";
+    private static final String FIND_BY_NAME = "SELECT * FROM artist WHERE name = ?";
+    private static final String CREATE = "INSERT INTO artist (name) VALUES (?)";
+    private static final String UPDATE = "UPDATE artist SET name = ? WHERE id = ?";
+    private static final String DELETE = "DELETE FROM artist WHERE id = ?";
+
+    @Override
+    public List<Artist> findAll() throws DaoException {
+        List<Artist> artistsList = new ArrayList<>();
+        Artist artist;
+        try (Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(FIND_ALL);
+            while (resultSet.next()) {
+                artist = new ArtistBuilder().build(resultSet);
+                artistsList.add(artist);
+            }
+        } catch (SQLException | ServiceException e) {
+            throw new DaoException(e);
+        }
+        return artistsList;
+    }
+
+    @Override
+    public Optional<Artist> findById(Integer id) throws DaoException {
+        Artist artist = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                artist = new ArtistBuilder().build(resultSet);
+            }
+        } catch (SQLException | ServiceException e) {
+            throw new DaoException(e);
+        }
+        return Optional.ofNullable(artist);
+    }
+
+    @Override
+    public boolean save(Artist artist) throws DaoException {
+        PreparedStatement preparedStatement = null;
+        try {
+            try {
+                connection.setAutoCommit(false);
+                if (artist.getId() != null) {
+                    preparedStatement = connection.prepareStatement(UPDATE);
+                    preparedStatement.setInt(2, artist.getId());
+                } else {
+                    preparedStatement = connection.prepareStatement(CREATE);
+                }
+                preparedStatement.setString(1, artist.getArtistName());
+                connection.commit();
+            } catch (SQLException e) {
+                connection.rollback();
+                throw new SQLException(e);
+            } finally {
+                connection.setAutoCommit(true);
+            }
+        } catch (SQLException e) {
+            throw new DaoException();
+        }
+        return true;
+    }
+
+    @Override
+    public boolean delete(Artist artist) throws DaoException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE)) {
+            try {
+                connection.setAutoCommit(false);
+                preparedStatement.setLong(1, artist.getId());
+                preparedStatement.executeUpdate();
+                connection.commit();
+            } catch (SQLException e) {
+                connection.rollback();
+                throw new SQLException(e);
+            } finally {
+                connection.setAutoCommit(true);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return true;
+    }
+
+    public List<Artist> findByName(String name) throws DaoException {
+        List<Artist> artistsList = new ArrayList<>();
+        Artist artist;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_NAME)) {
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                artist = new ArtistBuilder().build(resultSet);
+                artistsList.add(artist);
+            }
+        } catch (SQLException | ServiceException e) {
+            throw new DaoException(e);
+        }
+        return artistsList;
+    }
+}

@@ -1,0 +1,5 @@
+CREATE SCHEMA IF NOT EXISTS `music` DEFAULT CHARACTER SET utf8 ;
+
+GRANT SELECT,INSERT,UPDATE,DELETE
+ON `music`.*
+TO `music_user`@`localhost`;
