@@ -6,10 +6,7 @@ import by.nyurush.music.entity.Artist;
 import by.nyurush.music.service.builder.ArtistBuilder;
 import by.nyurush.music.service.exception.ServiceException;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,10 +14,14 @@ import java.util.Optional;
 public class ArtistDaoImpl extends AbstractDao<Artist> {
     private static final String FIND_ALL = "SELECT * FROM artist";
     private static final String FIND_BY_ID = "SELECT * FROM artist WHERE id = ?";
-    private static final String FIND_BY_NAME = "SELECT * FROM artist WHERE name = ?";
+    private static final String FIND_BY_NAME = "SELECT * FROM artist WHERE name LIKE ?";
     private static final String CREATE = "INSERT INTO artist (name) VALUES (?)";
     private static final String UPDATE = "UPDATE artist SET name = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM artist WHERE id = ?";
+
+    public ArtistDaoImpl(Connection connection) {
+        super(connection);
+    }
 
     @Override
     public List<Artist> findAll() throws DaoException {
@@ -103,7 +104,7 @@ public class ArtistDaoImpl extends AbstractDao<Artist> {
         List<Artist> artistsList = new ArrayList<>();
         Artist artist;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_NAME)) {
-            preparedStatement.setString(1, name);
+            preparedStatement.setString(1, "%" + name + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 artist = new ArtistBuilder().build(resultSet);

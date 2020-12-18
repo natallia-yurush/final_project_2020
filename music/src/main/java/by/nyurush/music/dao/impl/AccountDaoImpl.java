@@ -7,10 +7,7 @@ import by.nyurush.music.service.builder.AccountBuilder;
 import by.nyurush.music.service.builder.UserBuilder;
 import by.nyurush.music.service.exception.ServiceException;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +20,10 @@ public class AccountDaoImpl extends AbstractDao<Account> {
     private static final String UPDATE = "UPDATE account SET login=?, password=?, role=? WHERE id=?";
     private static final String DELETE = "DELETE FROM account WHERE id=?";
 
+    public AccountDaoImpl(Connection connection) {
+        super(connection);
+    }
+
     @Override
     public List<Account> findAll() throws DaoException {
         List<Account> accountsList = new ArrayList<>();
@@ -30,7 +31,7 @@ public class AccountDaoImpl extends AbstractDao<Account> {
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(FIND_ALL);
             while (resultSet.next()) {
-                account = new UserBuilder().build(resultSet);
+                account = new AccountBuilder().build(resultSet);
                 accountsList.add(account);
             }
         } catch (SQLException | ServiceException e) {

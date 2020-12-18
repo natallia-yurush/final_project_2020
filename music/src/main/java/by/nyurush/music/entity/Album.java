@@ -64,4 +64,14 @@ public class Album extends Entity {
     public int hashCode() {
         return Objects.hash(super.hashCode(), albumName, year, numberOfLikes, artist);
     }
+
+    @Override
+    public String toString() {
+        return "Album{" +
+                "albumName='" + albumName + '\'' +
+                ", year=" + year +
+                ", numberOfLikes=" + numberOfLikes +
+                ", artist=" + artist +
+                '}';
+    }
 }

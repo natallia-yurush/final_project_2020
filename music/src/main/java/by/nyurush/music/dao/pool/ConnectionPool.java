@@ -5,14 +5,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.MissingResourceException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
-
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
     private static final int POOL_SIZE = 20;
     private ArrayBlockingQueue<ProxyConnection> freeConnections;
@@ -76,7 +74,6 @@ public class ConnectionPool {
         } catch (InterruptedException e) {
             LOGGER.error("Error getting connection ", e);
             throw new ConnectionPoolException("Problem with take connection from pool, e");
-
         }
         return connection;
     }
@@ -90,9 +87,7 @@ public class ConnectionPool {
     }
 
     public void closeConnectionsQueue(List<ProxyConnection> queue) throws SQLException {
-        Iterator<ProxyConnection> iterator = queue.iterator();
-        while (iterator.hasNext()) {
-            ProxyConnection proxyConnection = iterator.next();
+        for (ProxyConnection proxyConnection : queue) {
             if (!proxyConnection.getAutoCommit()) {
                 proxyConnection.commit();
             }

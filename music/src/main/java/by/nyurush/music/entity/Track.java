@@ -75,4 +75,15 @@ public class Track extends Entity {
     public int hashCode() {
         return Objects.hash(super.hashCode(), trackName, trackPath, numberOfLikes, genre, album);
     }
+
+    @Override
+    public String toString() {
+        return "Track{" +
+                "trackName='" + trackName + '\'' +
+                ", trackPath='" + trackPath + '\'' +
+                ", numberOfLikes=" + numberOfLikes +
+                ", genre='" + genre + '\'' +
+                ", album=" + album +
+                '}';
+    }
 }

@@ -53,4 +53,13 @@ public class Playlist extends Entity {
     public int hashCode() {
         return Objects.hash(super.hashCode(), playlistName, visible, user);
     }
+
+    @Override
+    public String toString() {
+        return "Playlist{" +
+                "playlistName='" + playlistName + '\'' +
+                ", visible=" + visible +
+                ", user=" + user +
+                '}';
+    }
 }

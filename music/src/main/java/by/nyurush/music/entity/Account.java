@@ -53,4 +53,13 @@ public class Account extends Entity {
     public int hashCode() {
         return Objects.hash(super.hashCode(), login, password, role);
     }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                '}';
+    }
 }

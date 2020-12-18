@@ -6,10 +6,7 @@ import by.nyurush.music.entity.Track;
 import by.nyurush.music.service.builder.TrackBuilder;
 import by.nyurush.music.service.exception.ServiceException;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,16 +14,20 @@ import java.util.Optional;
 public class TrackDaoImpl extends AbstractDao<Track> {
     private static final String FIND_ALL = "SELECT T.*, G.name, A.* FROM track T JOIN genre G ON T.genre_name = G.name JOIN album A ON T.album_id = A.id";
     private static final String FIND_BY_ID = "SELECT T.*, G.name, A.* FROM track T JOIN genre G ON T.genre_name = G.name JOIN album A ON T.album_id = A.id WHERE T.id=?";
-    private static final String FIND_BY_NAME = "SELECT T.*, G.name, A.* FROM track T JOIN genre G ON T.genre_name = G.name JOIN album A ON T.album_id = A.id WHERE T.name=?";
-    private static final String FIND_BY_ALBUM_NAME = "SELECT T.*, G.name, A.* FROM track T JOIN genre G ON T.genre_name = G.name JOIN album A ON T.album_id = A.id WHERE A.name=?";
+    private static final String FIND_BY_NAME = "SELECT T.*, G.name, A.* FROM track T JOIN genre G ON T.genre_name = G.name JOIN album A ON T.album_id = A.id WHERE T.name LIKE ?";
+    private static final String FIND_BY_ALBUM_NAME = "SELECT T.*, G.name, A.* FROM track T JOIN genre G ON T.genre_name = G.name JOIN album A ON T.album_id = A.id WHERE A.name LIKE ?";
     private static final String FIND_BY_GENRE = "SELECT T.*, G.name, A.* FROM track T JOIN genre G ON T.genre_name = G.name JOIN album A ON T.album_id = A.id WHERE T.genre_name=?";
     private static final String FIND_BY_ARTIST = "SELECT T.*, Al.artist_id, Ar.name FROM artist_track AT  JOIN track T ON T.id = AT.track_id " +
-            "JOIN album Al ON T.album_id = Al.id JOIN artist Ar ON Al.artist_id = Ar.id WHERE Ar.name=?";
+            "JOIN album Al ON T.album_id = Al.id JOIN artist Ar ON Al.artist_id = Ar.id WHERE Ar.name LIKE ?";
     private static final String FIND_BY_PLAYLIST_ID = "SELECT T.*, P.* FROM playlist_track PT JOIN playlist P on PT.playlist_id = p.id JOIN track T on PT.track_id = t.id WHERE P.id = ?";
-    private static final String FIND_BY_PLAYLIST_NAME = "SELECT T.*, P.* FROM playlist_track PT JOIN playlist P on PT.playlist_id = p.id JOIN track T on PT.track_id = t.id WHERE P.name = ? AND P.visible = 1";
+    private static final String FIND_BY_PLAYLIST_NAME = "SELECT T.*, P.* FROM playlist_track PT JOIN playlist P on PT.playlist_id = p.id JOIN track T on PT.track_id = t.id WHERE P.name LIKE ? AND P.visible = 1";
     private static final String CREATE = "INSERT INTO track (name, audio_path, number_of_likes, genre_name, album_id) VALUES (?, ?, ?, ?, ?)";
     private static final String UPDATE = "UPDATE track SET name = ?, audio_path = ?, number_of_likes = ?, genre_name = ?, album_id = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM track WHERE id=?";
+
+    public TrackDaoImpl(Connection connection) {
+        super(connection);
+    }
 
     @Override
     public List<Track> findAll() throws DaoException {
@@ -113,7 +114,7 @@ public class TrackDaoImpl extends AbstractDao<Track> {
         List<Track> tracksList = new ArrayList<>();
         Track track;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_NAME)) {
-            preparedStatement.setString(1, name);
+            preparedStatement.setString(1, "%" + name + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 track = new TrackBuilder().build(resultSet);
@@ -129,7 +130,7 @@ public class TrackDaoImpl extends AbstractDao<Track> {
         List<Track> tracksList = new ArrayList<>();
         Track track;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ALBUM_NAME)) {
-            preparedStatement.setString(1, name);
+            preparedStatement.setString(1, "%" + name + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 track = new TrackBuilder().build(resultSet);
@@ -161,7 +162,7 @@ public class TrackDaoImpl extends AbstractDao<Track> {
         List<Track> tracksList = new ArrayList<>();
         Track track;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ARTIST)) {
-            preparedStatement.setString(1, name);
+            preparedStatement.setString(1, "%" + name + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 track = new TrackBuilder().build(resultSet);
@@ -193,7 +194,7 @@ public class TrackDaoImpl extends AbstractDao<Track> {
         List<Track> tracksList = new ArrayList<>();
         Track track;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_PLAYLIST_NAME)) {
-            preparedStatement.setString(1, playlistName);
+            preparedStatement.setString(1, "%" + playlistName + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 track = new TrackBuilder().build(resultSet);

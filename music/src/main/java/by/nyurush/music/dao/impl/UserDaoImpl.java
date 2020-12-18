@@ -23,6 +23,10 @@ public class UserDaoImpl extends AbstractDao<User> {
             "U.birth_date=?, U.email=?, U.subscription=?, U.country_code=? WHERE A.id = ? AND U.account_id = ?";
     private static final String DELETE = "DELETE FROM user WHERE account_id=?";
 
+    public UserDaoImpl(Connection connection) {
+        super(connection);
+    }
+
     @Override
     public List<User> findAll() throws DaoException {
         List<User> usersList = new ArrayList<>();

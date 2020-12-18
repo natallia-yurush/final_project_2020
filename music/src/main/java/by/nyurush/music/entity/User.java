@@ -87,4 +87,16 @@ public class User extends Account {
     public int hashCode() {
         return Objects.hash(super.hashCode(), firstName, lastName, birthDate, email, subscription, country);
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthDate=" + birthDate +
+                ", email='" + email + '\'' +
+                ", subscription=" + subscription +
+                ", country='" + country + '\'' +
+                '}';
+    }
 }

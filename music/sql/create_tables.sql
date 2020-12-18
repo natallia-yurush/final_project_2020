@@ -4,14 +4,14 @@ USE 'music';
 -- -----------------------------------------------------
 -- Table `music`.`country`
 -- -----------------------------------------------------
-CREATE TABLE `music`.`country` (
+CREATE TABLE IF NOT EXISTS `music`.`country` (
   `country_code` CHAR(2) NOT NULL,
   PRIMARY KEY (`country_code`);
 
 -- -----------------------------------------------------
 -- Table `music`.`account`
 -- -----------------------------------------------------
-CREATE TABLE `music`.`account` (
+CREATE TABLE IF NOT EXISTS `music`.`account` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `login` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE `music`.`account` (
 -- -----------------------------------------------------
 -- Table `music`.`user`
 -- -----------------------------------------------------
-CREATE TABLE `music`.`user` (
+CREATE TABLE IF NOT EXISTS `music`.`user` (
   `account_id` INT NOT NULL,
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE `music`.`user` (
 -- -----------------------------------------------------
 -- Table `music`.`genre`
 -- -----------------------------------------------------
-CREATE TABLE `music`.`genre` (
+CREATE TABLE IF NOT EXISTS `music`.`genre` (
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`name`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE;
@@ -55,7 +55,7 @@ CREATE TABLE `music`.`genre` (
 -- -----------------------------------------------------
 -- Table `music`.`artist`
 -- -----------------------------------------------------
-CREATE TABLE `music`.`artist` (
+CREATE TABLE IF NOT EXISTS `music`.`artist` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`));
@@ -63,7 +63,7 @@ CREATE TABLE `music`.`artist` (
 -- -----------------------------------------------------
 -- Table `music`.`album`
 -- -----------------------------------------------------
-CREATE TABLE `music`.`album` (
+CREATE TABLE IF NOT EXISTS `music`.`album` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `year` INT NOT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE `music`.`album` (
 -- -----------------------------------------------------
 -- Table `music`.`track`
 -- -----------------------------------------------------
-CREATE TABLE `music`.`track` (
+CREATE TABLE IF NOT EXISTS `music`.`track` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `audio_path` VARCHAR(60) NOT NULL,
@@ -105,7 +105,7 @@ CREATE TABLE `music`.`track` (
 -- -----------------------------------------------------
 -- Table `music`.`artist_track`
 -- -----------------------------------------------------
-CREATE TABLE `music`.`artist_track` (
+CREATE TABLE IF NOT EXISTS `music`.`artist_track` (
   `artist_id` INT NOT NULL,
   `track_id` INT NOT NULL,
   INDEX `artist_id_idx` (`artist_id` ASC) VISIBLE,
@@ -124,7 +124,7 @@ CREATE TABLE `music`.`artist_track` (
 -- -----------------------------------------------------
 -- Table `music`.`playlist`
 -- -----------------------------------------------------
-CREATE TABLE `music`.`playlist` (
+CREATE TABLE IF NOT EXISTS `music`.`playlist` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `visible` TINYINT NOT NULL DEFAULT 0,
@@ -141,7 +141,7 @@ CREATE TABLE `music`.`playlist` (
 -- -----------------------------------------------------
 -- Table `music`.`playlist_track`
 -- -----------------------------------------------------
-CREATE TABLE `music`.`playlist_track` (
+CREATE TABLE IF NOT EXISTS `music`.`playlist_track` (
   `playlist_id` INT NOT NULL,
   `track_id` INT NOT NULL,
   INDEX `fk_playlist_id_idx` (`playlist_id` ASC) VISIBLE,
@@ -160,7 +160,7 @@ CREATE TABLE `music`.`playlist_track` (
 -- -----------------------------------------------------
 -- Table `music`.`subscriber`
 -- -----------------------------------------------------
-CREATE TABLE `music`.`subscriber` (
+CREATE TABLE IF NOT EXISTS `music`.`subscriber` (
   `user_id` INT NOT NULL,
   `subscriber_id` INT NOT NULL,
   INDEX `fk_subscriber_user_id_idx` (`user_id` ASC) VISIBLE,

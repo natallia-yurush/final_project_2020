@@ -6,10 +6,7 @@ import by.nyurush.music.entity.Playlist;
 import by.nyurush.music.service.builder.PlaylistBuilder;
 import by.nyurush.music.service.exception.ServiceException;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,10 +14,14 @@ import java.util.Optional;
 public class PlaylistDaoImpl extends AbstractDao<Playlist> {
     private static final String FIND_ALL = "SELECT P.*, U.* FROM playlist P JOIN user U ON P.user_id = U.account_id ";
     private static final String FIND_BY_ID = "SELECT P.*, U.* FROM playlist P JOIN user U ON P.user_id = U.account_id WHERE P.id = ?";
-    private static final String FIND_BY_NAME = "SELECT P.*, U.* FROM playlist P JOIN user U ON P.user_id = U.account_id WHERE P.name = ?";
+    private static final String FIND_BY_NAME = "SELECT P.*, U.* FROM playlist P JOIN user U ON P.user_id = U.account_id WHERE P.name LIKE ?";
     private static final String CREATE = "INSERT INTO playlist (name, visible, user_id) VALUES (?, ?, ?)";
     private static final String UPDATE = "UPDATE playlist SET name = ?, visible = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM playlist WHERE id = ?";
+
+    public PlaylistDaoImpl(Connection connection) {
+        super(connection);
+    }
 
     @Override
     public List<Playlist> findAll() throws DaoException {
@@ -105,7 +106,7 @@ public class PlaylistDaoImpl extends AbstractDao<Playlist> {
         List<Playlist> playlistsList = new ArrayList<>();
         Playlist playlist;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_NAME)) {
-            preparedStatement.setString(1, name);
+            preparedStatement.setString(1, "%" + name + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 playlist = new PlaylistBuilder().build(resultSet);

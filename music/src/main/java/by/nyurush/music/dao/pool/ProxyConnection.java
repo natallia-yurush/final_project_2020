@@ -23,48 +23,40 @@ public class ProxyConnection implements Connection, AutoCloseable{
         return connection.createStatement();
     }
 
-
     @Override
     public PreparedStatement prepareStatement(String sql) throws SQLException {
         return connection.prepareStatement(sql);
     }
-
 
     @Override
     public CallableStatement prepareCall(String sql) throws SQLException {
         return connection.prepareCall(sql);
     }
 
-
     @Override
     public String nativeSQL(String sql) throws SQLException {
         return connection.nativeSQL(sql);
     }
-
 
     @Override
     public void setAutoCommit(boolean autoCommit) throws SQLException {
         connection.setAutoCommit(autoCommit);
     }
 
-
     @Override
     public boolean getAutoCommit() throws SQLException {
         return connection.getAutoCommit();
     }
-
 
     @Override
     public void commit() throws SQLException {
         connection.commit();
     }
 
-
     @Override
     public void rollback() throws SQLException {
         connection.rollback();
     }
-
 
     @Override
     public void close(){

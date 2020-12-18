@@ -15,10 +15,14 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
     private static final String FIND_ALL = "SELECT Al.*, Ar.*  FROM album Al JOIN artist Ar ON Al.artist_id = Ar.id";
     private static final String FIND_BY_ID = "SELECT Al.*, Ar.*  FROM album Al JOIN artist Ar ON Al.artist_id = Ar.id WHERE Al.id = ?";
     private static final String FIND_BY_NAME = "SELECT Al.*, Ar.*  FROM album Al JOIN artist Ar ON Al.artist_id = Ar.id WHERE Al.name = ?";
-    private static final String FIND_BY_YEAR = "SELECT Al.*, Ar.*  FROM album Al JOIN artist Ar ON Al.artist_id = Ar.id WHERE Al.year = ?";
+    private static final String FIND_BY_YEAR = "SELECT Al.*, Ar.*  FROM album Al JOIN artist Ar ON Al.artist_id = Ar.id WHERE Al.year LIKE ?";
     private static final String UPDATE = "UPDATE album SET name=?, year=?, number_of_likes=?, artist_id=? WHERE id=?";
     private static final String CREATE = "INSERT INTO album (name, year, number_of_likes, artist_id) VALUES (?, ?, ?, ?)";
     private static final String DELETE = "DELETE FROM album WHERE id=?";
+
+    public AlbumDaoImpl(Connection connection) {
+        super(connection);
+    }
 
     @Override
     public List<Album> findAll() throws DaoException {
@@ -100,31 +104,35 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
         return true;
     }
 
-    public Optional<Album> findByName(String name) throws DaoException {
+    public List<Album> findByName(String name) throws DaoException {
+        List<Album> albumsList = new ArrayList<>();
         Album album = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_NAME)) {
-            preparedStatement.setString(1, name);
+            preparedStatement.setString(1, "%" + name + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 album = new AlbumBuilder().build(resultSet);
+                albumsList.add(album);
             }
         } catch (SQLException | ServiceException e) {
             throw new DaoException(e);
         }
-        return Optional.ofNullable(album);
+        return albumsList;
     }
 
-    public Optional<Album> findByYear(String year) throws DaoException {
+    public List<Album> findByYear(Integer year) throws DaoException {
+        List<Album> albumsList = new ArrayList<>();
         Album album = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_YEAR)) {
-            preparedStatement.setString(1, year);
+            preparedStatement.setInt(1, year);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 album = new AlbumBuilder().build(resultSet);
+                albumsList.add(album);
             }
         } catch (SQLException | ServiceException e) {
             throw new DaoException(e);
         }
-        return Optional.ofNullable(album);
+        return albumsList;
     }
 }

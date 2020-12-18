@@ -31,4 +31,11 @@ public class Artist extends Entity {
     public int hashCode() {
         return Objects.hash(super.hashCode(), artistName);
     }
+
+    @Override
+    public String toString() {
+        return "Artist{" +
+                "artistName='" + artistName + '\'' +
+                '}';
+    }
 }
