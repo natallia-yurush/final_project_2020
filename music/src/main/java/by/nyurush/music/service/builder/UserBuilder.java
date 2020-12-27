@@ -18,7 +18,7 @@ public class UserBuilder implements Builder<User>{
             Date date = resultSet.getDate("birth_date");
             String email = resultSet.getString("email");
             Boolean subscription = resultSet.getBoolean("subscription");
-            String country = resultSet.getString("country.country_code");
+            String country = resultSet.getString("country_code");
             return new User(account.getId(), account.getLogin(), account.getPassword(), account.getRole(), firstName, lastName,
                     date, email, subscription, country);
         } catch (SQLException e) {

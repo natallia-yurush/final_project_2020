@@ -11,6 +11,10 @@ public class User extends Account {
     private Boolean subscription;
     private String country;
 
+    public User(Integer id) {
+        super(id);
+    }
+
     public User(Integer id, String login, String password, AccountRole role, String firstName, String lastName, Date birthDate, String email, Boolean subscription, String country) {
         super(id, login, password, role);
         this.firstName = firstName;

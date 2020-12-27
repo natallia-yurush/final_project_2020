@@ -8,6 +8,10 @@ public class Album extends Entity {
     private Integer numberOfLikes;
     private Artist artist;
 
+    public Album(Integer id) {
+        super(id);
+    }
+
     public Album(Integer id, String albumName, Integer year, Integer numberOfLikes, Artist artist) {
         super(id);
         this.albumName = albumName;

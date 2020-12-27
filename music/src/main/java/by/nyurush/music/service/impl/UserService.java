@@ -34,7 +34,7 @@ public class UserService extends Service {
         }
     }
 
-    public boolean save(User user) throws ServiceException {
+    public Integer save(User user) throws ServiceException {
         try {
             return userDao.save(user);
         } catch (DaoException e) {

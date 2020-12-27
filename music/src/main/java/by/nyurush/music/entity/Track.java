@@ -9,6 +9,10 @@ public class Track extends Entity {
     private String genre;
     private Album album;
 
+    public Track(Integer id) {
+        super(id);
+    }
+
     public Track(Integer id, String trackName, String trackPath, Integer numberOfLikes, String genre, Album album) {
         super(id);
         this.trackName = trackName;

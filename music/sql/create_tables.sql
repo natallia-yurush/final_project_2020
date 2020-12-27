@@ -1,12 +1,11 @@
-USE 'music';
-
+USE music;
 
 -- -----------------------------------------------------
 -- Table `music`.`country`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `music`.`country` (
   `country_code` CHAR(2) NOT NULL,
-  PRIMARY KEY (`country_code`);
+  PRIMARY KEY (`country_code`) );
 
 -- -----------------------------------------------------
 -- Table `music`.`account`
@@ -37,12 +36,7 @@ CREATE TABLE IF NOT EXISTS `music`.`user` (
     FOREIGN KEY (`country_code`)
     REFERENCES `music`.`country` (`country_code`)
     ON DELETE SET NULL
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_country_id`
-    FOREIGN KEY (`country_id`)
-    REFERENCES `music`.`country` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE;
+    ON UPDATE CASCADE);
 
 -- -----------------------------------------------------
 -- Table `music`.`genre`
@@ -50,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `music`.`user` (
 CREATE TABLE IF NOT EXISTS `music`.`genre` (
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`name`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE;
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE );
 
 -- -----------------------------------------------------
 -- Table `music`.`artist`
@@ -75,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `music`.`album` (
     FOREIGN KEY (`artist_id`)
     REFERENCES `music`.`artist` (`id`)
     ON DELETE SET NULL
-    ON UPDATE CASCADE;
+    ON UPDATE CASCADE );
 
 -- -----------------------------------------------------
 -- Table `music`.`track`
@@ -85,21 +79,21 @@ CREATE TABLE IF NOT EXISTS `music`.`track` (
   `name` VARCHAR(45) NOT NULL,
   `audio_path` VARCHAR(60) NOT NULL,
   `number_of_likes` INT NULL,
-  `genre_id` INT NULL,
+  `genre_name` VARCHAR(45) NULL,
   `album_id` INT NULL,
   PRIMARY KEY (`id`),
-  INDEX `genre_id_idx` (`genre_id` ASC) VISIBLE,
-  INDEX `album_id_idx` (`album_id` ASC) VISIBLE,
+  INDEX `genre_id_idx` (`genre_name` ASC) VISIBLE,
+  INDEX `album_id_idx` (`genre_name` ASC) VISIBLE,
   CONSTRAINT `album_id_FK`
     FOREIGN KEY (`album_id`)
     REFERENCES `music`.`album` (`id`)
     ON DELETE SET NULL
-    ON UPDATE CASCADE;
+    ON UPDATE CASCADE,
   CONSTRAINT `genre_name_FK`
     FOREIGN KEY (`genre_name`)
     REFERENCES `music`.`genre` (`name`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE;
+    ON UPDATE CASCADE );
 
 
 -- -----------------------------------------------------
@@ -136,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `music`.`playlist` (
     FOREIGN KEY (`user_id`)
     REFERENCES `music`.`user` (`account_id`)
     ON DELETE NO ACTION
-    ON UPDATE CASCADE;
+    ON UPDATE CASCADE);
 
 -- -----------------------------------------------------
 -- Table `music`.`playlist_track`

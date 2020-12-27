@@ -7,6 +7,10 @@ public class Playlist extends Entity {
     private Boolean visible;
     private User user;
 
+    public Playlist(Integer id) {
+        super(id);
+    }
+
     public Playlist(Integer id, String playlistName, Boolean visible, User user) {
         super(id);
         this.playlistName = playlistName;

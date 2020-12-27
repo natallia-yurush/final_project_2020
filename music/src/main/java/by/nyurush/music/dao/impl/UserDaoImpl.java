@@ -12,14 +12,29 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserDaoImpl extends AbstractDao<User> {
-    private static final String FIND_ALL = "SELECT U.*, A.*, C.country_code FROM user U JOIN account A ON U.account_id = A.id JOIN country C ON U.country_code = C.country_code ";
-    private static final String FIND_BY_ID = "SELECT U.*, A.* FROM user U JOIN account A ON U.account_id = A.id WHERE U.account_id=?";
-    private static final String FIND_BY_LOGIN = "SELECT U.*, A.* FROM user U JOIN account A ON U.account_id = A.id WHERE A.login=?";
-    private static final String FIND_BY_EMAIL = "SELECT U.*, A.* FROM user U JOIN account A ON U.account_id = A.id WHERE U.email=?";
+    private static final String FIND_ALL = "SELECT account_id, first_name, last_name, birth_date, email, subscription, id, login, password, role, user.country_code " +
+            "FROM user " +
+            "JOIN account ON account_id = id " +
+            "JOIN country ON user.country_code = country.country_code ";
+    private static final String FIND_BY_ID = "SELECT account_id, first_name, last_name, birth_date, email, subscription, id, login, password, role, user.country_code " +
+            "FROM user " +
+            "JOIN account ON account_id = id " +
+            "JOIN country ON user.country_code = country.country_code " +
+            "WHERE account_id = ?";
+    private static final String FIND_BY_LOGIN = "SELECT account_id, first_name, last_name, birth_date, email, subscription, id, login, password, role, user.country_code " +
+            "FROM user " +
+            "JOIN account ON account_id = id " +
+            "JOIN country ON user.country_code = country.country_code " +
+            "WHERE login = ?";
+    private static final String FIND_BY_EMAIL = "SELECT account_id, first_name, last_name, birth_date, email, subscription, id, login, password, role, user.country_code " +
+            "FROM user " +
+            "JOIN account ON account_id = id " +
+            "JOIN country ON user.country_code = country.country_code " +
+            "WHERE email = ?";
     private static final String CREATE_USERS_ACCOUNT = "INSERT INTO account (login, password, role) VALUES (?, ?, ?)";
     private static final String CREATE_USER = "INSERT INTO user (account_id, first_name, last_name, birth_date, email, subscription, " +
             "country_code) VALUES (?, ?, ?, ?, ?, ? ,?)";
-    private static final String UPDATE = "UPDATE account A, user U SET A.login=?, A.password=?, A.role=?, U.first_name=?, U.last_name=?, " +
+    private static final String UPDATE = "UPDATE account A, user U SET A.login=?, A.password=?, A.role = ?, U.first_name = ?, U.last_name = ?, " +
             "U.birth_date=?, U.email=?, U.subscription=?, U.country_code=? WHERE A.id = ? AND U.account_id = ?";
     private static final String DELETE = "DELETE FROM user WHERE account_id=?";
 
@@ -59,7 +74,7 @@ public class UserDaoImpl extends AbstractDao<User> {
     }
 
     @Override
-    public boolean save(User user) throws DaoException {
+    public Integer save(User user) throws DaoException {
         PreparedStatement preparedStatement = null;
         Integer generatedId = null;
         try {
@@ -79,6 +94,7 @@ public class UserDaoImpl extends AbstractDao<User> {
                     preparedStatement.setInt(10, user.getId());
                     preparedStatement.setInt(11, user.getId());
                     preparedStatement.executeUpdate();
+                    generatedId = user.getId();
                 } else {
                     preparedStatement = connection.prepareStatement(CREATE_USERS_ACCOUNT, Statement.RETURN_GENERATED_KEYS);
                     preparedStatement.setString(1, user.getLogin());
@@ -99,7 +115,6 @@ public class UserDaoImpl extends AbstractDao<User> {
                         preparedStatement.execute();
                     } else {
                         connection.rollback();
-                        return false;
                     }
                 }
                 connection.commit();
@@ -112,7 +127,7 @@ public class UserDaoImpl extends AbstractDao<User> {
         } catch (SQLException e) {
             throw new DaoException();
         }
-        return true;
+        return generatedId;
     }
 
     @Override

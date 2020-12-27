@@ -4,6 +4,7 @@ import by.nyurush.music.dao.DaoHelperFactory;
 import by.nyurush.music.dao.exception.DaoException;
 import by.nyurush.music.dao.impl.PlaylistDaoImpl;
 import by.nyurush.music.entity.Playlist;
+import by.nyurush.music.entity.Track;
 import by.nyurush.music.service.Service;
 import by.nyurush.music.service.exception.ServiceException;
 
@@ -34,7 +35,7 @@ public class PlaylistService extends Service {
         }
     }
 
-    public boolean save(Playlist playlist) throws ServiceException {
+    public Integer save(Playlist playlist) throws ServiceException {
         try {
             return playlistDao.save(playlist);
         } catch (DaoException e) {
@@ -58,4 +59,19 @@ public class PlaylistService extends Service {
         }
     }
 
+    public boolean addTrack(Playlist playlist, Track track) throws ServiceException {
+        try {
+            return playlistDao.addTrack(playlist, track);
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public boolean deleteTrack(Playlist playlist, Track track) throws ServiceException {
+        try {
+            return playlistDao.deleteTrack(playlist, track);
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
 }

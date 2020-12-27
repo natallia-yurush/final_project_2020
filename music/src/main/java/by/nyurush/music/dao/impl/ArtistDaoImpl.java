@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class ArtistDaoImpl extends AbstractDao<Artist> {
-    private static final String FIND_ALL = "SELECT * FROM artist";
-    private static final String FIND_BY_ID = "SELECT * FROM artist WHERE id = ?";
-    private static final String FIND_BY_NAME = "SELECT * FROM artist WHERE name LIKE ?";
+    private static final String FIND_ALL = "SELECT id, name FROM artist";
+    private static final String FIND_BY_ID = "SELECT id, name FROM artist WHERE id = ?";
+    private static final String FIND_BY_NAME = "SELECT id, name FROM artist WHERE name LIKE ?";
     private static final String CREATE = "INSERT INTO artist (name) VALUES (?)";
     private static final String UPDATE = "UPDATE artist SET name = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM artist WHERE id = ?";
@@ -55,18 +55,24 @@ public class ArtistDaoImpl extends AbstractDao<Artist> {
     }
 
     @Override
-    public boolean save(Artist artist) throws DaoException {
+    public Integer save(Artist artist) throws DaoException {
         PreparedStatement preparedStatement = null;
+        Integer generatedId = null;
         try {
             try {
                 connection.setAutoCommit(false);
                 if (artist.getId() != null) {
-                    preparedStatement = connection.prepareStatement(UPDATE);
+                    preparedStatement = connection.prepareStatement(UPDATE, Statement.RETURN_GENERATED_KEYS);
                     preparedStatement.setInt(2, artist.getId());
                 } else {
-                    preparedStatement = connection.prepareStatement(CREATE);
+                    preparedStatement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
                 }
                 preparedStatement.setString(1, artist.getArtistName());
+                preparedStatement.execute();
+                ResultSet resultSet = preparedStatement.getGeneratedKeys();
+                if (resultSet.next()) {
+                    generatedId = resultSet.getInt(1);
+                }
                 connection.commit();
             } catch (SQLException e) {
                 connection.rollback();
@@ -77,7 +83,7 @@ public class ArtistDaoImpl extends AbstractDao<Artist> {
         } catch (SQLException e) {
             throw new DaoException();
         }
-        return true;
+        return generatedId;
     }
 
     @Override

@@ -46,7 +46,7 @@ public class AccountService extends Service {
         }
     }
 
-    public boolean save(Account account) throws ServiceException {
+    public Integer save(Account account) throws ServiceException {
         try {
             return accountDao.save(account);
         } catch (DaoException e) {

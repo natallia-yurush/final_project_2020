@@ -34,7 +34,7 @@ public class AlbumService extends Service {
         }
     }
 
-    public boolean save(Album album) throws ServiceException {
+    public Integer save(Album album) throws ServiceException {
         try {
             return albumDao.save(album);
         } catch (DaoException e) {

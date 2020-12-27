@@ -4,7 +4,6 @@ import by.nyurush.music.dao.AbstractDao;
 import by.nyurush.music.dao.exception.DaoException;
 import by.nyurush.music.entity.Account;
 import by.nyurush.music.service.builder.AccountBuilder;
-import by.nyurush.music.service.builder.UserBuilder;
 import by.nyurush.music.service.exception.ServiceException;
 
 import java.sql.*;
@@ -13,9 +12,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class AccountDaoImpl extends AbstractDao<Account> {
-    private static final String FIND_ALL = "SELECT * FROM account";
-    private static final String FIND_BY_ID = "SELECT * FROM account WHERE id=?";
-    private static final String FIND_BY_LOGIN = "SELECT * FROM account WHERE login=?";
+    private static final String FIND_ALL = "SELECT id, login, password, role FROM account";
+    private static final String FIND_BY_ID = "SELECT id, login, password, role FROM account WHERE id=?";
+    private static final String FIND_BY_LOGIN = "SELECT id, login, password, role FROM account WHERE login=?";
     private static final String CREATE = "INSERT INTO account (login, password, role) VALUES (?, ?, ?)";
     private static final String UPDATE = "UPDATE account SET login=?, password=?, role=? WHERE id=?";
     private static final String DELETE = "DELETE FROM account WHERE id=?";
@@ -56,21 +55,26 @@ public class AccountDaoImpl extends AbstractDao<Account> {
     }
 
     @Override
-    public boolean save(Account account) throws DaoException {
+    public Integer save(Account account) throws DaoException {
         PreparedStatement preparedStatement;
+        Integer generatedId = null;
         try {
             try {
                 connection.setAutoCommit(false);
                 if (account.getId() != null) {
-                    preparedStatement = connection.prepareStatement(UPDATE);
+                    preparedStatement = connection.prepareStatement(UPDATE, Statement.RETURN_GENERATED_KEYS);
                     preparedStatement.setInt(4, account.getId());
                 } else {
-                    preparedStatement = connection.prepareStatement(CREATE);
+                    preparedStatement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
                 }
                 preparedStatement.setString(1, account.getLogin());
                 preparedStatement.setString(2, account.getPassword());
                 preparedStatement.setString(3, account.getRole().toString());
                 preparedStatement.execute();
+                ResultSet resultSet = preparedStatement.getGeneratedKeys();
+                if (resultSet.next()) {
+                    generatedId = resultSet.getInt(1);
+                }
                 connection.commit();
             } catch (SQLException e) {
                 connection.rollback();
@@ -81,7 +85,7 @@ public class AccountDaoImpl extends AbstractDao<Account> {
         } catch (SQLException e) {
             throw new DaoException();
         }
-        return true;
+        return generatedId;
     }
 
     @Override

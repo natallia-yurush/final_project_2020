@@ -12,10 +12,14 @@ import java.util.List;
 import java.util.Optional;
 
 public class AlbumDaoImpl extends AbstractDao<Album> {
-    private static final String FIND_ALL = "SELECT Al.*, Ar.*  FROM album Al JOIN artist Ar ON Al.artist_id = Ar.id";
-    private static final String FIND_BY_ID = "SELECT Al.*, Ar.*  FROM album Al JOIN artist Ar ON Al.artist_id = Ar.id WHERE Al.id = ?";
-    private static final String FIND_BY_NAME = "SELECT Al.*, Ar.*  FROM album Al JOIN artist Ar ON Al.artist_id = Ar.id WHERE Al.name = ?";
-    private static final String FIND_BY_YEAR = "SELECT Al.*, Ar.*  FROM album Al JOIN artist Ar ON Al.artist_id = Ar.id WHERE Al.year LIKE ?";
+    private static final String FIND_ALL = "SELECT Al.id, Al.name, Al.year, Al.number_of_likes, artist.id, artist.name " +
+            "FROM album Al JOIN artist ON Al.artist_id = artist.id";
+    private static final String FIND_BY_ID = "SELECT Al.id, Al.name, Al.year, Al.number_of_likes, artist.id, artist.name  " +
+            "FROM album Al JOIN artist ON Al.artist_id = artist.id WHERE Al.id = ?";
+    private static final String FIND_BY_NAME = "SELECT Al.id, Al.name, Al.year, Al.number_of_likes, artist.id, artist.name  " +
+            "FROM album Al JOIN artist ON Al.artist_id = artist.id WHERE Al.name LIKE ?";
+    private static final String FIND_BY_YEAR = "SELECT Al.id, Al.name, Al.year, Al.number_of_likes, artist.id, artist.name  " +
+            "FROM album Al JOIN artist ON Al.artist_id = artist.id WHERE Al.year = ?";
     private static final String UPDATE = "UPDATE album SET name=?, year=?, number_of_likes=?, artist_id=? WHERE id=?";
     private static final String CREATE = "INSERT INTO album (name, year, number_of_likes, artist_id) VALUES (?, ?, ?, ?)";
     private static final String DELETE = "DELETE FROM album WHERE id=?";
@@ -56,21 +60,27 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
     }
 
     @Override
-    public boolean save(Album album) throws DaoException {
+    public Integer save(Album album) throws DaoException {
         PreparedStatement preparedStatement = null;
+        Integer generatedId = null;
         try {
             try {
                 connection.setAutoCommit(false);
                 if (album.getId() != null) {
-                    preparedStatement = connection.prepareStatement(UPDATE);
+                    preparedStatement = connection.prepareStatement(UPDATE, Statement.RETURN_GENERATED_KEYS);
                     preparedStatement.setInt(5, album.getId());
                 } else {
-                    preparedStatement = connection.prepareStatement(CREATE);
+                    preparedStatement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
                 }
                 preparedStatement.setString(1, album.getAlbumName());
                 preparedStatement.setInt(2, album.getYear());
                 preparedStatement.setInt(3, album.getNumberOfLikes());
                 preparedStatement.setInt(4, album.getArtist().getId());
+                preparedStatement.execute();
+                ResultSet resultSet = preparedStatement.getGeneratedKeys();
+                if (resultSet.next()) {
+                    generatedId = resultSet.getInt(1);
+                }
                 connection.commit();
             } catch (SQLException e) {
                 connection.rollback();
@@ -81,7 +91,7 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
         } catch (SQLException e) {
             throw new DaoException();
         }
-        return true;
+        return generatedId;
     }
 
     @Override
@@ -109,6 +119,7 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
         Album album = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_NAME)) {
             preparedStatement.setString(1, "%" + name + "%");
+            //preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 album = new AlbumBuilder().build(resultSet);
