@@ -70,4 +70,14 @@ public class AccountService extends Service {
         }
     }
 
+    public Optional<Account> isAccountExist(String login, String password) throws ServiceException {
+        try {
+
+            //TODO зашифровать пароль
+            return accountDao.findByLoginAndPassword(login, password);
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
 }

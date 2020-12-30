@@ -15,6 +15,7 @@ public class AccountDaoImpl extends AbstractDao<Account> {
     private static final String FIND_ALL = "SELECT id, login, password, role FROM account";
     private static final String FIND_BY_ID = "SELECT id, login, password, role FROM account WHERE id=?";
     private static final String FIND_BY_LOGIN = "SELECT id, login, password, role FROM account WHERE login=?";
+    private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT id, login, password, role FROM account WHERE login=? AND password=?";
     private static final String CREATE = "INSERT INTO account (login, password, role) VALUES (?, ?, ?)";
     private static final String UPDATE = "UPDATE account SET login=?, password=?, role=? WHERE id=?";
     private static final String DELETE = "DELETE FROM account WHERE id=?";
@@ -112,6 +113,21 @@ public class AccountDaoImpl extends AbstractDao<Account> {
         Account account = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_LOGIN)) {
             preparedStatement.setString(1, login);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                account = new AccountBuilder().build(resultSet);
+            }
+        } catch (SQLException | ServiceException e) {
+            throw new DaoException(e);
+        }
+        return Optional.ofNullable(account);
+    }
+
+    public Optional<Account> findByLoginAndPassword(String login, String password) throws DaoException {
+        Account account = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_LOGIN_AND_PASSWORD)) {
+            preparedStatement.setString(1, login);
+            preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 account = new AccountBuilder().build(resultSet);

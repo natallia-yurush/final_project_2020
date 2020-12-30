@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserService extends Service {
-    private final UserDaoImpl userDao;
+    private final UserDaoImpl userDao;// = new DaoHelperFactory().create().createUserDao();
 
     public UserService(DaoHelperFactory factory) throws ServiceException {
         super(factory);
@@ -61,6 +61,15 @@ public class UserService extends Service {
     public Optional<User> findByEmail(String email) throws ServiceException {
         try {
             return userDao.findByEmail(email);
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public Optional<User> isUserExist(String login, String password) throws ServiceException {
+        try {
+            //TODO зашифровать пароль
+            return userDao.findBuLoginAndPassword(login, password);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage());
         }

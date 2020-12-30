@@ -1,0 +1,34 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Natallia Yurush
+  Date: 31-Dec-20
+  Time: 00:06
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" isELIgnored="false" %>
+
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.local}" scope="session"/>
+<fmt:setBundle basename="locale" var="loc"/>
+
+<li>
+
+    <a>
+        <fmt:message bundle="${loc}" key="title.language"/>
+    </a>
+
+    <ul>
+        <li>
+            <a href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=en_En&page=${param.page}">
+                <fmt:message bundle="${loc}" key="label.languageEn"/>
+            </a>
+        </li>
+        <li>
+            <a href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=ru_RU&page=${param.page}">
+                <fmt:message bundle="${loc}" key="label.languageRu"/>
+            </a>
+        </li>
+    </ul>
+
+</li>

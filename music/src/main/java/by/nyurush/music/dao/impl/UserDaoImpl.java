@@ -31,12 +31,18 @@ public class UserDaoImpl extends AbstractDao<User> {
             "JOIN account ON account_id = id " +
             "JOIN country ON user.country_code = country.country_code " +
             "WHERE email = ?";
+    private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT account_id, first_name, last_name, birth_date, email, subscription, id, login, password, role, user.country_code " +
+            "FROM user " +
+            "JOIN account ON account_id = id " +
+            "JOIN country ON user.country_code = country.country_code " +
+            "WHERE login = ? AND password = ?";
     private static final String CREATE_USERS_ACCOUNT = "INSERT INTO account (login, password, role) VALUES (?, ?, ?)";
     private static final String CREATE_USER = "INSERT INTO user (account_id, first_name, last_name, birth_date, email, subscription, " +
             "country_code) VALUES (?, ?, ?, ?, ?, ? ,?)";
     private static final String UPDATE = "UPDATE account A, user U SET A.login=?, A.password=?, A.role = ?, U.first_name = ?, U.last_name = ?, " +
             "U.birth_date=?, U.email=?, U.subscription=?, U.country_code=? WHERE A.id = ? AND U.account_id = ?";
     private static final String DELETE = "DELETE FROM user WHERE account_id=?";
+
 
     public UserDaoImpl(Connection connection) {
         super(connection);
@@ -168,6 +174,22 @@ public class UserDaoImpl extends AbstractDao<User> {
         User user = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_EMAIL)) {
             preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                user = new UserBuilder().build(resultSet);
+            }
+        } catch (SQLException | ServiceException e) {
+            throw new DaoException(e);
+        }
+        return Optional.ofNullable(user);
+    }
+
+    //TODO: может не делать, а испольховать в сервисе аккаунт
+    public Optional<User> findBuLoginAndPassword(String login, String password) throws DaoException {
+        User user = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_LOGIN_AND_PASSWORD)) {
+            preparedStatement.setString(1, login);
+            preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 user = new UserBuilder().build(resultSet);
