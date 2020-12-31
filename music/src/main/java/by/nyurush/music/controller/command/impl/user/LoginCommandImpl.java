@@ -5,10 +5,8 @@ import by.nyurush.music.controller.command.CommandResult;
 import by.nyurush.music.dao.DaoHelperFactory;
 import by.nyurush.music.entity.Account;
 import by.nyurush.music.entity.AccountRole;
-import by.nyurush.music.entity.User;
 import by.nyurush.music.service.exception.ServiceException;
 import by.nyurush.music.service.impl.AccountService;
-import by.nyurush.music.service.impl.UserService;
 import by.nyurush.music.util.StringUtil;
 import by.nyurush.music.util.constant.ConstantPathPages;
 
@@ -29,6 +27,7 @@ public class LoginCommandImpl implements Command {
         HttpSession session = req.getSession();
         session.removeAttribute("user");
         session.removeAttribute("role");
+        session.setAttribute("errorAuthorisation", null);
 
         String login = req.getParameter("login");
         String password = req.getParameter("password");
@@ -68,7 +67,7 @@ public class LoginCommandImpl implements Command {
     }
 
     private ResourceBundle getResourceBundle(HttpSession session) {
-        Object localParameter = session.getAttribute("pagecontent");
+        Object localParameter = session.getAttribute("javax.servlet.jsp.jstl.fmt.locale.session");
         Locale currentLang;
         if (localParameter != null) {
             String string = String.valueOf(localParameter);

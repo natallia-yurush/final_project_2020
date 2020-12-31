@@ -3,7 +3,6 @@ package by.nyurush.music.controller;
 import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandFactory;
 import by.nyurush.music.controller.command.CommandResult;
-import by.nyurush.music.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

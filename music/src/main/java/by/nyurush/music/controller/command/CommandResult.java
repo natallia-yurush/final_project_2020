@@ -4,6 +4,7 @@ public class CommandResult {
     private final String page;
     private final boolean redirect;
 
+
     private CommandResult(String page, boolean redirect) {
         this.page = page;
         this.redirect = redirect;

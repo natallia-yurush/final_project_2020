@@ -29,6 +29,17 @@
 
 <body>
 
+<div id="head">
+    <nav>
+        <ul>
+            <jsp:include page="../fragment/nav-language.jsp">
+                <jsp:param name="page" value="login"/>
+            </jsp:include>
+        </ul>
+    </nav>
+</div>
+
+
 <div class="server-answer">
     <p class="infos">${sessionScope.parametersInfo}</p>
     <c:remove var="parametersInfo" scope="session"/>
@@ -43,17 +54,19 @@
     <div class="input-form">
         <input type="password" name="password" placeholder=<fmt:message key="label.password" bundle="${loc}"/> required>
     </div>
-    <div class="input-form">
-        <input type="submit" value=<fmt:message key="label.signIn" bundle="${loc}"/>>
-    </div>
 
     <div class="errorInfo">
         <c:out value="${requestScope.errorAuthorisation}"/>
     </div>
 
+    <div class="input-form">
+        <input type="submit" value=<fmt:message key="label.signIn" bundle="${loc}"/>>
+    </div>
+
+
     <p><fmt:message key="label.noAccount" bundle="${loc}"/></p>
     <%--<a href="/controller?command=signup"><fmt:message key="label.signIn" bundle="${loc}"/></a>--%>
-    <a href="/signup.jsp"><fmt:message key="label.signUp" bundle="${loc}"/></a>
+    <a href="${pageContext.servletContext.contextPath}/controller?command=signup"><fmt:message key="label.signUp" bundle="${loc}"/></a>
 
 </form>
 

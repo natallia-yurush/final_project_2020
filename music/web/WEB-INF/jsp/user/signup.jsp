@@ -23,6 +23,16 @@
 
 <body>
 
+<div id="head">
+    <nav>
+        <ul>
+            <jsp:include page="../fragment/nav-language.jsp">
+                <jsp:param name="page" value="login"/>
+            </jsp:include>
+        </ul>
+    </nav>
+</div>
+
 <form class="form" method="post" action="${pageContext.servletContext.contextPath}/controller?command=sing up">
 
     <h1><fmt:message key="title.signUp" bundle="${loc}"/></h1>

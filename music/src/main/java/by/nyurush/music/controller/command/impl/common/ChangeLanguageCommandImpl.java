@@ -23,8 +23,6 @@ public class ChangeLanguageCommandImpl implements Command {
         String page = req.getParameter("page");
 
         HttpSession session = req.getSession();
-        String locale = req.getParameter("pagecontent");
-        session.setAttribute("pagecontent", locale);
 
         StringUtil stringUtil = new StringUtil();
         ResourceBundle rb = getResourceBundle(session);
@@ -33,12 +31,7 @@ public class ChangeLanguageCommandImpl implements Command {
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_LOGIN);
         }
 
-
-        return null;//TODO DELETE
-/*
-
-        LanguageName languageName = new LanguageName();
-        if (languageName.isLangExist(lang)) {
+        if(lang.contains("en_En") || lang.contains("ru_RU")) {
             session.setAttribute(LOCALE_ATTRIBUTE_NAME, lang);
         } else {
             throw new UnsupportedOperationException("Unknown language: " + lang);
@@ -46,32 +39,20 @@ public class ChangeLanguageCommandImpl implements Command {
 
         switch (page) {
             case "login":
-                return CommandResult.forward(JspPageName.LOGIN_PAGE);
-            case "main":
-                return CommandResult.forward(JspPageName.MAIN_PAGE);
-            case "addBooks":
-                return CommandResult.redirect(JspPageRedirectPath.ADMIN_BOOKS_PAGE);
-            case "addLibrarians":
-                return CommandResult.redirect(JspPageRedirectPath.ADMIN_LIBRARIANS_PAGE);
-            case "addReaders":
-                return CommandResult.redirect(JspPageRedirectPath.ADMIN_READERS_PAGE);
-            case "allOrders":
-                return CommandResult.redirect(JspPageRedirectPath.LIBRARIAN_ALL_ORDERS_PAGE);
-            case "issueOrders":
-                return CommandResult.redirect(JspPageRedirectPath.LIBRARIAN_ISSUE_ORDERS_PAGE);
-            case "readersBooks":
-                return CommandResult.redirect(JspPageRedirectPath.READER_BOOKS_PAGE);
-            case "readerFindBook":
-                return CommandResult.redirect(JspPageRedirectPath.READER_FIND_BOOKS_PAGE);
+                return CommandResult.forward(ConstantPathPages.PATH_PAGE_LOGIN);
+            case "signup":
+                return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
+
             default:
                 throw new UnsupportedOperationException("Unknown page: " + page);
         }
-*/
+
 
     }
 
+    //TODO: вынести куда-нибудь эту функцию (много раз повторяется)
     private ResourceBundle getResourceBundle(HttpSession session) {
-        Object localParameter = session.getAttribute("local");
+        Object localParameter = session.getAttribute("javax.servlet.jsp.jstl.fmt.locale.session");
         Locale currentLang;
         if (localParameter != null) {
             String string = String.valueOf(localParameter);
@@ -80,6 +61,6 @@ public class ChangeLanguageCommandImpl implements Command {
         } else {
             currentLang = new Locale(DEFAULT_LANG);
         }
-        return ResourceBundle.getBundle("locale", currentLang);
+        return ResourceBundle.getBundle("pagecontent", currentLang);
     }
 }

@@ -82,8 +82,10 @@ body {
 }
 
 .errorInfo {
-    font-size: 20px;
-    color: white;
+    display: block;
+    text-align: center;
+    font-size: 13px;
+    color: #8b0000;
     font-family: Arial, Calibri, serif;
 }
 
@@ -93,4 +95,83 @@ body {
     font-size: 13px;
     padding-left: 50px;
     padding-right: 30px;
+}
+
+
+#head {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+nav {
+    /*   display: flex;
+       flex-direction: row;
+       height: 50px;
+       color: white;
+       justify-content: right;*/
+
+    overflow: hidden;
+    /*background-color: #333;*/
+}
+
+.server-answer {
+    display: none;
+}
+
+nav * {
+    margin: 0;
+    padding: 0;
+}
+
+nav a {
+    float: right;
+    display: block;
+    color: #f2f2f2;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+nav ul {
+    list-style: none;
+}
+
+nav > ul {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: right;
+}
+
+nav > ul li a {
+    display: block;
+    background-color: #333;
+    padding-left: 35px;
+    /*padding: 15px 30px 15px 40px;*/
+    font-size: 14px;
+    width: 100px;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+nav li ul {
+    position: absolute;
+    /*min-width: 100px;*/
+    display: none;
+}
+
+nav li:hover > ul {
+    display: block;
+}
+
+nav a:hover {
+    background-color: #ddd;
+}
+
+a:hover {
+    color: black;
 }

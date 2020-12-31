@@ -1,6 +1,8 @@
 package by.nyurush.music.controller.command;
 
+import by.nyurush.music.controller.command.impl.common.ChangeLanguageCommandImpl;
 import by.nyurush.music.controller.command.impl.user.LoginCommandImpl;
+import by.nyurush.music.controller.command.impl.user.RegisterCommandImpl;
 import by.nyurush.music.controller.command.impl.user.SignUpCommandImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,8 +14,13 @@ public class CommandFactory {
         switch (command) {
             case "login":
                 return new LoginCommandImpl();
-            case "sign up":
+            case "signup":
                 return new SignUpCommandImpl();
+            case "register":
+                return new RegisterCommandImpl();
+            case "changeLanguage":
+                return new ChangeLanguageCommandImpl();
+
 
 
             default:
