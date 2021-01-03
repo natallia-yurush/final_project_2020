@@ -12,35 +12,29 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserDaoImpl extends AbstractDao<User> {
-    private static final String FIND_ALL = "SELECT account_id, first_name, last_name, birth_date, email, subscription, id, login, password, role, user.country_code " +
+    private static final String FIND_ALL = "SELECT account_id, first_name, last_name, email, subscription, id, login, password, role " +
+            "FROM user " +
+            "JOIN account ON account_id = id ";
+    private static final String FIND_BY_ID = "SELECT account_id, first_name, last_name, email, subscription, id, login, password, role " +
             "FROM user " +
             "JOIN account ON account_id = id " +
-            "JOIN country ON user.country_code = country.country_code ";
-    private static final String FIND_BY_ID = "SELECT account_id, first_name, last_name, birth_date, email, subscription, id, login, password, role, user.country_code " +
-            "FROM user " +
-            "JOIN account ON account_id = id " +
-            "JOIN country ON user.country_code = country.country_code " +
             "WHERE account_id = ?";
-    private static final String FIND_BY_LOGIN = "SELECT account_id, first_name, last_name, birth_date, email, subscription, id, login, password, role, user.country_code " +
+    private static final String FIND_BY_LOGIN = "SELECT account_id, first_name, last_name, email, subscription, id, login, password, role " +
             "FROM user " +
             "JOIN account ON account_id = id " +
-            "JOIN country ON user.country_code = country.country_code " +
             "WHERE login = ?";
-    private static final String FIND_BY_EMAIL = "SELECT account_id, first_name, last_name, birth_date, email, subscription, id, login, password, role, user.country_code " +
+    private static final String FIND_BY_EMAIL = "SELECT account_id, first_name, last_name, email, subscription, id, login, password, role " +
             "FROM user " +
             "JOIN account ON account_id = id " +
-            "JOIN country ON user.country_code = country.country_code " +
             "WHERE email = ?";
-    private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT account_id, first_name, last_name, birth_date, email, subscription, id, login, password, role, user.country_code " +
+    private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT account_id, first_name, last_name, email, subscription, id, login, password, role " +
             "FROM user " +
             "JOIN account ON account_id = id " +
-            "JOIN country ON user.country_code = country.country_code " +
             "WHERE login = ? AND password = ?";
     private static final String CREATE_USERS_ACCOUNT = "INSERT INTO account (login, password, role) VALUES (?, ?, ?)";
-    private static final String CREATE_USER = "INSERT INTO user (account_id, first_name, last_name, birth_date, email, subscription, " +
-            "country_code) VALUES (?, ?, ?, ?, ?, ? ,?)";
+    private static final String CREATE_USER = "INSERT INTO user (account_id, first_name, last_name, email, subscription) VALUES (?, ?, ?, ?, ?, ? ,?)";
     private static final String UPDATE = "UPDATE account A, user U SET A.login=?, A.password=?, A.role = ?, U.first_name = ?, U.last_name = ?, " +
-            "U.birth_date=?, U.email=?, U.subscription=?, U.country_code=? WHERE A.id = ? AND U.account_id = ?";
+            "U.email=?, U.subscription=? WHERE A.id = ? AND U.account_id = ?";
     private static final String DELETE = "DELETE FROM user WHERE account_id=?";
 
 
@@ -93,12 +87,10 @@ public class UserDaoImpl extends AbstractDao<User> {
                     preparedStatement.setString(3, user.getRole().toString());
                     preparedStatement.setString(4, user.getFirstName());
                     preparedStatement.setString(5, user.getLastName());
-                    preparedStatement.setDate(6, new Date(user.getBirthDate().getTime()));
-                    preparedStatement.setString(7, user.getEmail());
-                    preparedStatement.setBoolean(8, user.getSubscription());
-                    preparedStatement.setString(9, user.getCountry());
-                    preparedStatement.setInt(10, user.getId());
-                    preparedStatement.setInt(11, user.getId());
+                    preparedStatement.setString(6, user.getEmail());
+                    preparedStatement.setBoolean(7, user.getSubscription());
+                    preparedStatement.setInt(8, user.getId());
+                    preparedStatement.setInt(9, user.getId());
                     preparedStatement.executeUpdate();
                     generatedId = user.getId();
                 } else {
@@ -114,10 +106,8 @@ public class UserDaoImpl extends AbstractDao<User> {
                         preparedStatement.setInt(1, generatedId);
                         preparedStatement.setString(2, user.getFirstName());
                         preparedStatement.setString(3, user.getLastName());
-                        preparedStatement.setDate(4, new Date(user.getBirthDate().getTime()));
-                        preparedStatement.setString(5, user.getEmail());
-                        preparedStatement.setBoolean(6, user.getSubscription());
-                        preparedStatement.setString(7, user.getCountry());
+                        preparedStatement.setString(4, user.getEmail());
+                        preparedStatement.setBoolean(5, user.getSubscription());
                         preparedStatement.execute();
                     } else {
                         connection.rollback();
@@ -185,7 +175,7 @@ public class UserDaoImpl extends AbstractDao<User> {
     }
 
     //TODO: может не делать, а испольховать в сервисе аккаунт
-    public Optional<User> findBuLoginAndPassword(String login, String password) throws DaoException {
+    public Optional<User> findByLoginAndPassword(String login, String password) throws DaoException {
         User user = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_LOGIN_AND_PASSWORD)) {
             preparedStatement.setString(1, login);

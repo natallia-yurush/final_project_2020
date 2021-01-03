@@ -37,7 +37,7 @@ public class UserDaoImplTest {
 
     @Test
     public void saveAndDeletePositiveTest() throws DaoException {
-        User user = new User(null, "krop", "krop", AccountRole.CLIENT, "krop", "krop", new Date(2001-02-02), "krop@gmail.com", false, "BY");
+        User user = new User(null, "krop", "krop", AccountRole.CLIENT, "krop", "krop", "krop@gmail.com", false);
         Integer result = userDao.save(user);
         boolean actual = result != null;
         Assert.assertTrue(actual);
@@ -47,7 +47,7 @@ public class UserDaoImplTest {
 
     @Test
     public void updatePositiveTest() throws DaoException {
-        User user = new User(2, "user", "user", AccountRole.CLIENT, "Наталья", "Юруш", new Date(2001-02-02), "natallia.yurush@gmail.com", true, "BY");
+        User user = new User(2, "user", "user", AccountRole.CLIENT, "Наталья", "Юруш", "natallia.yurush@gmail.com", true);
         Assert.assertNotNull(userDao.save(user));
     }
 

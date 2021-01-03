@@ -4,8 +4,10 @@ import by.nyurush.music.dao.DaoHelperFactory;
 import by.nyurush.music.dao.exception.DaoException;
 import by.nyurush.music.dao.impl.AccountDaoImpl;
 import by.nyurush.music.entity.Account;
+import by.nyurush.music.entity.User;
 import by.nyurush.music.service.Service;
 import by.nyurush.music.service.exception.ServiceException;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,7 +40,7 @@ public class AccountService extends Service {
         }
     }
 
-    public Optional<Account> findBuId(Integer id) throws ServiceException {
+    public Optional<Account> findById(Integer id) throws ServiceException {
         try {
             return accountDao.findById(id);
         } catch (DaoException e) {
@@ -47,7 +49,9 @@ public class AccountService extends Service {
     }
 
     public Integer save(Account account) throws ServiceException {
+        //TODO: при регистрации должна быть проверка, существует ли данный логин!
         try {
+            account.setPassword(BCrypt.hashpw(account.getPassword(), BCrypt.gensalt()));
             return accountDao.save(account);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage());
@@ -72,9 +76,13 @@ public class AccountService extends Service {
 
     public Optional<Account> isAccountExist(String login, String password) throws ServiceException {
         try {
-
             //TODO зашифровать пароль
-            return accountDao.findByLoginAndPassword(login, password);
+            Optional<Account> account = accountDao.findByLogin(login);
+            if(account.isPresent() && BCrypt.checkpw(password, account.get().getPassword())) {
+                return account;
+            } else {
+                return Optional.empty();
+            }
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage());
         }

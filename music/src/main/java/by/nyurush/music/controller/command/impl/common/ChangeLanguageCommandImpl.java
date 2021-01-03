@@ -2,7 +2,7 @@ package by.nyurush.music.controller.command.impl.common;
 
 import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandResult;
-import by.nyurush.music.util.StringUtil;
+import by.nyurush.music.util.validation.StringUtil;
 import by.nyurush.music.util.constant.ConstantPathPages;
 
 import javax.servlet.http.HttpServletRequest;

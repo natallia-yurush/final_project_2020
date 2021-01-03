@@ -1,8 +1,8 @@
-package by.nyurush.music.util;
+package by.nyurush.music.util.validation;
 
 public class StringUtil {
 
-    public boolean areNotNullAndNotEmpty(String... strings) {
+    public static boolean areNotNullAndNotEmpty(String... strings) {
         if (strings == null || strings.length == 0) {
             return false;
         }
@@ -14,7 +14,7 @@ public class StringUtil {
         return true;
     }
 
-    public boolean areNotNull(String... strings) {
+    public static boolean areNotNull(String... strings) {
         if (strings == null || strings.length == 0) {
             return false;
         }
@@ -26,7 +26,7 @@ public class StringUtil {
         return true;
     }
 
-    public boolean isNullOrEmpty(String string) {
+    public static boolean isNullOrEmpty(String string) {
         return string == null || string.isEmpty();
     }
 }

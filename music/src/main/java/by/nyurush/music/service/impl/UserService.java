@@ -6,6 +6,7 @@ import by.nyurush.music.dao.impl.UserDaoImpl;
 import by.nyurush.music.entity.User;
 import by.nyurush.music.service.Service;
 import by.nyurush.music.service.exception.ServiceException;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +37,8 @@ public class UserService extends Service {
 
     public Integer save(User user) throws ServiceException {
         try {
+            //TODO hash
+            user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
             return userDao.save(user);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage());
@@ -69,7 +72,12 @@ public class UserService extends Service {
     public Optional<User> isUserExist(String login, String password) throws ServiceException {
         try {
             //TODO зашифровать пароль
-            return userDao.findBuLoginAndPassword(login, password);
+            Optional<User> user = userDao.findByLogin(login);
+            if(user.isPresent() && BCrypt.checkpw(password, user.get().getPassword())) {
+                return user;
+            } else {
+                return Optional.empty();
+            }
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage());
         }

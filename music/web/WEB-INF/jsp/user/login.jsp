@@ -41,8 +41,17 @@
 
 
 <div class="server-answer">
+    <%--
     <p class="infos">${sessionScope.parametersInfo}</p>
     <c:remove var="parametersInfo" scope="session"/>
+--%>
+<%--    <c:when test="${not empty requestScope.wrongData}">
+        <p class="text-danger">${wrongLogin}</p>
+    </c:when>--%>
+    <c:if test="${not empty requestScope.parametersInfo}">
+        <p class="infos">${sessionScope.parametersInfo}</p>
+    </c:if>
+
 </div>
 
 <form class="form" method="post" action="${pageContext.servletContext.contextPath}/controller?command=login">
@@ -55,9 +64,18 @@
         <input type="password" name="password" placeholder=<fmt:message key="label.password" bundle="${loc}"/> required>
     </div>
 
+    <c:if test="${not empty requestScope.errorAuthorisation}">
+        <div class="errorInfo">
+            <c:out value="${requestScope.errorAuthorisation}"/>
+        </div>
+    </c:if>
+
+<%--
     <div class="errorInfo">
         <c:out value="${requestScope.errorAuthorisation}"/>
     </div>
+--%>
+
 
     <div class="input-form">
         <input type="submit" value=<fmt:message key="label.signIn" bundle="${loc}"/>>

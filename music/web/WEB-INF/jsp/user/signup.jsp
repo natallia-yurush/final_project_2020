@@ -33,27 +33,45 @@
     </nav>
 </div>
 
-<form class="form" method="post" action="${pageContext.servletContext.contextPath}/controller?command=sing up">
+<form class="form" method="post" action="${pageContext.servletContext.contextPath}/controller?command=register">
 
     <h1><fmt:message key="title.signUp" bundle="${loc}"/></h1>
     <div class="input-form">
         <input type="text" name="firstName" placeholder="<fmt:message key="label.firstName" bundle="${loc}"/>" required>
     </div>
+    <c:if test="${not empty requestScope.invalidFirstName}">
+        <div class="errorInfo"><c:out value="${requestScope.invalidFirstName}"/></div>
+    </c:if>
     <div class="input-form">
         <input type="text" name="lastName" placeholder="<fmt:message key="label.lastName" bundle="${loc}"/>" required>
     </div>
+    <c:if test="${not empty requestScope.invalidLastName}">
+        <div class="errorInfo"><c:out value="${requestScope.invalidLastName}"/></div>
+    </c:if>
     <div class="input-form">
         <input type="email" name="email" placeholder="Email" required>
     </div>
+    <c:if test="${not empty requestScope.invalidEmail}">
+        <div class="errorInfo"><c:out value="${requestScope.invalidEmail}"/></div>
+    </c:if>
     <div class="input-form">
         <input type="text" name="login" placeholder="<fmt:message key="label.login" bundle="${loc}"/>" required>
     </div>
+    <c:if test="${not empty requestScope.invalidLogin}">
+        <div class="errorInfo"><c:out value="${requestScope.invalidLogin}"/></div>
+    </c:if>
     <div class="input-form">
-        <input type="password" name="password" placeholder="<fmt:message key="label.password" bundle="${loc}"/>" required pattern=""(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"">
+        <input type="password" name="password" placeholder="<fmt:message key="label.password" bundle="${loc}"/>" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
     </div>
+    <c:if test="${not empty requestScope.invalidPassword}">
+        <div class="errorInfo"><c:out value="${requestScope.invalidPassword}"/></div>
+    </c:if>
     <div class="input-form">
-        <input type="password" name="confirmPassword" placeholder="<fmt:message key="label.confirmPassword" bundle="${loc}"/>" required pattern=""(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"">
+        <input type="password" name="confirmPassword" placeholder="<fmt:message key="label.confirmPassword" bundle="${loc}"/>" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
     </div>
+    <c:if test="${not empty requestScope.invalidConfirmPassword}">
+        <div class="errorInfo"><c:out value="${requestScope.invalidConfirmPassword}"/></div>
+    </c:if>
     <div class="secure">
         * <fmt:message key="label.securePassword" bundle="${loc}"/>
     </div>
