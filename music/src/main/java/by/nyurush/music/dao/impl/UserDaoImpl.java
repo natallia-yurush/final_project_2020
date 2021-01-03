@@ -32,7 +32,7 @@ public class UserDaoImpl extends AbstractDao<User> {
             "JOIN account ON account_id = id " +
             "WHERE login = ? AND password = ?";
     private static final String CREATE_USERS_ACCOUNT = "INSERT INTO account (login, password, role) VALUES (?, ?, ?)";
-    private static final String CREATE_USER = "INSERT INTO user (account_id, first_name, last_name, email, subscription) VALUES (?, ?, ?, ?, ?, ? ,?)";
+    private static final String CREATE_USER = "INSERT INTO user (account_id, first_name, last_name, email, subscription) VALUES (?, ?, ?, ?, ?)";
     private static final String UPDATE = "UPDATE account A, user U SET A.login=?, A.password=?, A.role = ?, U.first_name = ?, U.last_name = ?, " +
             "U.email=?, U.subscription=? WHERE A.id = ? AND U.account_id = ?";
     private static final String DELETE = "DELETE FROM user WHERE account_id=?";
@@ -74,7 +74,7 @@ public class UserDaoImpl extends AbstractDao<User> {
     }
 
     @Override
-    public Integer save(User user) throws DaoException {
+    public User save(User user) throws DaoException {
         PreparedStatement preparedStatement = null;
         Integer generatedId = null;
         try {
@@ -92,7 +92,6 @@ public class UserDaoImpl extends AbstractDao<User> {
                     preparedStatement.setInt(8, user.getId());
                     preparedStatement.setInt(9, user.getId());
                     preparedStatement.executeUpdate();
-                    generatedId = user.getId();
                 } else {
                     preparedStatement = connection.prepareStatement(CREATE_USERS_ACCOUNT, Statement.RETURN_GENERATED_KEYS);
                     preparedStatement.setString(1, user.getLogin());
@@ -102,6 +101,7 @@ public class UserDaoImpl extends AbstractDao<User> {
                     ResultSet resultSet = preparedStatement.getGeneratedKeys();
                     if (resultSet.next()) {
                         generatedId = resultSet.getInt(1);
+                        user.setId(generatedId);
                         preparedStatement = connection.prepareStatement(CREATE_USER);
                         preparedStatement.setInt(1, generatedId);
                         preparedStatement.setString(2, user.getFirstName());
@@ -123,7 +123,7 @@ public class UserDaoImpl extends AbstractDao<User> {
         } catch (SQLException e) {
             throw new DaoException();
         }
-        return generatedId;
+        return user;
     }
 
     @Override

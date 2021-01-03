@@ -2,7 +2,6 @@ package by.nyurush.music.controller.command.impl.user;
 
 import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandResult;
-import by.nyurush.music.controller.command.ResourceBundleCommand;
 import by.nyurush.music.dao.DaoHelperFactory;
 import by.nyurush.music.entity.Account;
 import by.nyurush.music.entity.AccountRole;
@@ -10,13 +9,12 @@ import by.nyurush.music.service.exception.ServiceException;
 import by.nyurush.music.service.impl.AccountService;
 import by.nyurush.music.util.constant.ConstantAttributes;
 import by.nyurush.music.util.constant.ConstantMessages;
-import by.nyurush.music.util.validation.StringUtil;
 import by.nyurush.music.util.constant.ConstantPathPages;
+import by.nyurush.music.util.language.ResourceBundleUtil;
+import by.nyurush.music.util.validation.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -25,7 +23,7 @@ public class LoginCommandImpl implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
 
-        HttpSession session = req.getSession();
+       // HttpSession session = req.getSession();
 
         //TODO: necessary or not?
         //session.removeAttribute("user");
@@ -37,9 +35,9 @@ public class LoginCommandImpl implements Command {
         String login = req.getParameter(ConstantAttributes.LOGIN);
         String password = req.getParameter(ConstantAttributes.PASSWORD);
 
-        ResourceBundle rb = ResourceBundleCommand.getResourceBundle(session);
-        StringUtil stringUtil = new StringUtil();
-        if (!stringUtil.areNotNull(login, password)) {
+        ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
+
+        if (!StringUtil.areNotNull(login, password)) {
             req.setAttribute(ConstantAttributes.PARAM_INFO, rb.getString(ConstantMessages.WRONG_OPERATION_KEY));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_LOGIN);
         }

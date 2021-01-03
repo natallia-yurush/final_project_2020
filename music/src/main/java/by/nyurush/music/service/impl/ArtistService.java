@@ -34,7 +34,7 @@ public class ArtistService extends Service {
         }
     }
 
-    public Integer save(Artist artist) throws ServiceException {
+    public Artist save(Artist artist) throws ServiceException {
         try {
             return artistDao.save(artist);
         } catch (DaoException e) {

@@ -37,10 +37,9 @@ public class PlaylistDaoImplTest {
     public void saveAndDeletePositiveTest() throws DaoException {
         User user = new User(2);
         Playlist playlist = new Playlist(null, "krop", false, user);
-        Integer result = playlistDao.save(playlist);
-        boolean actual = result != null;
+        Playlist result = playlistDao.save(playlist);
+        boolean actual = result.getId() != null;
         Assert.assertTrue(actual);
-        playlist.setId(result);
         Assert.assertTrue(playlistDao.delete(playlist));
     }
 

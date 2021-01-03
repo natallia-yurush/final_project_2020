@@ -10,7 +10,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<fmt:setLocale value="${sessionScope.local}" scope="session"/>
+<fmt:setLocale value="${cookie.language.value}"/>
 <fmt:setBundle basename="pagecontent" var="loc"/>
 <%--TODO: нормальная локализация locale--%>
 
@@ -71,6 +71,9 @@
     </div>
     <c:if test="${not empty requestScope.invalidConfirmPassword}">
         <div class="errorInfo"><c:out value="${requestScope.invalidConfirmPassword}"/></div>
+    </c:if>
+    <c:if test="${not empty requestScope.invalidPasswordsMatch}">
+        <div class="errorInfo"><c:out value="${requestScope.invalidPasswordsMatch}"/></div>
     </c:if>
     <div class="secure">
         * <fmt:message key="label.securePassword" bundle="${loc}"/>

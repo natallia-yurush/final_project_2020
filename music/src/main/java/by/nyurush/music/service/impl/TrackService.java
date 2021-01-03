@@ -34,7 +34,7 @@ public class TrackService extends Service {
         }
     }
 
-    public Integer save(Track track) throws ServiceException {
+    public Track save(Track track) throws ServiceException {
         try {
             return trackDao.save(track);
         } catch (DaoException e) {

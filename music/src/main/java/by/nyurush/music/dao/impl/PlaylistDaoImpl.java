@@ -70,9 +70,8 @@ public class PlaylistDaoImpl extends AbstractDao<Playlist> {
     }
 
     @Override
-    public Integer save(Playlist playlist) throws DaoException {
+    public Playlist save(Playlist playlist) throws DaoException {
         PreparedStatement preparedStatement = null;
-        Integer generatedId = null;
         try {
             try {
                 connection.setAutoCommit(false);
@@ -88,7 +87,7 @@ public class PlaylistDaoImpl extends AbstractDao<Playlist> {
                 preparedStatement.execute();
                 ResultSet resultSet = preparedStatement.getGeneratedKeys();
                 if (resultSet.next()) {
-                    generatedId = resultSet.getInt(1);
+                    playlist.setId(resultSet.getInt(1));
                 }
                 connection.commit();
             } catch (SQLException e) {
@@ -100,7 +99,7 @@ public class PlaylistDaoImpl extends AbstractDao<Playlist> {
         } catch (SQLException e) {
             throw new DaoException();
         }
-        return generatedId;
+        return playlist;
     }
 
     @Override

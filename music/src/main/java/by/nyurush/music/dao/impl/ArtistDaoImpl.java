@@ -55,9 +55,8 @@ public class ArtistDaoImpl extends AbstractDao<Artist> {
     }
 
     @Override
-    public Integer save(Artist artist) throws DaoException {
+    public Artist save(Artist artist) throws DaoException {
         PreparedStatement preparedStatement = null;
-        Integer generatedId = null;
         try {
             try {
                 connection.setAutoCommit(false);
@@ -71,7 +70,7 @@ public class ArtistDaoImpl extends AbstractDao<Artist> {
                 preparedStatement.execute();
                 ResultSet resultSet = preparedStatement.getGeneratedKeys();
                 if (resultSet.next()) {
-                    generatedId = resultSet.getInt(1);
+                    artist.setId(resultSet.getInt(1));
                 }
                 connection.commit();
             } catch (SQLException e) {
@@ -83,7 +82,7 @@ public class ArtistDaoImpl extends AbstractDao<Artist> {
         } catch (SQLException e) {
             throw new DaoException();
         }
-        return generatedId;
+        return artist;
     }
 
     @Override

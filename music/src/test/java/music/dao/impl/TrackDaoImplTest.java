@@ -37,10 +37,9 @@ public class TrackDaoImplTest {
     public void saveAndDeletePositiveTest() throws DaoException {
         Album album = new Album(1);
         Track track = new Track(null, "krop", "krop", 265, "ROCK", album);
-        Integer result = trackDao.save(track);
-        boolean actual = result != null;
+        Track result = trackDao.save(track);
+        boolean actual = result.getId() != null;
         Assert.assertTrue(actual);
-        track.setId(result);
         Assert.assertTrue(trackDao.delete(track));
     }
 

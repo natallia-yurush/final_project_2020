@@ -2,7 +2,12 @@ package by.nyurush.music.controller.command.impl.user;
 
 import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandResult;
-import by.nyurush.music.controller.command.ResourceBundleCommand;
+import by.nyurush.music.dao.DaoHelperFactory;
+import by.nyurush.music.entity.AccountRole;
+import by.nyurush.music.entity.User;
+import by.nyurush.music.service.exception.ServiceException;
+import by.nyurush.music.service.impl.UserService;
+import by.nyurush.music.util.language.ResourceBundleUtil;
 import by.nyurush.music.util.constant.ConstantAttributes;
 import by.nyurush.music.util.constant.ConstantMessages;
 import by.nyurush.music.util.constant.ConstantPathPages;
@@ -17,105 +22,93 @@ import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.util.ResourceBundle;
 
+import static by.nyurush.music.util.constant.ConstantAttributes.*;
+
 public class RegisterCommandImpl implements Command {
     private static Logger LOGGER = LogManager.getLogger(RegisterCommandImpl.class);
 
-/*
-    @Override
-    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
-        return null;
-    }
-*/
-
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            request.setCharacterEncoding("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            //TODO
-            e.printStackTrace();
-        }
+
         HttpSession session = request.getSession();
-        ResourceBundle rb = ResourceBundleCommand.getResourceBundle(session);
+        ResourceBundle rb = ResourceBundleUtil.getResourceBundle(request);
 
         String page;
-        String name = request.getParameter(ConstantAttributes.FIRST_NAME);
+        String name = request.getParameter(FIRST_NAME);
         if (!StringUtil.areNotNullAndNotEmpty(name) || !DataValidator.isCorrectNameSurname(name)) {
             LOGGER.info("invalid first name format was received:" + name);
-            request.setAttribute(ConstantAttributes.INVALID_FIRST_NAME, rb.getString(ConstantMessages.INVALID_NAME));
+            request.setAttribute(INVALID_FIRST_NAME, rb.getString(ConstantMessages.INVALID_NAME));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
         }
-        String lastName = request.getParameter(ConstantAttributes.LAST_NAME);
+        String lastName = request.getParameter(LAST_NAME);
         if (!StringUtil.areNotNullAndNotEmpty(lastName) || !DataValidator.isCorrectNameSurname(lastName)) {
             LOGGER.info("invalid name format was received:" + lastName);
-            request.setAttribute(ConstantAttributes.INVALID_LAST_NAME, rb.getString(ConstantMessages.INVALID_NAME));
+            request.setAttribute(INVALID_LAST_NAME, rb.getString(ConstantMessages.INVALID_NAME));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
         }
-        String login = request.getParameter(ConstantAttributes.LOGIN);
+        String login = request.getParameter(LOGIN);
         if (!StringUtil.areNotNullAndNotEmpty(login) || !DataValidator.isCorrectLogin(login)) {
             LOGGER.info("invalid login format was received:" + login);
-            request.setAttribute(ConstantAttributes.INVALID_LOGIN, rb.getString(ConstantMessages.INVALID_LOGIN));
+            request.setAttribute(INVALID_LOGIN, rb.getString(ConstantMessages.INVALID_LOGIN));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
         }
-        String email = request.getParameter(ConstantAttributes.EMAIL);
+        String email = request.getParameter(EMAIL);
         if (!StringUtil.areNotNullAndNotEmpty(email) || !DataValidator.isCorrectEmail(email)){
             LOGGER.info("invalid email format was received:" + email);
-            request.setAttribute(ConstantAttributes.INVALID_EMAIL, rb.getString(ConstantMessages.INVALID_EMAIL));
+            request.setAttribute(INVALID_EMAIL, rb.getString(ConstantMessages.INVALID_EMAIL));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
         }
-        String password = request.getParameter(ConstantAttributes.PASSWORD);
+        String password = request.getParameter(PASSWORD);
         if (!StringUtil.areNotNullAndNotEmpty(password) || !DataValidator.isCorrectPassword(password)){
             LOGGER.info("invalid password format was received");
-            request.setAttribute(ConstantAttributes.INVALID_PASS, rb.getString(ConstantMessages.INVALID_PASSWORD));
+            request.setAttribute(INVALID_PASS, rb.getString(ConstantMessages.INVALID_PASSWORD));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
         }
-        String confPassword = request.getParameter(ConstantAttributes.CONFIRM_PASSWORD);
+        String confPassword = request.getParameter(CONFIRM_PASSWORD);
         if (!StringUtil.areNotNullAndNotEmpty(confPassword) || !DataValidator.isCorrectPassword(confPassword)){
             LOGGER.info("invalid confirm password format was received");
-            request.setAttribute(ConstantAttributes.INVALID_CONFIRM_PASS, rb.getString(ConstantMessages.INVALID_PASSWORD));
+            request.setAttribute(INVALID_CONFIRM_PASS, rb.getString(ConstantMessages.INVALID_PASSWORD));
+            return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
+        }
+        if(!password.equals(confPassword)) {
+            LOGGER.info("passwords do not match");
+            request.setAttribute(INVALID_PASS_MATCH, rb.getString(ConstantMessages.INVALID_PASSWORDS_MATCH));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
         }
 
-        //TODO
-        return CommandResult.forward(ConstantPathPages.PATH_PAGE_LOGIN);
-
-/*
 
 
-        Client client;
+        User user;
         try {
-            client = buildUser(request, userHash);
-            if (clientService.registerUser(client)) {
-                SendingEmail.verify(login, email, userHash);
-                log.info("client with login = " + login + " was registered. Activation Link was sent.");
-                page = Page.VERIFY_PAGE;
+            user = buildUser(request);
+            UserService userService = new UserService(new DaoHelperFactory());
+            if (userService.isFreeLogin(user.getLogin())) {
+
+                //SendingEmail.verify(login, email);  //TODO: send email
+
+                session.setAttribute(USER, userService.save(user));
+                LOGGER.info("user with login = " + login + " was registered.");
+
             } else {
-                request.setAttribute(WRONG_DATA, true);
-                return new CommandResult(Page.REGISTER_PAGE);
+                request.setAttribute(INVALID_LOGIN, ConstantMessages.TAKEN_LOGIN);
+                return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
             }
         } catch (ServiceException e) {
-            log.error("Problem with service occurred!", e);
-            page = Page.REGISTER_PAGE;
+            LOGGER.error("Problem with service occurred!", e);
+            return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
         }
-        return new CommandResult(page, true);
-*/
+        return CommandResult.redirect(ConstantPathPages.PATH_PAGE_MAIN);
 
     }
-/*
 
-    private Client buildUser(HttpServletRequest request, String userHash) throws ServiceException {
-        String name = request.getParameter(PARAM_NAME);
-        String surname = request.getParameter(PARAM_SURNAME);
-        String login = request.getParameter(PARAM_LOGIN);
-        String email = request.getParameter(PARAM_EMAIL);
-        String password = request.getParameter(PARAM_PASSWORD);
-        String newPassword = DigestUtils.sha512Hex(password);
-        float personalDiscount = SALE_SYSTEM.getSaleByVisitNumber(START_VISIT_NUMBER);
-        Program program = buildProgram();
-        return new Client(null, null, name, surname, login, newPassword, email, userHash, false, START_VISIT_NUMBER,
-                personalDiscount, program.getId(), null, null);
+    private User buildUser(HttpServletRequest request) {
+        String firstName = request.getParameter(FIRST_NAME);
+        String lastName = request.getParameter(LAST_NAME);
+        String login = request.getParameter(LOGIN);
+        String email = request.getParameter(EMAIL);
+        String password = request.getParameter(PASSWORD);
+        return new User(null, login, password, AccountRole.CLIENT, firstName, lastName, email, false);
     }
 
-*/
 
 }

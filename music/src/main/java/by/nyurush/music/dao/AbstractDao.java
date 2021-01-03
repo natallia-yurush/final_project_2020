@@ -29,7 +29,7 @@ public abstract class AbstractDao<T extends Entity> {
 
     public abstract Optional<T> findById(Integer id) throws DaoException;
 
-    public abstract Integer save(T entity) throws DaoException;
+    public abstract T save(T entity) throws DaoException;
 
     public abstract boolean delete(T entity) throws DaoException;
 

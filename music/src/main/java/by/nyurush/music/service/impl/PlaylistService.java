@@ -35,7 +35,7 @@ public class PlaylistService extends Service {
         }
     }
 
-    public Integer save(Playlist playlist) throws ServiceException {
+    public Playlist save(Playlist playlist) throws ServiceException {
         try {
             return playlistDao.save(playlist);
         } catch (DaoException e) {

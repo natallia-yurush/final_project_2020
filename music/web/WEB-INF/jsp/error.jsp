@@ -7,6 +7,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie.language.value}"/>
+<fmt:setBundle basename="pagecontent" var="loc"/>
 
 <html>
 <head>
@@ -16,7 +19,9 @@
 </head>
 <body>
 <div class="content">
-    <a href="/">Вернуться на предыдущую страницу</a> <%--TODO: link to back page--%>
+    <a onclick="history.back(); return false;">
+        <fmt:message bundle="${loc}" key="answer.error404"/>
+    </a>
 </div>
 </body>
 </html>

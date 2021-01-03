@@ -9,7 +9,7 @@
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<fmt:setLocale value="${sessionScope.local}" scope="session"/>
+<fmt:setLocale value="${cookie.language.value}"/>
 <fmt:setBundle basename="pagecontent" var="loc"/>
 
 <li>
@@ -20,7 +20,7 @@
 
     <ul>
         <li>
-            <a href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=en_En&page=${param.page}">
+            <a href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=en_EN&page=${param.page}">
                 <fmt:message bundle="${loc}" key="label.languageEn"/>
             </a>
         </li>

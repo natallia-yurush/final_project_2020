@@ -3,6 +3,7 @@ package by.nyurush.music.controller;
 import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandFactory;
 import by.nyurush.music.controller.command.CommandResult;
+import by.nyurush.music.util.constant.ConstantAttributes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,7 +18,7 @@ import java.io.IOException;
 @WebServlet(name = "MusicController", urlPatterns = "/controller")
 public class MusicController extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger(MusicController.class);
-    private static final String PARAMETER_COMMAND = "command";
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,9 +31,9 @@ public class MusicController extends HttpServlet {
     }
 
     private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String parameter = req.getParameter(PARAMETER_COMMAND);
+        String parameter = req.getParameter(ConstantAttributes.PARAMETER_COMMAND);
 
-        Command command = CommandFactory.create(parameter);
+        Command command = CommandFactory.getCommand(parameter);
 
         CommandResult page = command.execute(req, resp);
         dispatch(req, resp, page);

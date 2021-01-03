@@ -36,10 +36,9 @@ public class ArtistDaoImplTest {
     @Test
     public void saveAndDeletePositiveTest() throws DaoException {
         Artist artist = new Artist(null, "krop");
-        Integer result = artistDao.save(artist);
-        boolean actual = result != null;
+        Artist result = artistDao.save(artist);
+        boolean actual = result.getId() != null;
         Assert.assertTrue(actual);
-        artist.setId(result);
         Assert.assertTrue(artistDao.delete(artist));
     }
 

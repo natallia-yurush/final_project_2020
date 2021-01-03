@@ -56,9 +56,8 @@ public class AccountDaoImpl extends AbstractDao<Account> {
     }
 
     @Override
-    public Integer save(Account account) throws DaoException {
+    public Account save(Account account) throws DaoException {
         PreparedStatement preparedStatement;
-        Integer generatedId = null;
         try {
             try {
                 connection.setAutoCommit(false);
@@ -74,7 +73,7 @@ public class AccountDaoImpl extends AbstractDao<Account> {
                 preparedStatement.execute();
                 ResultSet resultSet = preparedStatement.getGeneratedKeys();
                 if (resultSet.next()) {
-                    generatedId = resultSet.getInt(1);
+                    account.setId(resultSet.getInt(1));
                 }
                 connection.commit();
             } catch (SQLException e) {
@@ -86,7 +85,7 @@ public class AccountDaoImpl extends AbstractDao<Account> {
         } catch (SQLException e) {
             throw new DaoException();
         }
-        return generatedId;
+        return account;
     }
 
     @Override

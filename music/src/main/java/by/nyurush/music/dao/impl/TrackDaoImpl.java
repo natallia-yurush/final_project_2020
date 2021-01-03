@@ -114,9 +114,8 @@ public class TrackDaoImpl extends AbstractDao<Track> {
     }
 
     @Override
-    public Integer save(Track track) throws DaoException {
+    public Track save(Track track) throws DaoException {
         PreparedStatement preparedStatement = null;
-        Integer generatedId = null;
         try {
             try {
                 connection.setAutoCommit(false);
@@ -134,7 +133,7 @@ public class TrackDaoImpl extends AbstractDao<Track> {
                 preparedStatement.execute();
                 ResultSet resultSet = preparedStatement.getGeneratedKeys();
                 if (resultSet.next()) {
-                    generatedId = resultSet.getInt(1);
+                    track.setId(resultSet.getInt(1));
                     preparedStatement = connection.prepareStatement(ADD_ARTIST_TRACK);
                     preparedStatement.setInt(1, track.getAlbum().getArtist().getId());
                     preparedStatement.setInt(2, track.getId());
@@ -150,7 +149,7 @@ public class TrackDaoImpl extends AbstractDao<Track> {
         } catch (SQLException e) {
             throw new DaoException();
         }
-        return generatedId;
+        return track;
     }
 
     @Override

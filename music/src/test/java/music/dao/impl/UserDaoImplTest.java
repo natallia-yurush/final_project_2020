@@ -38,10 +38,9 @@ public class UserDaoImplTest {
     @Test
     public void saveAndDeletePositiveTest() throws DaoException {
         User user = new User(null, "krop", "krop", AccountRole.CLIENT, "krop", "krop", "krop@gmail.com", false);
-        Integer result = userDao.save(user);
-        boolean actual = result != null;
+        User result = userDao.save(user);
+        boolean actual = result.getId() != null;
         Assert.assertTrue(actual);
-        user.setId(result);
         Assert.assertTrue(userDao.delete(user));
     }
 

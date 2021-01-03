@@ -60,9 +60,8 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
     }
 
     @Override
-    public Integer save(Album album) throws DaoException {
+    public Album save(Album album) throws DaoException {
         PreparedStatement preparedStatement = null;
-        Integer generatedId = null;
         try {
             try {
                 connection.setAutoCommit(false);
@@ -79,7 +78,7 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
                 preparedStatement.execute();
                 ResultSet resultSet = preparedStatement.getGeneratedKeys();
                 if (resultSet.next()) {
-                    generatedId = resultSet.getInt(1);
+                    album.setId(resultSet.getInt(1));
                 }
                 connection.commit();
             } catch (SQLException e) {
@@ -91,7 +90,7 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
         } catch (SQLException e) {
             throw new DaoException();
         }
-        return generatedId;
+        return album;
     }
 
     @Override

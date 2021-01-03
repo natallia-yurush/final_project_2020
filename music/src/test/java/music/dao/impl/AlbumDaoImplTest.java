@@ -39,14 +39,13 @@ public class AlbumDaoImplTest {
     @Test
     public void saveAndDeletePositiveTest() throws DaoException {
         Album album = new Album(null, "krop", 2020, 540, new Artist(1, "krop"));
-        Integer result = saveAlbum(album);
-        boolean actual = result != null;
+        Album result = saveAlbum(album);
+        boolean actual = result.getId() != null;
         assertTrue(actual);
-        album.setId(result);
         assertTrue(deleteAlbum(album));
     }
 
-    private Integer saveAlbum(Album album) throws DaoException {
+    private Album saveAlbum(Album album) throws DaoException {
         return albumDao.save(album);
     }
 

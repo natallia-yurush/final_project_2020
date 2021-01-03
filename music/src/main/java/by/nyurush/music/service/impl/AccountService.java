@@ -48,7 +48,7 @@ public class AccountService extends Service {
         }
     }
 
-    public Integer save(Account account) throws ServiceException {
+    public Account save(Account account) throws ServiceException {
         //TODO: при регистрации должна быть проверка, существует ли данный логин!
         try {
             account.setPassword(BCrypt.hashpw(account.getPassword(), BCrypt.gensalt()));

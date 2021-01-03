@@ -43,14 +43,13 @@ public class AccountDaoImplTest {
     @Test
     public void saveAndDeletePositiveTest() throws DaoException {
         Account account = new Account(null, "krop", "krop", AccountRole.CLIENT);
-        Integer result = saveAccount(account);
-        boolean actual = result != null;
+        Account result = saveAccount(account);
+        boolean actual = result.getId() != null;
         assertTrue(actual);
-        account.setId(result);
         assertTrue(deleteAccount(account));
     }
 
-    private Integer saveAccount(Account account) throws DaoException {
+    private Account saveAccount(Account account) throws DaoException {
         return accountDao.save(account);
     }
 

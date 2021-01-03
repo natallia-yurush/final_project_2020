@@ -35,7 +35,7 @@ public class UserService extends Service {
         }
     }
 
-    public Integer save(User user) throws ServiceException {
+    public User save(User user) throws ServiceException {
         try {
             //TODO hash
             user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
@@ -71,13 +71,20 @@ public class UserService extends Service {
 
     public Optional<User> isUserExist(String login, String password) throws ServiceException {
         try {
-            //TODO зашифровать пароль
             Optional<User> user = userDao.findByLogin(login);
             if(user.isPresent() && BCrypt.checkpw(password, user.get().getPassword())) {
                 return user;
             } else {
                 return Optional.empty();
             }
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public boolean isFreeLogin(String login) throws ServiceException {
+        try {
+            return !userDao.findByLogin(login).isPresent();
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage());
         }
