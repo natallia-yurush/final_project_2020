@@ -674,6 +674,7 @@ $(function () {
  * Copyright 2019 Kri8thm
  * Licensed under MIT
  *------------------------------------*/
+/*
 
 ;(function ($, window, document, undefined) {
 
@@ -681,14 +682,14 @@ $(function () {
 
         this.$body = $('body');
 
-        /*
+        /!*
          * Theme settings options
-         */
+         *!/
         this.options = $.extend({}, Theme.Defaults, options);
 
-        /*
+        /!*
          * Options to store in cookies
-         */
+         *!/
         this.cookiesOptions = {
             'themeDark': this.options.darkTheme,
             'header': this.options.header,
@@ -696,9 +697,9 @@ $(function () {
             'player': this.options.player
         };
 
-        /*
+        /!*
          * Get cookies of app and set on options
-         */
+         *!/
         if ($.cookie('themeSetting') != null && options === false) {
             this.cookiesOptions = JSON.parse($.cookie('themeSetting'));
             this.options.darkTheme = this.cookiesOptions.themeDark;
@@ -707,9 +708,9 @@ $(function () {
             this.options.player = this.cookiesOptions.player;
         }
 
-        /*
+        /!*
          * Count for checkbox
-         */
+         *!/
         this.optionList = [
             {
                 'text': 'Dark Theme',
@@ -725,10 +726,10 @@ $(function () {
         }
     }
 
-    /**
+    /!**
      * Default options for the theme.
      * @public
-     */
+     *!/
     Theme.Defaults = {
         darkTheme: false,
 
@@ -749,10 +750,10 @@ $(function () {
         listItemClass: 'custom-list--item'
     };
 
-    /**
+    /!**
      * Initializes the theme settings.
      * @protected
-     */
+     *!/
     Theme.prototype.initialize = function () {
         var $header = $('#header');
         var $sidebar = $('#sidebar');
@@ -768,10 +769,10 @@ $(function () {
         this.skinClicks();
     };
 
-    /**
+    /!**
      * Add theme settings button.
      * @protected
-     */
+     *!/
     Theme.prototype.settingsButtonElement = function () {
         var attributes = {
             'type': 'button',
@@ -786,10 +787,10 @@ $(function () {
         this.themeOptions();
     };
 
-    /**
+    /!**
      * Add theme settings options.
      * @protected
-     */
+     *!/
     Theme.prototype.themeOptions = function () {
         var wrapperElement = document.createElement(this.options.itemElement);
         wrapperElement.setAttribute('id', this.options.wrapperId);
@@ -854,11 +855,13 @@ $(function () {
         wrapperElement.innerHTML = header + body;
         this.$body.append(wrapperElement);
     };
+*/
+/*
 
-    /**
+    /!**
      * App click events.
      * @protected
-     */
+     *!/
     Theme.prototype.skinClicks = function () {
         var _this = this;
         var settings = '#' + _this.options.settingsButtonId;
@@ -919,18 +922,18 @@ $(function () {
         });
     };
 
-    /**
+    /!**
      * Set app cookies.
      * @protected
-     */
+     *!/
     Theme.prototype.setCookies = function () {
         $.cookie('themeSetting', JSON.stringify(this.cookiesOptions), {expires: 7, path: '/'});
     };
 
-    /**
+    /!**
      * The jQuery Plugin for the Theme Setting
      * @public
-     */
+     *!/
     $.fn.themeSettings = function (option) {
         return this.each(function () {
             var $this = $(this);
@@ -938,10 +941,10 @@ $(function () {
         });
     };
 
-    /**
+    /!**
      * The constructor for the jQuery Plugin
      * @public
-     */
+     *!/
     $.fn.themeSettings.Constructor = Theme;
 
-})(jQuery, window, document);
+})(jQuery, window, document);*/

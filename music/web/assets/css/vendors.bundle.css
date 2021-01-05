@@ -2631,19 +2631,19 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #fff;
-  background-color: #753fdc;
-  border-color: #753fdc;
+  background-color: #2c3034;
+  border-color: #2c3034;
 }
 
 .btn-primary:hover {
   color: #fff;
-  background-color: #6026cf;
-  border-color: #5b24c4;
+  background-color: #32373b;
+  border-color: #32373b;
 }
 
 .btn-primary:focus, .btn-primary.focus {
-  -webkit-box-shadow: 0 0 0 0 rgba(138, 92, 225, 0.5);
-  box-shadow: 0 0 0 0 rgba(138, 92, 225, 0.5);
+  -webkit-box-shadow: 0 0 0 0 #495057;
+  box-shadow: 0 0 0 0 #495057;
 }
 
 .btn-primary.disabled, .btn-primary:disabled {

@@ -11,7 +11,7 @@
   <body>
     <jsp:forward page="WEB-INF/jsp/user/login.jsp"/>
 
-    <%--<jsp:forward page="WEB-INF/jsp/user/signup.jsp"/>--%>
+    <%--<jsp:forward page="WEB-INF/jsp/music/profile.jsp"/>--%>
 
   </body>
 </html>

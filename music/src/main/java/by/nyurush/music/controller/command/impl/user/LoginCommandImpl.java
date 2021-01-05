@@ -7,6 +7,7 @@ import by.nyurush.music.entity.Account;
 import by.nyurush.music.entity.AccountRole;
 import by.nyurush.music.service.exception.ServiceException;
 import by.nyurush.music.service.impl.AccountService;
+import by.nyurush.music.service.impl.UserService;
 import by.nyurush.music.util.constant.ConstantAttributes;
 import by.nyurush.music.util.constant.ConstantMessages;
 import by.nyurush.music.util.constant.ConstantPathPages;
@@ -15,6 +16,7 @@ import by.nyurush.music.util.validation.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -23,7 +25,7 @@ public class LoginCommandImpl implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
 
-       // HttpSession session = req.getSession();
+        HttpSession session = req.getSession();
 
         //TODO: necessary or not?
         //session.removeAttribute("user");
@@ -44,16 +46,20 @@ public class LoginCommandImpl implements Command {
 
         try {
             AccountService accountService = new AccountService(new DaoHelperFactory());
+            UserService userService = new UserService(new DaoHelperFactory());
 
             Optional<Account> account = accountService.isAccountExist(login, password);
             if (account.isPresent()) {
                 /*session.setAttribute("role", user.get().getRole());*/
-                /*session.setAttribute("user", account.get());*/
+
                 if(account.get().getRole() == AccountRole.ADMIN) {
-                    return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
+                    session.setAttribute("user", account.get());
+                    return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME);
                     //TODO ADMIN
                     //return CommandResult.forward(ConstantPathPages.PATH_PAGE_MAIN); //ADMIN
                 } else {
+                    session.setAttribute("user", userService.findByLogin(login).get());
+                    return CommandResult.forward(ConstantPathPages.PATH_PAGE_PROFILE);
                     //TODO CLIENT + можно найти именно юзера и установить его в сессию, а может и не нужно:)
                     //return CommandResult.forward(ConstantPathPages.PATH_PAGE_MAIN); //CLIENT
                 }

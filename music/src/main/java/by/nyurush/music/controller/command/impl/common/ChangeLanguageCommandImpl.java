@@ -59,7 +59,7 @@ public class ChangeLanguageCommandImpl implements Command {
         //TODO: All pages
         switch (page) {
             case "login":
-                return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP); //todo
+                return CommandResult.forward(ConstantPathPages.PATH_PAGE_LOGIN);
             case "register":
             case "signup":
                 return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);

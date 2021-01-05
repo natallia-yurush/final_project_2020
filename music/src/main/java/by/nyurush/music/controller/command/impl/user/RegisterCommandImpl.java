@@ -8,7 +8,6 @@ import by.nyurush.music.entity.User;
 import by.nyurush.music.service.exception.ServiceException;
 import by.nyurush.music.service.impl.UserService;
 import by.nyurush.music.util.language.ResourceBundleUtil;
-import by.nyurush.music.util.constant.ConstantAttributes;
 import by.nyurush.music.util.constant.ConstantMessages;
 import by.nyurush.music.util.constant.ConstantPathPages;
 import by.nyurush.music.util.validation.DataValidator;
@@ -19,7 +18,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.UnsupportedEncodingException;
 import java.util.ResourceBundle;
 
 import static by.nyurush.music.util.constant.ConstantAttributes.*;
@@ -97,7 +95,7 @@ public class RegisterCommandImpl implements Command {
             LOGGER.error("Problem with service occurred!", e);
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
         }
-        return CommandResult.redirect(ConstantPathPages.PATH_PAGE_MAIN);
+        return CommandResult.redirect(ConstantPathPages.PATH_PAGE_HOME);
 
     }
 

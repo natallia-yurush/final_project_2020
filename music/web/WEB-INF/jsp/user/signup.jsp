@@ -17,7 +17,7 @@
 <html>
 <head>
     <title><fmt:message key="title.signUp" bundle="${loc}"/></title>
-    <link rel="shortcut icon" href='<c:url value="/resource/img/wallpaper-music.png"/>' type="image/png">
+    <link rel="shortcut icon" href='<c:url value="/resource/img/purple-img.png"/>' type="image/png">
     <link type="text/css" rel="stylesheet" href='<c:url value="/resource/css/loginpage.css"/>'>
 </head>
 

@@ -95,7 +95,7 @@ img {
 .banner {
   background-size: cover;
   background-position: center center;
-  height: 20rem;
+  height: 7rem;
   margin: 0 -2rem;
   position: relative;
   z-index: 1;
@@ -140,7 +140,7 @@ img {
 }
 
 .bg-home {
-  background-image: url("../images/banner/home.jpg");
+  /*background-image: url("../images/banner/home.jpg");*/
 }
 
 .bg-radio {
@@ -1171,10 +1171,10 @@ body.theme-dark #footer:after {
 
 .brand {
   display: block;
-  font-weight: 600;
+  /*font-weight: 600;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  width: 6.25rem;
+  width: 6.25rem;*/
 }
 
 @media (min-width: 768px) {
@@ -1628,9 +1628,9 @@ body.theme-dark #footer:after {
 
 #footer {
   margin: 0 -2rem;
-  padding: 2rem 2rem 8rem;
+  padding: 1rem 1rem 3rem;
   text-align: center;
-  background-image: url("../images/background/footer.jpg");
+  /*background-image: url("../images/background/footer.jpg");*/
   position: relative;
 }
 
@@ -1654,7 +1654,7 @@ body.theme-dark #footer:after {
   top: 0;
   right: 0;
   left: 0;
-  height: 15rem;
+  height: 2rem;
   background: -webkit-gradient(linear, left top, left bottom, from(white), to(rgba(255, 255, 255, 0)));
   background: -webkit-linear-gradient(top, white 0%, rgba(255, 255, 255, 0) 100%);
   background: -o-linear-gradient(top, white 0%, rgba(255, 255, 255, 0) 100%);
@@ -1666,12 +1666,6 @@ body.theme-dark #footer:after {
   z-index: 2;
 }
 
-#footer .email {
-  font-weight: 300;
-  font-size: 3rem;
-  display: inline-block;
-  margin-bottom: 2rem;
-}
 
 .platform-btn-inline {
   margin-right: -.25rem;
