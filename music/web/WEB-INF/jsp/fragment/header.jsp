@@ -27,9 +27,13 @@
                 <div class="mb-3">
                     <!-- Begin | Search Result List Header -->
                     <div class="d-flex">
+                        <%--TODO: ???--%>
+                        <%--
                         <span class="text-uppercase mr-auto font-weight-bold text-dark">Artists</span>
                         <a href="artists.html">View All</a>
+                        --%>
                     </div>
+
                     <!-- End | Search Result List Header -->
                     <hr>
                     <!-- Begin | Result List -->
@@ -219,15 +223,17 @@
             <li class="dropdown fade-in">
                 <a href="javascript:void(0);" class="d-flex align-items-center py-2" role="button"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="pl-2">Language</span>
+                    <span class="pl-2"><fmt:message key="title.language" bundle="${loc}"/></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
 
-                    <a class="dropdown-item" href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=en_EN&page=${param.page}">
+                    <a class="dropdown-item"
+                       href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=en_EN&page=${param.page}">
                         <span><fmt:message bundle="${loc}" key="label.languageEn"/></span>
                     </a>
 
-                    <a class="dropdown-item" href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=ru_RU&page=${param.page}">
+                    <a class="dropdown-item"
+                       href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=ru_RU&page=${param.page}">
                         <span><fmt:message bundle="${loc}" key="label.languageRu"/></span>
                     </a>
 
@@ -243,10 +249,16 @@
                     <span class="pl-2">Halo Admin</span> <%--TODO: имя пользователя--%>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
-                    <a class="dropdown-item" href="profile.html"><i class="ion-md-contact"></i> <span>Profile</span></a>
+                    <a class="dropdown-item"
+                       href="${pageContext.servletContext.contextPath}/controller?command=profile">
+                        <i class="ion-md-contact"></i>
+                        <span><fmt:message key="label.profile" bundle="${loc}"/></span>
+                    </a>
                     <div class="dropdown-divider"></div>
                     <div class="px-4 py-2">
-                        <a href="#" class="btn btn-sm btn-air btn-pill btn-danger">Logout</a>
+                        <a href="${pageContext.servletContext.contextPath}/controller?command=logout" class="btn btn-sm btn-air btn-pill btn-danger">
+                            <fmt:message key="label.logout" bundle="${loc}"/>
+                        </a>
                     </div>
                 </div>
             </li>

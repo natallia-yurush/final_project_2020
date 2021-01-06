@@ -67,7 +67,7 @@
         <div class="errorInfo"><c:out value="${requestScope.invalidPassword}"/></div>
     </c:if>
     <div class="input-form">
-        <input type="password" name="confirmPassword" placeholder="<fmt:message key="label.confirmPassword" bundle="${loc}"/>" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+        <input type="password" name="confirmPassword" placeholder="<fmt:message key="label.confirmPassword" bundle="${loc}"/>" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}">
     </div>
     <c:if test="${not empty requestScope.invalidConfirmPassword}">
         <div class="errorInfo"><c:out value="${requestScope.invalidConfirmPassword}"/></div>

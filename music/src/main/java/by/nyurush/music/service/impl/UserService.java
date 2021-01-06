@@ -37,8 +37,9 @@ public class UserService extends Service {
 
     public User save(User user) throws ServiceException {
         try {
-            //TODO hash
-            user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+            //TODO hash (проверить зашифрован ли) можно по размеру строки (== поставить ограничение на размер пароля)
+            if(user.getPassword().length() <= 30)
+                user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
             return userDao.save(user);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage());

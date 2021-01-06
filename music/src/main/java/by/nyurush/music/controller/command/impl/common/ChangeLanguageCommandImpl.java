@@ -12,7 +12,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ChangeLanguageCommandImpl implements Command {
@@ -38,15 +37,13 @@ public class ChangeLanguageCommandImpl implements Command {
             langCookie = new Cookie(ConstantAttributes.LANGUAGE, ConstantAttributes.DEFAULT_LANG);
         }
 
-        ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
+       // ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
+        /*
         if (!StringUtil.areNotNull(page)) {
             session.setAttribute("parametersInfo", rb.getString(ConstantMessages.WRONG_OPERATION_KEY));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_LOGIN);
         }
-
-
-        //Cookie uiColorCookie = new Cookie("color", "red");
-        //response.addCookie(uiColorCookie);
+*/
 
 
         if (lang.contains(ConstantAttributes.EN_LANG) || lang.contains(ConstantAttributes.RU_LANG)) {
@@ -57,6 +54,22 @@ public class ChangeLanguageCommandImpl implements Command {
         }
 
         //TODO: All pages
+        System.out.println(req.getContextPath());
+        System.out.println(req.getRequestURI());
+        System.out.println(req.getRequestURL());
+        System.out.println(req.getHeader("Refer"));
+
+
+        String uri = req.getRequestURI();
+
+        String pageName = uri.substring(uri.lastIndexOf("/")+1);
+
+
+        String path = req.getRequestURI().substring(req.getContextPath().length());
+
+
+        /*return CommandResult.forward(req.getContextPath());*/
+
         switch (page) {
             case "login":
                 return CommandResult.forward(ConstantPathPages.PATH_PAGE_LOGIN);

@@ -7,6 +7,8 @@ public class ConstantAttributes {
     public static final String PARAM_INFO = "parametersInfo";
     public static final String PARAMETER_COMMAND = "command";
 
+    public static final String SUCCESSFUL_CHANGES = "successfulChanges";
+
 
     public static final String INVALID_FIRST_NAME = "invalidFirstName";
     public static final String INVALID_LAST_NAME = "invalidLastName";

@@ -54,12 +54,12 @@ public class LoginCommandImpl implements Command {
 
                 if(account.get().getRole() == AccountRole.ADMIN) {
                     session.setAttribute("user", account.get());
-                    return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME);
+                    return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADMIN_HOME);
                     //TODO ADMIN
                     //return CommandResult.forward(ConstantPathPages.PATH_PAGE_MAIN); //ADMIN
                 } else {
                     session.setAttribute("user", userService.findByLogin(login).get());
-                    return CommandResult.forward(ConstantPathPages.PATH_PAGE_PROFILE);
+                    return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME);
                     //TODO CLIENT + можно найти именно юзера и установить его в сессию, а может и не нужно:)
                     //return CommandResult.forward(ConstantPathPages.PATH_PAGE_MAIN); //CLIENT
                 }

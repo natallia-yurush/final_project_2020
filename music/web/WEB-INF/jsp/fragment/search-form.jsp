@@ -6,22 +6,29 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${cookie.language.value}"/>
+<fmt:setBundle basename="pagecontent" var="loc"/>
 
 
 <form action="#" id="searchForm">
 
     <button type="button" class="btn ion-ios-search"></button>
-    <input type="text" placeholder="Search..." id="searchInput" class="form-control">
+    <input type="text" placeholder="<fmt:message key="label.search" bundle="${loc}"/>" id="searchInput" class="form-control">
 
     <!-- Begin | Search Card [[ Find at scss/framework/base/search/search.scss ]] -->
     <div class="search-card" data-scrollable="true">
         <!-- Begin | Search Result List -->
         <div class="mb-3">
             <!-- Begin | Search Result List Header -->
+            <%--TODO--%>
+            <%--
             <div class="d-flex">
                 <span class="text-uppercase mr-auto font-weight-bold text-dark">Artists</span>
                 <a href="artists.html">View All</a>
             </div>
+            --%>
             <!-- End | Search Result List Header -->
             <hr>
             <!-- Begin | Result List -->

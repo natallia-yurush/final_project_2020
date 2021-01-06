@@ -1,6 +1,7 @@
 package by.nyurush.music.controller.command;
 
 import by.nyurush.music.controller.command.impl.common.ChangeLanguageCommandImpl;
+import by.nyurush.music.controller.command.impl.common.LogoutCommandImpl;
 import by.nyurush.music.controller.command.impl.user.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,6 +22,7 @@ public class CommandFactory {
         commands.put("changeLanguage", new ChangeLanguageCommandImpl());
         commands.put("home", new HomeCommandImpl());
         commands.put("profile", new ProfileCommandImpl());
+        commands.put("logout", new LogoutCommandImpl());
     }
 
     public static Command getCommand(String commandName) {

@@ -12,13 +12,8 @@
 
 
 <%--<fmt:setLocale value="${sessionScope.local}" scope="session"/>--%>
-<fmt:setLocale value="${cookie.language.value}"/> <%--scope="session"/>--%>
+<fmt:setLocale value="${cookie.language.value}"/>
 <fmt:setBundle basename="pagecontent" var="loc"/>
-
-
-<%--<fmt:setLocale value="${changeLanguage}"/>
-<fmt:setBundle basename="pagecontent_ru_RU" var="loc"/>--%>
-<%--TODO: нормальная локализация locale--%>
 
 
 <html>
@@ -42,17 +37,9 @@
 
 
 <div class="server-answer">
-    <%--
-    <p class="infos">${sessionScope.parametersInfo}</p>
-    <c:remove var="parametersInfo" scope="session"/>
---%>
-<%--    <c:when test="${not empty requestScope.wrongData}">
-        <p class="text-danger">${wrongLogin}</p>
-    </c:when>--%>
     <c:if test="${not empty requestScope.parametersInfo}">
         <p class="infos">${sessionScope.parametersInfo}</p>
     </c:if>
-
 </div>
 
 <form class="form" method="post" action="${pageContext.servletContext.contextPath}/controller?command=login">
@@ -71,20 +58,12 @@
         </div>
     </c:if>
 
-<%--
-    <div class="errorInfo">
-        <c:out value="${requestScope.errorAuthorisation}"/>
-    </div>
---%>
-
 
     <div class="input-form">
         <input type="submit" value=<fmt:message key="label.signIn" bundle="${loc}"/>>
     </div>
 
-
     <p><fmt:message key="label.noAccount" bundle="${loc}"/></p>
-    <%--<a href="/controller?command=signup"><fmt:message key="label.signIn" bundle="${loc}"/></a>--%>
     <a href="${pageContext.servletContext.contextPath}/controller?command=signup"><fmt:message key="label.signUp" bundle="${loc}"/></a>
 
 </form>

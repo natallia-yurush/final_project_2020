@@ -1,17 +1,16 @@
 <%--
   Created by IntelliJ IDEA.
   User: Natallia Yurush
-  Date: 05-Jan-21
-  Time: 13:53
+  Date: 06-Jan-21
+  Time: 23:51
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="${cookie.language.value}"/>
-<fmt:setBundle basename="pagecontent" var="loc"/>
 
 <!-- Begin | Sidebar [[ Find at scss/framework/base/sidebar/left/sidebar.scss ]] -->
 <%--TODO: add localization--%>
+
 <aside id="sidebar" class="sidebar-primary">
 
     <!-- Begin | Sidebar Header -->
@@ -35,35 +34,23 @@
     <!-- Begin | Navbar [[ Find at scss/framework/components/navbar/navbar.scss ]] -->
     <nav class="navbar">
         <ul class="navbar-nav" data-scrollable="true">
-            <li class="nav-item nav-header"><fmt:message key="label.browseMusic" bundle="${loc}"/></li>
+            <li class="nav-item nav-header">Browse Music</li>
             <li class="nav-item">
-                <a href="home.html" class="nav-link active"><i class="la la-home"></i><span>
-                    <fmt:message key="label.home" bundle="${loc}"/>
-                </span></a>
+                <a href="home.html" class="nav-link active"><i class="la la-home"></i><span>Home</span></a>
             </li>
             <li class="nav-item">
-                <a href="genres.html" class="nav-link"><i class="la la-diamond"></i><span>
-                    <fmt:message key="label.genres" bundle="${loc}"/>
-                </span></a>
+                <a href="genres.html" class="nav-link"><i class="la la-diamond"></i><span>Genres</span></a>
             </li>
             <li class="nav-item">
-                <a href="artists.html" class="nav-link"><i class="la la-microphone"></i><span>
-                    <fmt:message key="label.artists" bundle="${loc}"/>
-                </span></a>
+                <a href="artists.html" class="nav-link"><i class="la la-microphone"></i><span>Artists</span></a>
             </li>
 
-            <li class="nav-item nav-header">
-                <fmt:message key="lable.yourMusic" bundle="${loc}"/>
+            <li class="nav-item nav-header">Your Music</li>
+            <li class="nav-item">
+                <a href="favorites.html" class="nav-link"><i class="la la-heart-o"></i><span>Favorites</span></a>
             </li>
             <li class="nav-item">
-                <a href="favorites.html" class="nav-link"><i class="la la-heart-o"></i><span>
-                    <fmt:message key="lable.favorites" bundle="${loc}"/>
-                </span></a>
-            </li>
-            <li class="nav-item">
-                <a href="history.html" class="nav-link"><i class="la la-history"></i><span>
-                    <fmt:message key="label.myPlaylists" bundle="${loc}"/>
-                </span></a>
+                <a href="history.html" class="nav-link"><i class="la la-history"></i><span>My playlists</span></a>
             </li>
         </ul>
     </nav>
@@ -71,13 +58,14 @@
 
     <!--TODO: only ADMIN-->
     <!-- Begin | Sidebar Footer -->
-    <%--<div class="sidebar-footer">
+    <div class="sidebar-footer">
         <a href="add-music.html" class="btn btn-block btn-danger btn-air btn-bold">
             <i class="ion-md-musical-note"></i>
             <span>Add Music</span>
         </a>
-    </div>--%>
+    </div>
     <!-- End | Sidebar Footer -->
 
 </aside>
 <!-- End | Sidebar -->
+

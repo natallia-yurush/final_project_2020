@@ -26,6 +26,7 @@
         </li>
         <li>
             <a href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=ru_RU&page=${param.page}">
+            <%--<a href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=ru_RU">--%>
                 <fmt:message bundle="${loc}" key="label.languageRu"/>
             </a>
         </li>

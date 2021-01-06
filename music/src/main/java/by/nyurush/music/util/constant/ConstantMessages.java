@@ -10,4 +10,6 @@ public class ConstantMessages {
     public static final String INVALID_PASSWORDS_MATCH = "answer.invalidPasswordsMatch";
     public static final String TAKEN_LOGIN = "answer.takenLogin";
 
+    public static final String SUCCESSFUL_CHANGES = "answer.successfulChanges";
+
 }
