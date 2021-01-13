@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -54,16 +53,17 @@ public class AddMusicCommandImpl implements Command {
                             object = ois.readObject();
 */
 
-                            songName = item.getString();
+                            songName = item.getString(UTF_8);
                             break;
                         case GENRE:
-                            genre = item.getString();
+                            genre = item.getString(UTF_8);
                             break;
                         case ARTISTS_NAME:
-                            artistsName = Arrays.asList(req.getParameterValues(ARTISTS_NAME));
+                            artistsName.add(item.getString(UTF_8));
+                           // artistsName = Arrays.asList(item.getString());
                             break;
                         case ALBUM:
-                            albumName = item.getString();
+                            albumName = item.getString(UTF_8);
                             break;
                         default:
                             //TODO logger
@@ -107,11 +107,11 @@ public class AddMusicCommandImpl implements Command {
             TrackService trackService = new TrackService(new DaoHelperFactory());
             trackService.save(track);
 
-            req.setAttribute(ConstantAttributes.SAVE_RESULT, rb.getString(ConstantMessages.SUCCESSFUL_SAVE_RESULT));
+            req.setAttribute(ConstantAttributes.SAVE_RESULT, rb.getString(ConstantMessages.SUCCESSFUL_SONG_SAVE_RESULT));
 
 
         } catch (ServiceException e) {
-            req.setAttribute(ConstantAttributes.SAVE_RESULT, rb.getString(ConstantMessages.INVALID_SAVE_RESULT));
+            req.setAttribute(ConstantAttributes.SAVE_RESULT, rb.getString(ConstantMessages.INVALID_SONG_SAVE_RESULT));
             e.printStackTrace();//TODO
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_ARTIST);
         }

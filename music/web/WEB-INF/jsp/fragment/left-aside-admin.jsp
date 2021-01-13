@@ -60,13 +60,15 @@
     <!-- Begin | Sidebar Footer -->
     <div class="sidebar-footer">
         <a href="${pageContext.servletContext.contextPath}/controller?command=addArtistPage" class="btn btn-block btn-danger btn-air btn-bold">
-            <%--<i class="ion-md-musical-note"></i>--%>
             <span>Add Artist</span>
         </a>
 
         <a href="${pageContext.servletContext.contextPath}/controller?command=addMusicPage" class="btn btn-block btn-danger btn-air btn-bold">
-            <%--<i class="ion-md-musical-note"></i>--%>
             <span>Add Music</span>
+        </a>
+
+        <a href="${pageContext.servletContext.contextPath}/controller?command=createAlbumPage" class="btn btn-block btn-danger btn-air btn-bold">
+            <span>Create Album</span>
         </a>
 
     </div>

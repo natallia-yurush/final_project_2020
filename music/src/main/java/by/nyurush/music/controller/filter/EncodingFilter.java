@@ -2,11 +2,11 @@ package by.nyurush.music.controller.filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.annotation.WebInitParam;
 import java.io.IOException;
 
-@WebFilter(filterName = "encodingFilter", urlPatterns = {"/*"}, initParams = {@WebInitParam(name = "encoding",
-        value = "UTF-8", description = "Encoding param")})
+
+//urlPatterns = {"/*"}
+@WebFilter(filterName = "encodingFilter", urlPatterns = {"/controller/*"})
 public class EncodingFilter implements Filter {
     private String code;
 
@@ -18,11 +18,9 @@ public class EncodingFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
-        String codeRequest = servletRequest.getCharacterEncoding();
-        if (code != null && !code.equalsIgnoreCase(codeRequest)){
-            servletRequest.setCharacterEncoding(code);
-            servletResponse.setCharacterEncoding(code);
-        }
+
+        servletRequest.setCharacterEncoding("UTF-8");
+        servletResponse.setCharacterEncoding("UTF-8");
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

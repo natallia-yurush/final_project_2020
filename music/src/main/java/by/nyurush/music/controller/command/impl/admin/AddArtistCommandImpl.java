@@ -14,13 +14,13 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.InputStream;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static by.nyurush.music.util.constant.ConstantAttributes.UTF_8;
 
 public class AddArtistCommandImpl implements Command {
     @Override
@@ -204,7 +204,7 @@ public class AddArtistCommandImpl implements Command {
             for (FileItem item : items) {
                 if (item.isFormField()) {
                     // Process regular form field (input type="text|radio|checkbox|etc", select, etc).
-                    artistName = item.getString();
+                    artistName = item.getString(UTF_8);
                    /* String fieldValue = item.getString();
                     artistName = fieldValue;*/
                     // ... (do your job here)
@@ -254,11 +254,11 @@ public class AddArtistCommandImpl implements Command {
             ArtistService artistService = new ArtistService(new DaoHelperFactory());
             artistService.save(artist);
 
-            req.setAttribute(ConstantAttributes.SAVE_RESULT, rb.getString(ConstantMessages.SUCCESSFUL_SAVE_RESULT));
+            req.setAttribute(ConstantAttributes.SAVE_RESULT, rb.getString(ConstantMessages.SUCCESSFUL_ARTIST_SAVE_RESULT));
 
 
         } catch (ServiceException e) {
-            req.setAttribute(ConstantAttributes.SAVE_RESULT, rb.getString(ConstantMessages.INVALID_SAVE_RESULT));
+            req.setAttribute(ConstantAttributes.SAVE_RESULT, rb.getString(ConstantMessages.INVALID_ARTIST_SAVE_RESULT));
             e.printStackTrace();//TODO
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_ARTIST);
         }

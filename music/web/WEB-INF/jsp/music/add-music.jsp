@@ -59,7 +59,7 @@
                             <h6 class="card-title mb-0">Add Song</h6>
                         </div>
                         <div class="card-body">
-                            <form method="post" enctype="multipart/form-data"
+                            <form method="post" enctype="multipart/form-data" acceptcharset="UTF-8"
                                   action="${pageContext.servletContext.contextPath}/controller?command=addMusic">
                                 <div class="form-row form-group">
                                     <label for="songName" class="col-md-4 text-md-right col-form-label">Song
@@ -75,15 +75,6 @@
                                         <%--<select class="form-control chosen-select">--%>
                                         <select data-placeholder="Choose a Genre..." class="form-control chosen-select"
                                                 name="genre">
-                                            <%--TODO: add genres--%>
-                                            <%--
-                                                                                        <option></option>
-                                                                                        <option>hgfd</option>
-                                                                                        <option>hgtfred</option>
-                                                                                        <option>jhygtfred</option>
-                                                                                        <option>juhygtfred</option>
-                                                                                        <option>kijuhygtfrd</option>
-                                                                                          --%>
                                             <c:forEach var="item" items="${sessionScope.genres}">
                                                 <option>${item}</option>
                                             </c:forEach>
@@ -113,20 +104,8 @@
                                                 <option>${item.artistName}</option>
                                             </c:forEach>
 
-
-                                            <%--<option></option>
-                                            <option>Hgfdsa</option>
-                                            <option>Asdfg</option>
-                                            <option>dghyh</option>
-                                            <option>hngfds</option>
-                                            --%>
                                         </select>
                                     </div>
-                                    <%--
-                                    <div class="col-md-7">
-                                        <input type="text" id="artistName" class="form-control">
-                                    </div>
-                                    --%>
                                 </div>
 
                                 <div class="form-row form-group">
@@ -139,11 +118,6 @@
                                             <c:forEach var="item" items="${requestScope.albums}">
                                                 <option>${item.albumName}</option>
                                             </c:forEach>
-                                            <%--
-                                            <c:forEach var="item" items="${obj.items}">
-                                                <option>${item}</option>
-                                            </c:forEach>
-                                            --%>
 
                                         </select>
                                     </div>

@@ -11,6 +11,8 @@ public class ConstantMessages {
     public static final String TAKEN_LOGIN = "answer.takenLogin";
 
     public static final String SUCCESSFUL_CHANGES = "answer.successfulChanges";
-    public static final String SUCCESSFUL_SAVE_RESULT = "answer.successfulSaveResult";
-    public static final String INVALID_SAVE_RESULT = "answer.invalidSaveResult";
+    public static final String SUCCESSFUL_ARTIST_SAVE_RESULT = "answer.successfulArtistSaveResult";
+    public static final String INVALID_ARTIST_SAVE_RESULT = "answer.invalidArtistSaveResult";
+    public static final String INVALID_SONG_SAVE_RESULT = "answer.invalidSongSaveResult";
+    public static final String SUCCESSFUL_SONG_SAVE_RESULT = "answer.successfulSongSaveResult";
 }

@@ -35,6 +35,7 @@ public class ConstantAttributes {
     public static final String DEFAULT_LANG = "";
     public static final String EN_LANG = "en_EN";
     public static final String RU_LANG = "ru_RU";
+    public static final String UTF_8 = "UTF-8";
 
 
     //artist
@@ -49,5 +50,8 @@ public class ConstantAttributes {
     public static final String ARTISTS_NAME = "artistsName";
     public static final String ALBUM = "album";
     public static final String ALBUMS = "albums";
+    public static final String SONG_SAVE_RESULT = "saveResult";
+    public static final String ALBUM_NAME = "albumName";
+    public static final String YEAR = "year";
 
 }

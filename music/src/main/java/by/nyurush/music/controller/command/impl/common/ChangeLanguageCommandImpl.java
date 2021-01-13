@@ -70,6 +70,11 @@ public class ChangeLanguageCommandImpl implements Command {
 
         /*return CommandResult.forward(req.getContextPath());*/
 
+/*        String url = req.getHeader("referer");
+        return CommandResult.forward(url);*/
+
+
+
         switch (page) {
             case "login":
                 return CommandResult.forward(ConstantPathPages.PATH_PAGE_LOGIN);
@@ -79,14 +84,14 @@ public class ChangeLanguageCommandImpl implements Command {
             case "profile":
                 return CommandResult.forward(ConstantPathPages.PATH_PAGE_PROFILE);
             case "home":
-                return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME); //redirect??
-
+                return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME);
 
 
 
             default:
                 throw new UnsupportedOperationException("Unknown page: " + page);
         }
+
 
 
     }
