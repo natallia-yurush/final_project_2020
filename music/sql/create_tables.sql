@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS `music`.`genre` (
 CREATE TABLE IF NOT EXISTS `music`.`artist` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
+  `image_path` VARCHAR(255),
   PRIMARY KEY (`id`));
 
 -- -----------------------------------------------------

@@ -14,41 +14,41 @@ import java.util.Optional;
 public class TrackDaoImpl extends AbstractDao<Track> {
     //TODO: add insert into artist_track AND + playlist_track
     private static final String FIND_ALL =
-            "SELECT track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name " +
+            "SELECT track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path " +
             "FROM track " +
             "JOIN genre ON track.genre_name = genre.name " +
             "JOIN album ON track.album_id = album.id " +
             "JOIN artist ON album.artist_id = artist.id";
     private static final String FIND_BY_ID =
-            "SELECT  track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name " +
+            "SELECT  track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path " +
             "FROM track " +
             "JOIN genre ON track.genre_name = genre.name " +
             "JOIN album ON track.album_id = album.id " +
             "JOIN artist on album.artist_id = artist.id " +
             "WHERE track.id=?";
     private static final String FIND_BY_NAME =
-            "SELECT  track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name " +
+            "SELECT  track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path " +
             "FROM track " +
             "JOIN genre ON track.genre_name = genre.name " +
             "JOIN album ON track.album_id = album.id " +
             "JOIN artist on album.artist_id = artist.id " +
             "WHERE track.name LIKE ?";
     private static final String FIND_BY_ALBUM_NAME =
-            "SELECT  track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name " +
+            "SELECT  track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path " +
             "FROM track " +
             "JOIN genre ON track.genre_name = genre.name " +
             "JOIN album ON track.album_id = album.id " +
             "JOIN artist on album.artist_id = artist.id " +
             "WHERE album.name LIKE ?";
     private static final String FIND_BY_GENRE =
-            "SELECT  track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name " +
+            "SELECT  track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path " +
             "FROM track " +
             "JOIN genre ON track.genre_name = genre.name " +
             "JOIN album ON track.album_id = album.id " +
             "JOIN artist on album.artist_id = artist.id " +
             "WHERE track.genre_name=?";
     private static final String FIND_BY_ARTIST =
-            "SELECT track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name " +
+            "SELECT track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path " +
             "FROM artist_track " +
             "JOIN track ON track.id = artist_track.track_id " +
             "JOIN genre ON track.genre_name = genre.name " +
@@ -56,7 +56,7 @@ public class TrackDaoImpl extends AbstractDao<Track> {
             "JOIN artist ON album.artist_id = artist.id " +
             "WHERE artist.name LIKE ?";
     private static final String FIND_BY_PLAYLIST_ID =
-            "SELECT track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, playlist.id, playlist.name, playlist.visible " +
+            "SELECT track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path, playlist.id, playlist.name, playlist.visible " +
             "FROM playlist_track " +
             "JOIN playlist on playlist_track.playlist_id = playlist.id " +
             "JOIN track ON playlist_track.track_id = track.id " +
@@ -64,7 +64,7 @@ public class TrackDaoImpl extends AbstractDao<Track> {
             "JOIN album ON track.album_id = album.id " +
             "JOIN artist ON album.artist_id = artist.id " +
             "WHERE playlist.id = ?";
-    private static final String FIND_BY_PLAYLIST_NAME = "SELECT track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, playlist.id, playlist.name, playlist.visible " +
+    private static final String FIND_BY_PLAYLIST_NAME = "SELECT track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path, playlist.id, playlist.name, playlist.visible " +
             "FROM playlist_track " +
             "JOIN playlist ON playlist_track.playlist_id = playlist.id " +
             "JOIN track ON playlist_track.track_id = track.id " +
@@ -77,6 +77,7 @@ public class TrackDaoImpl extends AbstractDao<Track> {
 
     private static final String UPDATE = "UPDATE track SET name = ?, audio_path = ?, number_of_likes = ?, genre_name = ?, album_id = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM track WHERE id=?";
+    private static final String FIND_ALL_GENRES = "SELECT name FROM genre";
 
     public TrackDaoImpl(Connection connection) {
         super(connection);
@@ -266,5 +267,18 @@ public class TrackDaoImpl extends AbstractDao<Track> {
             throw new DaoException(e);
         }
         return tracksList;
+    }
+
+    public List<String> findAllGenres() throws DaoException {
+        List<String> genres = new ArrayList<>();
+        try (Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(FIND_ALL_GENRES);
+            while (resultSet.next()) {
+                genres.add(resultSet.getString("name"));
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return genres;
     }
 }

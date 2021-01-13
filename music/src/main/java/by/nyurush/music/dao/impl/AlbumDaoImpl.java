@@ -12,14 +12,16 @@ import java.util.List;
 import java.util.Optional;
 
 public class AlbumDaoImpl extends AbstractDao<Album> {
-    private static final String FIND_ALL = "SELECT Al.id, Al.name, Al.year, Al.number_of_likes, artist.id, artist.name " +
-            "FROM album Al JOIN artist ON Al.artist_id = artist.id";
-    private static final String FIND_BY_ID = "SELECT Al.id, Al.name, Al.year, Al.number_of_likes, artist.id, artist.name  " +
-            "FROM album Al JOIN artist ON Al.artist_id = artist.id WHERE Al.id = ?";
-    private static final String FIND_BY_NAME = "SELECT Al.id, Al.name, Al.year, Al.number_of_likes, artist.id, artist.name  " +
-            "FROM album Al JOIN artist ON Al.artist_id = artist.id WHERE Al.name LIKE ?";
-    private static final String FIND_BY_YEAR = "SELECT Al.id, Al.name, Al.year, Al.number_of_likes, artist.id, artist.name  " +
-            "FROM album Al JOIN artist ON Al.artist_id = artist.id WHERE Al.year = ?";
+    private static final String FIND_ALL = "SELECT album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path " +
+            "FROM album JOIN artist ON album.artist_id = artist.id";
+    private static final String FIND_BY_ID = "SELECT album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path  " +
+            "FROM album JOIN artist ON album.artist_id = artist.id WHERE album.id = ?";
+    private static final String FIND_BY_NAME = "SELECT album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path  " +
+            "FROM album JOIN artist ON album.artist_id = artist.id WHERE album.name LIKE ?";
+    private static final String FIND_BY_YEAR = "SELECT album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path  " +
+            "FROM album JOIN artist ON album.artist_id = artist.id WHERE album.year = ?";
+    private static final String FIND_BY_ARTIST_AND_ALBUM_NAME = "SELECT album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path  " +
+            "FROM album JOIN artist ON album.artist_id = artist.id WHERE artist.name = ? AND album.name = ?";
     private static final String UPDATE = "UPDATE album SET name=?, year=?, number_of_likes=?, artist_id=? WHERE id=?";
     private static final String CREATE = "INSERT INTO album (name, year, number_of_likes, artist_id) VALUES (?, ?, ?, ?)";
     private static final String DELETE = "DELETE FROM album WHERE id=?";
@@ -144,5 +146,20 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
             throw new DaoException(e);
         }
         return albumsList;
+    }
+
+    public Optional<Album> findByArtistAndAlbumName(String artist, String albumName) throws DaoException {
+        Album album = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ARTIST_AND_ALBUM_NAME)) {
+            preparedStatement.setString(1, artist);
+            preparedStatement.setString(2, albumName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                album = new AlbumBuilder().build(resultSet);
+            }
+        } catch (SQLException | ServiceException e) {
+            throw new DaoException(e);
+        }
+        return Optional.ofNullable(album);
     }
 }

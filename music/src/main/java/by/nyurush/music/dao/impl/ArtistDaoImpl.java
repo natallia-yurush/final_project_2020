@@ -12,10 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class ArtistDaoImpl extends AbstractDao<Artist> {
-    private static final String FIND_ALL = "SELECT id, name FROM artist";
-    private static final String FIND_BY_ID = "SELECT id, name FROM artist WHERE id = ?";
-    private static final String FIND_BY_NAME = "SELECT id, name FROM artist WHERE name LIKE ?";
-    private static final String CREATE = "INSERT INTO artist (name) VALUES (?)";
+    private static final String FIND_ALL = "SELECT id, name, image_path FROM artist";
+    //TODO: add image_path !!!!!!!!!!
+    private static final String FIND_BY_ID = "SELECT id, name, image_path FROM artist WHERE id = ?";
+    private static final String FIND_BY_NAME = "SELECT id, name, image_path FROM artist WHERE name LIKE ?";
+    private static final String CREATE = "INSERT INTO artist (name, image_path) VALUES (?, ?)";
     private static final String UPDATE = "UPDATE artist SET name = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM artist WHERE id = ?";
 
@@ -67,6 +68,7 @@ public class ArtistDaoImpl extends AbstractDao<Artist> {
                     preparedStatement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
                 }
                 preparedStatement.setString(1, artist.getArtistName());
+                preparedStatement.setString(2, artist.getImagePath());
                 preparedStatement.execute();
                 ResultSet resultSet = preparedStatement.getGeneratedKeys();
                 if (resultSet.next()) {

@@ -4,10 +4,12 @@ import java.util.Objects;
 
 public class Artist extends Entity {
     private String artistName;
+    private String imagePath;
 
-    public Artist(Integer id, String artistName) {
+    public Artist(Integer id, String artistName, String imagePath) {
         super(id);
         this.artistName = artistName;
+        this.imagePath = imagePath;
     }
 
     public String getArtistName() {
@@ -16,6 +18,14 @@ public class Artist extends Entity {
 
     public void setArtistName(String artistName) {
         this.artistName = artistName;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     @Override

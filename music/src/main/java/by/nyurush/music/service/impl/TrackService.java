@@ -97,4 +97,12 @@ public class TrackService extends Service {
             throw new ServiceException(e.getMessage());
         }
     }
+
+    public List<String> findAllGenres() throws ServiceException {
+        try {
+            return trackDao.findAllGenres();
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
 }

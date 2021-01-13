@@ -1,5 +1,9 @@
 package by.nyurush.music.controller.command;
 
+import by.nyurush.music.controller.command.impl.admin.AddArtistCommandImpl;
+import by.nyurush.music.controller.command.impl.admin.AddArtistPageCommandImpl;
+import by.nyurush.music.controller.command.impl.admin.AddMusicCommandImpl;
+import by.nyurush.music.controller.command.impl.admin.AddMusicPageCommandImpl;
 import by.nyurush.music.controller.command.impl.common.ChangeLanguageCommandImpl;
 import by.nyurush.music.controller.command.impl.common.LogoutCommandImpl;
 import by.nyurush.music.controller.command.impl.user.*;
@@ -21,8 +25,13 @@ public class CommandFactory {
         commands.put("register", new RegisterCommandImpl());
         commands.put("changeLanguage", new ChangeLanguageCommandImpl());
         commands.put("home", new HomeCommandImpl());
+        commands.put("profilePage", new ProfilePageCommandImpl());
         commands.put("profile", new ProfileCommandImpl());
         commands.put("logout", new LogoutCommandImpl());
+        commands.put("addArtistPage", new AddArtistPageCommandImpl());
+        commands.put("addArtist", new AddArtistCommandImpl());
+        commands.put("addMusicPage", new AddMusicPageCommandImpl());
+        commands.put("addMusic", new AddMusicCommandImpl());
     }
 
     public static Command getCommand(String commandName) {

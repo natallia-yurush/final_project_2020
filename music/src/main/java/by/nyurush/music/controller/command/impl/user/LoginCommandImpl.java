@@ -7,10 +7,12 @@ import by.nyurush.music.entity.Account;
 import by.nyurush.music.entity.AccountRole;
 import by.nyurush.music.service.exception.ServiceException;
 import by.nyurush.music.service.impl.AccountService;
+import by.nyurush.music.service.impl.TrackService;
 import by.nyurush.music.service.impl.UserService;
 import by.nyurush.music.util.constant.ConstantAttributes;
 import by.nyurush.music.util.constant.ConstantMessages;
 import by.nyurush.music.util.constant.ConstantPathPages;
+import by.nyurush.music.util.language.GenreUtil;
 import by.nyurush.music.util.language.ResourceBundleUtil;
 import by.nyurush.music.util.validation.StringUtil;
 
@@ -45,6 +47,9 @@ public class LoginCommandImpl implements Command {
         }
 
         try {
+            TrackService trackService = new TrackService(new DaoHelperFactory());
+            session.setAttribute("genres", GenreUtil.getGenres(trackService.findAllGenres(), rb));
+
             AccountService accountService = new AccountService(new DaoHelperFactory());
             UserService userService = new UserService(new DaoHelperFactory());
 

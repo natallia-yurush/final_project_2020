@@ -47,7 +47,10 @@
     <!-- Begin | Page Wrapper [[ Find at scss/framework/base/wrapper/wrapper.scss ]] -->
     <main id="pageWrapper">
 
-        <jsp:include page="../fragment/header.jsp"/>
+        <%--TODO: delete если изменишь подход к смене языка (switch)--%>
+        <jsp:include page="../fragment/header.jsp">
+            <jsp:param name="page" value="profile"/>
+        </jsp:include>
 
 
         <!-- Begin | Main Container [[ Find at scss/base/core.scss ]] -->

@@ -11,5 +11,6 @@ public class ConstantMessages {
     public static final String TAKEN_LOGIN = "answer.takenLogin";
 
     public static final String SUCCESSFUL_CHANGES = "answer.successfulChanges";
-
+    public static final String SUCCESSFUL_SAVE_RESULT = "answer.successfulSaveResult";
+    public static final String INVALID_SAVE_RESULT = "answer.invalidSaveResult";
 }

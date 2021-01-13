@@ -10,7 +10,7 @@ public class ArtistBuilder implements Builder<Artist> {
     @Override
     public Artist build(ResultSet resultSet) throws ServiceException {
         try {
-            return new Artist(resultSet.getInt("artist.id"), resultSet.getString("artist.name"));
+            return new Artist(resultSet.getInt("artist.id"), resultSet.getString("artist.name"), resultSet.getString("artist.image_path"));
         } catch (SQLException e) {
             throw new ServiceException(e.getMessage(), e);
         }

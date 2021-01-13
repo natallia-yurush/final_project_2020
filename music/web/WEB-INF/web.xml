@@ -25,4 +25,10 @@
         <location>/WEB-INF/jsp/error.jsp</location>
     </error-page>
 
+    <listener>
+        <listener-class>
+            org.apache.commons.fileupload.servlet.FileCleanerCleanup
+        </listener-class>
+    </listener>
+
 </web-app>

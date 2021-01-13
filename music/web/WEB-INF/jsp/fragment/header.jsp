@@ -19,7 +19,8 @@
         <form action="#" id="searchForm">
 
             <button type="button" class="btn ion-ios-search"></button>
-            <input type="text" placeholder="Search..." id="searchInput" class="form-control" autocomplete="off">
+            <input type="text" placeholder="<fmt:message key="label.search" bundle="${loc}"/>" id="searchInput"
+                   class="form-control" autocomplete="off">
 
             <!-- Begin | Search Card [[ Find at scss/framework/base/search/search.scss ]] -->
             <div class="search-card" data-scrollable="true">
@@ -250,13 +251,15 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
                     <a class="dropdown-item"
-                       href="${pageContext.servletContext.contextPath}/controller?command=profile">
+                       href="${pageContext.servletContext.contextPath}/controller?command=profilePage">
                         <i class="ion-md-contact"></i>
                         <span><fmt:message key="label.profile" bundle="${loc}"/></span>
                     </a>
+
                     <div class="dropdown-divider"></div>
                     <div class="px-4 py-2">
-                        <a href="${pageContext.servletContext.contextPath}/controller?command=logout" class="btn btn-sm btn-air btn-pill btn-danger">
+                        <a href="${pageContext.servletContext.contextPath}/controller?command=logout"
+                           class="btn btn-sm btn-air btn-pill btn-danger">
                             <fmt:message key="label.logout" bundle="${loc}"/>
                         </a>
                     </div>

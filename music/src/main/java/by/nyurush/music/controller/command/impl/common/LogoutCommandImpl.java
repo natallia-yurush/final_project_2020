@@ -11,7 +11,7 @@ public class LogoutCommandImpl implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
-        req.getSession().invalidate();
+        req.getSession(false).invalidate();
         return CommandResult.forward(ConstantPathPages.PATH_PAGE_LOGIN);
     }
 }

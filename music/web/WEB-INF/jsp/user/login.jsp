@@ -28,6 +28,7 @@
 <div id="head">
     <nav>
         <ul>
+            <%--TODO: delete если изменишь подход к смене языка (switch)--%>
             <jsp:include page="../fragment/nav-language.jsp">
                 <jsp:param name="page" value="login"/>
             </jsp:include>

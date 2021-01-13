@@ -76,6 +76,12 @@ public class ChangeLanguageCommandImpl implements Command {
             case "register":
             case "signup":
                 return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
+            case "profile":
+                return CommandResult.forward(ConstantPathPages.PATH_PAGE_PROFILE);
+            case "home":
+                return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME); //redirect??
+
+
 
 
             default:

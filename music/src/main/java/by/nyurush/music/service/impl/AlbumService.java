@@ -65,4 +65,12 @@ public class AlbumService extends Service {
             throw new ServiceException(e.getMessage());
         }
     }
+
+    public Optional<Album> findByArtistAndAlbumName(String artist, String albumName) throws ServiceException {
+        try {
+            return albumDao.findByArtistAndAlbumName(artist, albumName);
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
 }

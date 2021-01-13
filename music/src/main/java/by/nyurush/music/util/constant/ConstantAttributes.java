@@ -30,11 +30,24 @@ public class ConstantAttributes {
 
 
     public static final String RESOURCE = "pagecontent";
+    public static final String RES_GENRE = "genre";
     public static final String LANGUAGE = "language";
     public static final String DEFAULT_LANG = "";
     public static final String EN_LANG = "en_EN";
     public static final String RU_LANG = "ru_RU";
 
 
+    //artist
+    public static final String ARTIST_NAME = "artistName";
+    public static final String ARTIST_IMAGE = "artistImage";
+    public static final String SAVE_RESULT = "saveResult";
+
+    //music
+    public static final String SONG_NAME = "songName";
+    public static final String GENRE = "genre";
+    public static final String SONG_FILE = "songFile";
+    public static final String ARTISTS_NAME = "artistsName";
+    public static final String ALBUM = "album";
+    public static final String ALBUMS = "albums";
 
 }
