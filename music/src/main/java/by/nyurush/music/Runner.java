@@ -5,6 +5,9 @@ import by.nyurush.music.dao.DaoHelperFactory;
 import by.nyurush.music.dao.exception.DaoException;
 import by.nyurush.music.dao.impl.AccountDaoImpl;
 
+import javax.management.relation.RoleInfoNotFoundException;
+import java.util.Arrays;
+
 public class Runner {
     public static void main(String[] args) throws DaoException {
 
@@ -14,3 +17,4 @@ public class Runner {
         System.out.println(accountDao.findAll().toString());
     }
 }
+

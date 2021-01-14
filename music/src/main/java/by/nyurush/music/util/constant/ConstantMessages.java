@@ -15,4 +15,6 @@ public class ConstantMessages {
     public static final String INVALID_ARTIST_SAVE_RESULT = "answer.invalidArtistSaveResult";
     public static final String INVALID_SONG_SAVE_RESULT = "answer.invalidSongSaveResult";
     public static final String SUCCESSFUL_SONG_SAVE_RESULT = "answer.successfulSongSaveResult";
+    public static final String SUCCESSFUL_ALBUM_SAVE_RESULT = "answer.successfulAlbumSaveResult";
+    public static final String INVALID_ALBUM_SAVE_RESULT = "answer.invalidAlbumSaveResult";
 }

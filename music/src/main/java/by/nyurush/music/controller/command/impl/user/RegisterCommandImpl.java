@@ -7,9 +7,9 @@ import by.nyurush.music.entity.AccountRole;
 import by.nyurush.music.entity.User;
 import by.nyurush.music.service.exception.ServiceException;
 import by.nyurush.music.service.impl.UserService;
-import by.nyurush.music.util.language.ResourceBundleUtil;
 import by.nyurush.music.util.constant.ConstantMessages;
 import by.nyurush.music.util.constant.ConstantPathPages;
+import by.nyurush.music.util.language.ResourceBundleUtil;
 import by.nyurush.music.util.validation.DataValidator;
 import by.nyurush.music.util.validation.StringUtil;
 import org.apache.logging.log4j.LogManager;
@@ -31,7 +31,6 @@ public class RegisterCommandImpl implements Command {
         HttpSession session = request.getSession();
         ResourceBundle rb = ResourceBundleUtil.getResourceBundle(request);
 
-        String page;
         String name = request.getParameter(FIRST_NAME);
         if (!StringUtil.areNotNullAndNotEmpty(name) || !DataValidator.isCorrectNameSurname(name)) {
             LOGGER.info("invalid first name format was received:" + name);

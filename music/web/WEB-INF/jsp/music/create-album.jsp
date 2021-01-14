@@ -81,17 +81,24 @@
                                 <div class="form-row form-group">
                                     <label class="col-md-4 text-md-right col-form-label">Artist Name</label>
                                     <div class="col-md-7">
-                                        <select data-placeholder="Choose a Artist(s)..."
-                                                class="form-control chosen-select" multiple name="artistsName">
-
+                                        <select data-placeholder="Choose a Artist..." class="form-control chosen-select"
+                                                name="artistsName">
                                             <c:forEach var="item" items="${requestScope.artistsName}">
                                                 <option>${item.artistName}</option>
                                             </c:forEach>
-
                                         </select>
                                     </div>
                                 </div>
 
+                                <div class="card-footer">
+                                    <div class="row">
+                                        <div class="col-md-4"></div>
+                                        <div class="col-md-7">
+                                            <button type="submit" class="btn btn-brand btn-air">Save Album</button>
+                                            <button type="button" class="btn btn-outline-secondary">Clear Form</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
                             <c:if test="${not empty requestScope.saveResult}">
                                 <div class="errorInfo"><c:out value="${requestScope.saveResult}"/></div>
@@ -114,12 +121,16 @@
         <div class="backdrop sidebar-backdrop"></div>--%>
 
     <!-- Scripts -->
-    <code>$(".chosen-select").chosen()</code>
 
     <script src="${pageContext.request.contextPath}/assets/js/vendors.bundle.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/scripts.bundle.js"></script>
     <script src="${pageContext.request.contextPath}/assets/plugin/chosen.jquery.js"></script>
     <script src="${pageContext.request.contextPath}/assets/plugin/chosen.proto.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".chosen-select").chosen();
+        });
+    </script>
 
 </div>
 </body>

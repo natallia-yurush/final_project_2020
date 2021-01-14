@@ -36,7 +36,8 @@
         <ul class="navbar-nav" data-scrollable="true">
             <li class="nav-item nav-header">Browse Music</li>
             <li class="nav-item">
-                <a href="home.html" class="nav-link active"><i class="la la-home"></i><span>Home</span></a>
+                <a href="${pageContext.servletContext.contextPath}/controller?command=home"
+                 class="nav-link active"><i class="la la-home"></i><span>Home</span></a>
             </li>
             <li class="nav-item">
                 <a href="genres.html" class="nav-link"><i class="la la-diamond"></i><span>Genres</span></a>
@@ -44,13 +45,8 @@
             <li class="nav-item">
                 <a href="artists.html" class="nav-link"><i class="la la-microphone"></i><span>Artists</span></a>
             </li>
-
-            <li class="nav-item nav-header">Your Music</li>
             <li class="nav-item">
-                <a href="favorites.html" class="nav-link"><i class="la la-heart-o"></i><span>Favorites</span></a>
-            </li>
-            <li class="nav-item">
-                <a href="history.html" class="nav-link"><i class="la la-history"></i><span>My playlists</span></a>
+                <a href="history.html" class="nav-link"><i class="la la-history"></i><span>Albums</span></a>
             </li>
         </ul>
     </nav>
@@ -63,13 +59,15 @@
             <span>Add Artist</span>
         </a>
 
+        <a href="${pageContext.servletContext.contextPath}/controller?command=createAlbumPage" class="btn btn-block btn-danger btn-air btn-bold">
+            <span>Create Artist's Album</span>
+        </a>
+
         <a href="${pageContext.servletContext.contextPath}/controller?command=addMusicPage" class="btn btn-block btn-danger btn-air btn-bold">
             <span>Add Music</span>
         </a>
 
-        <a href="${pageContext.servletContext.contextPath}/controller?command=createAlbumPage" class="btn btn-block btn-danger btn-air btn-bold">
-            <span>Create Album</span>
-        </a>
+
 
     </div>
 
