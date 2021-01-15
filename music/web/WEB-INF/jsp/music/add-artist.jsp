@@ -102,7 +102,7 @@
 
 
         <footer id="footer" class="bg-img"></footer>
-        <jsp:include page="../fragment/audio-player.jsp"/>
+        <%--<jsp:include page="../fragment/audio-player.jsp"/>--%>
 
     </main>
     <!-- End | Page Wrapper -->

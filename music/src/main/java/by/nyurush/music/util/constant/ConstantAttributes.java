@@ -53,5 +53,6 @@ public class ConstantAttributes {
     public static final String SONG_SAVE_RESULT = "saveResult";
     public static final String ALBUM_NAME = "albumName";
     public static final String YEAR = "year";
+    public static final String SONGS = "songs";
 
 }

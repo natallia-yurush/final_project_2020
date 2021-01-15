@@ -167,11 +167,13 @@ img {
 }
 
 .heading {
+  margin-top: 2rem;
   margin-bottom: 2rem;
 }
 
 .section {
   margin-bottom: 4rem !important;
+  /*height: 50px;!*TODO*!*/
 }
 
 .bg-img {
@@ -2006,13 +2008,13 @@ button:focus,
 }
 
 .btn-danger.btn-air {
-  -webkit-box-shadow: 0 2px 6px 2px rgba(241, 23, 23, 0.35);
-  box-shadow: 0 2px 6px 2px rgba(241, 23, 23, 0.35);
+  -webkit-box-shadow: 0 2px 6px 2px rgb(91, 9, 188);
+  box-shadow: 0 2px 6px 2px rgb(91, 9, 188);/*rgba(241, 23, 23, 0.35)*/
 }
 
 .btn-outline-danger.btn-air {
-  -webkit-box-shadow: 0 2px 6px 2px rgba(241, 23, 23, 0.35);
-  box-shadow: 0 2px 6px 2px rgba(241, 23, 23, 0.35);
+  -webkit-box-shadow: 0 2px 6px 2px rgb(91, 9, 188);
+  box-shadow: 0 2px 6px 2px rgb(91, 9, 188);
 }
 
 .btn-light.btn-air {
@@ -2348,15 +2350,6 @@ button:focus,
   max-width: calc(100% - 2.5rem);
   width: 260px;
 }
-
-/*.custom-card--inline .custom-card--inline-play {
-  float: right;
-  padding-left: 3rem;
-  -webkit-box-flex: 0;
-  -ms-flex: 0 0 calc(100% - 5.5rem);
-  flex: 0 0 calc(100% - 5.5rem);
-  max-width: calc(100% - 2.5rem);
-}*/
 
 .container-audio {
   border-radius: 5px;
@@ -2829,4 +2822,9 @@ audio:nth-child(2), audio:nth-child(4), audio:nth-child(6) {
 
 .switch-dark input[type='checkbox']:checked + label:after {
   background-color: #222629;
+}
+
+
+.for-genres {
+  height: 150px;
 }

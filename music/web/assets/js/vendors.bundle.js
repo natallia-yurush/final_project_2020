@@ -12369,7 +12369,6 @@
         if (t[0] < 2 && t[1] < 9 || 1 === t[0] && 9 === t[1] && t[2] < 1 || 4 <= t[0]) throw new Error("Bootstrap's JavaScript requires at least jQuery v1.9.1 but less than v4.0.0")
     }(), t.Util = m, t.Alert = g, t.Button = k, t.Carousel = at, t.Collapse = Ct, t.Dropdown = Xe, t.Modal = gn, t.Popover = ii, t.Scrollspy = Ci, t.Tab = Wi, t.Toast = Zi, t.Tooltip = qn, Object.defineProperty(t, "__esModule", {value: !0})
 });
-//# sourceMappingURL=bootstrap.bundle.min.js.map
 !function (e, t) {
     "object" == typeof exports && "object" == typeof module ? module.exports = t() : "function" == typeof define && define.amd ? define("Amplitude", [], t) : "object" == typeof exports ? exports.Amplitude = t() : e.Amplitude = t()
 }(this, function () {

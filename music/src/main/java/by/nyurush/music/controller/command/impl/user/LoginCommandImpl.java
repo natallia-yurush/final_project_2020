@@ -59,7 +59,7 @@ public class LoginCommandImpl implements Command {
 
                 if(account.get().getRole() == AccountRole.ADMIN) {
                     session.setAttribute("user", account.get());
-                    return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADMIN_HOME); //TODO: чтобы везде возвращало сюда
+                    return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME); //TODO: чтобы везде возвращало сюда
                     //TODO ADMIN
                     //return CommandResult.forward(ConstantPathPages.PATH_PAGE_MAIN); //ADMIN
                 } else {

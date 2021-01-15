@@ -321,7 +321,7 @@ $(function () {
 
         //=> Initialize theme settings
         initTheme: function () {
-            $('body').themeSettings();
+            // $('body').themeSettings();
         },
 
         //=> Languages checked unchecked for apply button disable and enable
