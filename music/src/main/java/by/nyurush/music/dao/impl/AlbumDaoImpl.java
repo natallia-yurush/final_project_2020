@@ -22,6 +22,8 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
             "FROM album JOIN artist ON album.artist_id = artist.id WHERE album.year = ?";
     private static final String FIND_BY_ARTIST_AND_ALBUM_NAME = "SELECT album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path  " +
             "FROM album JOIN artist ON album.artist_id = artist.id WHERE artist.name = ? AND album.name = ?";
+    private static final String FIND_BY_ARTIST_NAME = "SELECT album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path  " +
+            "FROM album JOIN artist ON album.artist_id = artist.id WHERE artist.name = ?";
     private static final String UPDATE = "UPDATE album SET name=?, year=?, number_of_likes=?, artist_id=? WHERE id=?";
     private static final String CREATE = "INSERT INTO album (name, year, number_of_likes, artist_id) VALUES (?, ?, ?, ?)";
     private static final String DELETE = "DELETE FROM album WHERE id=?";
@@ -161,5 +163,21 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
             throw new DaoException(e);
         }
         return Optional.ofNullable(album);
+    }
+
+    public List<Album> findByArtistName(String artistName) throws DaoException {
+        List<Album> albumsList = new ArrayList<>();
+        Album album = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ARTIST_NAME)) {
+            preparedStatement.setString(1, artistName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                album = new AlbumBuilder().build(resultSet);
+                albumsList.add(album);
+            }
+        } catch (SQLException | ServiceException e) {
+            throw new DaoException(e);
+        }
+        return albumsList;
     }
 }

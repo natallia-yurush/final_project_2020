@@ -11,7 +11,7 @@ import by.nyurush.music.util.constant.ConstantPathPages;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class CreateAlbumPageCommandImpl implements Command {
+public class AddAlbumPageCommandImpl implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
 

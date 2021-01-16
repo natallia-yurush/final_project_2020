@@ -73,4 +73,12 @@ public class AlbumService extends Service {
             throw new ServiceException(e.getMessage());
         }
     }
+
+    public List<Album> findByArtistName(String artistName) throws ServiceException {
+        try {
+            return albumDao.findByArtistName(artistName);
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
 }

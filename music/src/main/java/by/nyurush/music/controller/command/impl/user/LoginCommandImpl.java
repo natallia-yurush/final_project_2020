@@ -48,6 +48,8 @@ public class LoginCommandImpl implements Command {
 
         try {
             TrackService trackService = new TrackService(new DaoHelperFactory());
+
+
             session.setAttribute("genres", GenreUtil.getGenres(trackService.findAllGenres(), rb));
 
             AccountService accountService = new AccountService(new DaoHelperFactory());
@@ -59,6 +61,10 @@ public class LoginCommandImpl implements Command {
 
                 if(account.get().getRole() == AccountRole.ADMIN) {
                     session.setAttribute("user", account.get());
+
+                    //TODO?
+                    new HomeCommandImpl().execute(req, resp);
+
                     return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME); //TODO: чтобы везде возвращало сюда
                     //TODO ADMIN
                     //return CommandResult.forward(ConstantPathPages.PATH_PAGE_MAIN); //ADMIN

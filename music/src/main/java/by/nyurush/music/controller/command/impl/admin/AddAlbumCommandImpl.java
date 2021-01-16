@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ResourceBundle;
 
-public class CreateAlbumCommandImpl implements Command {
+public class AddAlbumCommandImpl implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
         String albumName = req.getParameter(ConstantAttributes.ALBUM_NAME);

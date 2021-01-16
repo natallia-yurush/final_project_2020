@@ -62,7 +62,7 @@
                         </div>
                         <div class="card-body">
                             <form method="post"
-                                  action="${pageContext.servletContext.contextPath}/controller?command=createAlbum">
+                                  action="${pageContext.servletContext.contextPath}/controller?command=addAlbum">
                                 <div class="form-row form-group">
                                     <label for="albumName" class="col-md-4 text-md-right col-form-label">Album
                                         Name</label>

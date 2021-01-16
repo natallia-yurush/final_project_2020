@@ -40,14 +40,16 @@
                  class="nav-link active"><i class="la la-home"></i><span>Home</span></a>
             </li>
             <li class="nav-item">
-                <a href="genres.html" class="nav-link"><i class="la la-diamond"></i><span>Genres</span></a>
+                <a href="${pageContext.servletContext.contextPath}/controller?command=genres" class="nav-link"><i class="la la-diamond"></i><span>Genres</span></a>
             </li>
             <li class="nav-item">
-                <a href="artists.html" class="nav-link"><i class="la la-microphone"></i><span>Artists</span></a>
+                <a href="${pageContext.servletContext.contextPath}/controller?command=artists" class="nav-link"><i class="la la-microphone"></i><span>Artists</span></a>
             </li>
+            <%--
             <li class="nav-item">
                 <a href="history.html" class="nav-link"><i class="la la-history"></i><span>Albums</span></a>
             </li>
+            --%>
         </ul>
     </nav>
     <!-- End | Navbar -->
@@ -59,8 +61,8 @@
             <span>Add Artist</span>
         </a>
 
-        <a href="${pageContext.servletContext.contextPath}/controller?command=createAlbumPage" class="btn btn-block btn-danger btn-air btn-bold">
-            <span>Create Artist's Album</span>
+        <a href="${pageContext.servletContext.contextPath}/controller?command=addAlbumPage" class="btn btn-block btn-danger btn-air btn-bold">
+            <span>Add Artist's Album</span>
         </a>
 
         <a href="${pageContext.servletContext.contextPath}/controller?command=addMusicPage" class="btn btn-block btn-danger btn-air btn-bold">

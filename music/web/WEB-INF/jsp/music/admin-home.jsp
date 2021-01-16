@@ -89,33 +89,13 @@
                     <!-- Begin | Custom List Item -->
                     <div class="custom-list--item">
                         <div class="text-dark custom-card--inline">
-
                             <table>
-
                                 <c:forEach items="${requestScope.songs}" var="song">
                                     <tr>
                                         <td>
                                             <div class="custom-card--inline-img">
-
-                                                <c:url value='/resource/img/artists/${song.album.artist.imagePath}'
-                                                       var="img"/>
-
-                                                <c:url value='${pageContext.request.contextPath}/resource/img/artists/${song.album.artist.imagePath}'
-                                                       var="imgUrl"/>
-
-
-                                                    <%--
-                                                     <img scr="<c:url value='/resource/img/artists/${song.album.artist.imagePath}'/>" class="card-img--radius-sm"/>
-
-                                                     <img scr="${ img }" class="card-img--radius-sm"/>
-                                                    <img scr='/resource/img/artists/${song.album.artist.imagePath}' class="card-img--radius-sm"/>
-                                                    img src="${pageContext.request.contextPath}/resource/img/artists/palina_respublika.jpg"
-                                                                                                     class="card-img--radius-sm">
-                                                    --%>
-
                                                 <img src="${pageContext.request.contextPath}/resource/img/artists/${song.album.artist.imagePath}"
                                                      class="card-img--radius-sm">
-
                                             </div>
                                         </td>
                                         <td>
@@ -128,43 +108,48 @@
 
                                         <td>
                                             <audio preload="auto" controls>
-                                                    <%--<c:url value="${pageContext.request.contextPath}/resource/songs/${song.trackPath}" var="songUrl" />--%>
                                                 <source src='${pageContext.request.contextPath}/resource/songs/${song.trackPath}'/>
                                             </audio>
                                         </td>
+
+                                        <td>
+                                            <ul class="custom-card--labels d-flex ml-auto">
+                                                    <%--TODO: появляется, если в избранном--%>
+                                                <li><span class="badge badge-pill badge-danger">
+                                                    <i class="la la-heart"></i></span></li>
+                                                <li class="dropleft">
+                                                    <a href="javascript:void(0);"
+                                                       class="btn btn-icon-only p-0 w-auto h-auto"
+                                                       data-toggle="dropdown" aria-haspopup="true"
+                                                       aria-expanded="false">
+                                                        <i class="la la-ellipsis-h"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu">
+                                                        <li class="dropdown-item">
+                                                            <a href="javascript:void(0);"
+                                                               class="dropdown-link favorite">
+                                                                <i class="la la-heart-o"></i>
+                                                                <span>Favorite</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="dropdown-item">
+                                                            <a href="javascript:void(0);" class="dropdown-link">
+                                                                <i class="la la-plus"></i>
+                                                                <span>Add to Playlist</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </td>
+
                                     </tr>
                                 </c:forEach>
                             </table>
 
 
                         </div>
-                        <ul class="custom-card--labels d-flex ml-auto">
-                            <%--TODO: появляется, если в избранном--%>
-                            <li><span class="badge badge-pill badge-danger"><i class="la la-heart"></i></span></li>
 
-                            <%--<li>05:03</li>--%>
-
-                            <li class="dropleft">
-                                <a href="javascript:void(0);" class="btn btn-icon-only p-0 w-auto h-auto"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="la la-ellipsis-h"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="dropdown-item">
-                                        <a href="javascript:void(0);" class="dropdown-link favorite">
-                                            <i class="la la-heart-o"></i>
-                                            <span>Favorite</span>
-                                        </a>
-                                    </li>
-                                    <li class="dropdown-item">
-                                        <a href="javascript:void(0);" class="dropdown-link">
-                                            <i class="la la-plus"></i>
-                                            <span>Add to Playlist</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
                     </div>
                     <!-- End | Custom List Item -->
                 </div>
@@ -177,7 +162,7 @@
                             <h4>Genres</h4>
                             <p>Select your genre</p>
                         </div>
-                        <a href="genres.html" class="btn btn-sm btn-pill btn-air btn-primary">View All</a>
+                        <a href="${pageContext.servletContext.contextPath}/controller?command=genres" class="btn btn-sm btn-pill btn-air btn-primary">View All</a>
                     </div>
                     <hr>
                 </div>
@@ -188,9 +173,10 @@
                         <div class="custom-card">
                             <div class="custom-card--img">
                                 <a href="javascript:void(0);">
-                                         <img src="${pageContext.request.contextPath}/resource/img/genres/Music-ear-Image.jpg" alt="${genre}"
-                                              class="card-img--radius-md">
-                                    <span class="bg-blur"><c:out value="${genre}"/></span>
+                                    <img src="${pageContext.request.contextPath}/resource/img/genres/Music-ear-Image.jpg"
+                                         alt="${genre}"
+                                         class="card-img--radius-md">
+                                    <span class="bg-blur"><c:out value="${genre.value}"/></span>
                                 </a>
                             </div>
                         </div>
@@ -200,31 +186,25 @@
             </div>
 
 
-
-
-
-
-
         </div>
 
 
+        <!--TODO: удалить верхнее объявление дива и редачить нижнее!-->
 
-<!--TODO: удалить верхнее объявление дива и редачить нижнее!-->
+        <!-- End | Main Container -->
 
-<!-- End | Main Container -->
+        <!-- Begin | Footer [[ Find at scss/framework/base/footer/footer.scss ]] -->
+        <footer id="footer" class="bg-img">
 
-<!-- Begin | Footer [[ Find at scss/framework/base/footer/footer.scss ]] -->
-<footer id="footer" class="bg-img">
-
-</footer>
-<!-- End | Footer -->
+        </footer>
+        <!-- End | Footer -->
 
         <%--TODO: playeer--%>
-<%--
-<jsp:include page="../fragment/audio-player.jsp"/>--%>
+        <%--
+        <jsp:include page="../fragment/audio-player.jsp"/>--%>
 
-</main>
-<!-- End | Page Wrapper -->
+    </main>
+    <!-- End | Page Wrapper -->
 
 </div>
 <!-- End | Wrapper -->
@@ -234,7 +214,6 @@
 <div class="backdrop sidebar-backdrop"></div>
 
 <!-- Scripts -->
-
 
 
 </body>

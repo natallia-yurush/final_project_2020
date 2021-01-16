@@ -10,7 +10,10 @@ public class ConstantPathPages {
     //public static final String PATH_PAGE_ADMIN_HOME = "/WEB-INF/jsp/music/admin-home.jsp";
     public static final String PATH_PAGE_ADD_ARTIST = "/WEB-INF/jsp/music/add-artist.jsp";
     public static final String PATH_PAGE_ADD_MUSIC = "/WEB-INF/jsp/music/add-music.jsp";
-    public static final String PATH_PAGE_CREATE_ALBUM = "/WEB-INF/jsp/music/create-album.jsp";
+    public static final String PATH_PAGE_CREATE_ALBUM = "/WEB-INF/jsp/music/add-album.jsp";
+
+    public static final String PATH_PAGE_GENRES = "/WEB-INF/jsp/music/genres.jsp";
+    public static final String PATH_PAGE_ARTISTS = "/WEB-INF/jsp/music/artists.jsp";
 
     public static final String PATH_PAGE_ERROR = "/WEB-INF/jsp/error.jsp";
 }

@@ -212,6 +212,8 @@ $(function () {
 });
 "use strict";
 
+
+
 //=> Class Definition
 var AppConfig = AppConfig || {};
 
@@ -234,7 +236,7 @@ $(function () {
             AppConfig.materialTab();
             AppConfig.initCountdown();
             AppConfig.addFavorite();
-            AudioPlayer.init();
+           // AudioPlayer.init(); /*todo*/
             Analytics.init();
         },
 
@@ -542,6 +544,8 @@ $('#wrapper').on("scroll", function() {
 
 "use strict";
 
+
+/*
 //=> Class Definition
 var AudioPlayer = AudioPlayer || {};
 
@@ -669,6 +673,10 @@ $(function () {
     //=> Call class at document ready
     $(document).ready(AudioPlayer.init);
 });
+*/
+
+
+
 /**
  * Theme Settings v1.0.0
  * Copyright 2019 Kri8thm

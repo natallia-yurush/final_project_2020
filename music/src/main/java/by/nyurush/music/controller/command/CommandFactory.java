@@ -1,8 +1,7 @@
 package by.nyurush.music.controller.command;
 
 import by.nyurush.music.controller.command.impl.admin.*;
-import by.nyurush.music.controller.command.impl.common.ChangeLanguageCommandImpl;
-import by.nyurush.music.controller.command.impl.common.LogoutCommandImpl;
+import by.nyurush.music.controller.command.impl.common.*;
 import by.nyurush.music.controller.command.impl.user.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,8 +28,11 @@ public class CommandFactory {
         commands.put("addArtist", new AddArtistCommandImpl());
         commands.put("addMusicPage", new AddMusicPageCommandImpl());
         commands.put("addMusic", new AddMusicCommandImpl());
-        commands.put("createAlbumPage", new CreateAlbumPageCommandImpl());
-        commands.put("createAlbum", new CreateAlbumCommandImpl());
+        commands.put("addAlbumPage", new AddAlbumPageCommandImpl());
+        commands.put("addAlbum", new AddAlbumCommandImpl());
+        commands.put("genres", new GenresCommandImpl());
+        commands.put("artists", new ArtistsCommandImpl());
+        commands.put("search", new SearchCommandImpl());
     }
 
     public static Command getCommand(String commandName) {

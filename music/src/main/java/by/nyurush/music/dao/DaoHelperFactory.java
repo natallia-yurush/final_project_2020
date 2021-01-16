@@ -6,6 +6,11 @@ import by.nyurush.music.dao.pool.ConnectionPool;
 public class DaoHelperFactory {
 
     public DaoHelper create() throws DaoException {
-        return new DaoHelper(ConnectionPool.getInstance());
+        try (DaoHelper daoHelper = new DaoHelper(ConnectionPool.getInstance())) {
+            return daoHelper;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+return null;
     }
 }
