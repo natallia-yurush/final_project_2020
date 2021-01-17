@@ -18,6 +18,39 @@ public class HomeCommandImpl implements Command {
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
 
         try {
+            int page = 1;
+            int recordsPerPage = 10;
+            if (req.getParameter("page") != null)
+                page = Integer.parseInt(req.getParameter("page"));
+            TrackService trackService = new TrackService(new DaoHelperFactory());
+            List<Track> list = trackService.findForPage((page - 1) * recordsPerPage, recordsPerPage);
+            int noOfRecords = trackService.getNoOfRecords();
+            int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+
+            req.setAttribute("songs", list);
+            req.setAttribute("noOfPages", noOfPages);
+            req.setAttribute("currentPage", page);
+
+
+/*
+            List<Track> list = dao.viewAllEmployees((page - 1) * recordsPerPage, recordsPerPage);
+            int noOfRecords = dao.getNoOfRecords();
+            int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+            request.setAttribute("employeeList", list);
+            request.setAttribute("noOfPages", noOfPages);
+            request.setAttribute("currentPage", page);
+            RequestDispatcher view = request.getRequestDispatcher("employee.jsp");
+            view.forward(request, response);
+*/
+
+
+        } catch (ServiceException e) {
+            e.printStackTrace();//todo
+        }
+
+
+/*
+        try {
             TrackService trackService = new TrackService(new DaoHelperFactory());
             req.setAttribute(ConstantAttributes.SONGS, trackService.findAll());
 
@@ -25,6 +58,7 @@ public class HomeCommandImpl implements Command {
         } catch (ServiceException e) {
             e.printStackTrace();//todo
         }
+*/
 
 
         return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME);

@@ -105,4 +105,20 @@ public class TrackService extends Service {
             throw new ServiceException(e.getMessage());
         }
     }
+
+    public List<Track> findForPage(Integer offset, Integer recordsPerPage) throws ServiceException {
+        try {
+            return trackDao.findForPage(offset, recordsPerPage);
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public Integer getNoOfRecords() throws ServiceException {
+        try {
+            return trackDao.getNoOfRecords();
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
 }

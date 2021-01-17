@@ -75,8 +75,8 @@
                                         <%--<select class="form-control chosen-select">--%>
                                         <select data-placeholder="Choose a Genre..." class="form-control chosen-select"
                                                 name="genre">
-                                            <c:forEach var="item" items="${sessionScope.genres}">
-                                                <option>${item}</option>
+                                            <c:forEach var="genre" items="${sessionScope.genres}">
+                                                <option>${genre.value}</option>
                                             </c:forEach>
 
                                         </select>

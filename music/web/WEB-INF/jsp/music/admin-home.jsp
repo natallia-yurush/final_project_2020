@@ -105,7 +105,6 @@
                                                         value="${ song.album.artist.artistName }"/></p>
                                             </div>
                                         </td>
-
                                         <td>
                                             <audio preload="auto" controls>
                                                 <source src='${pageContext.request.contextPath}/resource/songs/${song.trackPath}'/>
@@ -147,6 +146,40 @@
                                 </c:forEach>
                             </table>
 
+                            <%--For displaying Previous link except for the 1st page --%>
+                            <c:if test="${requestScope.currentPage != 1}">
+                                <td><a href="${pageContext.servletContext.contextPath}/controller?command=home&page=${requestScope.currentPage - 1}">Previous</a></td>
+                            </c:if>
+
+                            <%--For displaying Page numbers.
+                            The when condition does not display a link for the current page--%>
+                            <table border="1" cellpadding="5" cellspacing="5">
+                                <tr>
+                                    <c:forEach begin="1" end="${requestScope.noOfPages}" var="i">
+                                        <c:choose>
+                                            <c:when test="${requestScope.currentPage eq i}">
+                                                <td>${i}</td>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <td><a href="${pageContext.servletContext.contextPath}/controller?command=home&page=${i}">${i}</a></td>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                </tr>
+                            </table>
+
+                            <%--For displaying Next link --%>
+                            <c:if test="${requestScope.currentPage lt requestScope.noOfPages}">
+                                <td><a href="${pageContext.servletContext.contextPath}/controller?command=home&page=${requestScope.currentPage + 1}">Next</a></td>
+                            </c:if>
+
+
+
+
+
+
+
+
 
                         </div>
 
@@ -162,7 +195,8 @@
                             <h4>Genres</h4>
                             <p>Select your genre</p>
                         </div>
-                        <a href="${pageContext.servletContext.contextPath}/controller?command=genres" class="btn btn-sm btn-pill btn-air btn-primary">View All</a>
+                        <a href="${pageContext.servletContext.contextPath}/controller?command=genres"
+                           class="btn btn-sm btn-pill btn-air btn-primary">View All</a>
                     </div>
                     <hr>
                 </div>
@@ -174,7 +208,7 @@
                             <div class="custom-card--img">
                                 <a href="javascript:void(0);">
                                     <img src="${pageContext.request.contextPath}/resource/img/genres/Music-ear-Image.jpg"
-                                         alt="${genre}"
+                                         alt="${genre.value}"
                                          class="card-img--radius-md">
                                     <span class="bg-blur"><c:out value="${genre.value}"/></span>
                                 </a>

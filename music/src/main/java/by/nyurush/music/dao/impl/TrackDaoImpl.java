@@ -19,6 +19,15 @@ public class TrackDaoImpl extends AbstractDao<Track> {
             "JOIN genre ON track.genre_name = genre.name " +
             "JOIN album ON track.album_id = album.id " +
             "JOIN artist ON album.artist_id = artist.id";
+
+    private static final String FIND_FOR_PAGE =
+            "SELECT track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path " +
+                    "FROM track " +
+                    "JOIN genre ON track.genre_name = genre.name " +
+                    "JOIN album ON track.album_id = album.id " +
+                    "JOIN artist ON album.artist_id = artist.id " +
+                    "LIMIT ?, ?";
+
     private static final String FIND_BY_ID =
             "SELECT  track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path " +
             "FROM track " +
@@ -78,6 +87,7 @@ public class TrackDaoImpl extends AbstractDao<Track> {
     private static final String UPDATE = "UPDATE track SET name = ?, audio_path = ?, number_of_likes = ?, genre_name = ?, album_id = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM track WHERE id=?";
     private static final String FIND_ALL_GENRES = "SELECT name FROM genre";
+    private static final String GET_NUMBER_OF_RECORDS = "SELECT COUNT(*) FROM track";
 
     public TrackDaoImpl(Connection connection) {
         super(connection);
@@ -280,5 +290,34 @@ public class TrackDaoImpl extends AbstractDao<Track> {
             throw new DaoException(e);
         }
         return genres;
+    }
+
+    public List<Track> findForPage(Integer offset, Integer recordsPerPage) throws DaoException {
+        List<Track> tracksList = new ArrayList<>();
+        Track track;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_FOR_PAGE)) {
+            preparedStatement.setInt(1, offset);
+            preparedStatement.setInt(2, recordsPerPage);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                track = new TrackBuilder().build(resultSet);
+                tracksList.add(track);
+            }
+        } catch (SQLException | ServiceException e) {
+            throw new DaoException(e);
+        }
+        return tracksList;
+    }
+
+    public Integer getNoOfRecords() throws DaoException {
+        int count;
+        try (Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(GET_NUMBER_OF_RECORDS);
+            resultSet.next();
+            count = resultSet.getInt(1);
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return count;
     }
 }
