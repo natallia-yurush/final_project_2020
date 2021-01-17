@@ -36,7 +36,7 @@ public class SearchCommandImpl implements Command {
         }
 
 
-        return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME);
+        return CommandResult.forward(ConstantPathPages.PATH_PAGE_SEARCH);
 
         //return null; //TODO ?
     }

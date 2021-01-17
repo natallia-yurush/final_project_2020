@@ -15,5 +15,7 @@ public class ConstantPathPages {
     public static final String PATH_PAGE_GENRES = "/WEB-INF/jsp/music/genres.jsp";
     public static final String PATH_PAGE_ARTISTS = "/WEB-INF/jsp/music/artists.jsp";
 
+    public static final String PATH_PAGE_SEARCH = "/WEB-INF/jsp/music/search.jsp";
+
     public static final String PATH_PAGE_ERROR = "/WEB-INF/jsp/error.jsp";
 }

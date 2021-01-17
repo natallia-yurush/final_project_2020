@@ -1,34 +1,91 @@
 <%--
   Created by IntelliJ IDEA.
   User: Natallia Yurush
-  Date: 05-Jan-21
-  Time: 13:57
+  Date: 17-Jan-21
+  Time: 12:47
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" isELIgnored="false" %>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <fmt:setLocale value="${cookie.language.value}"/>
 <fmt:setBundle basename="pagecontent" var="loc"/>
 
-<!-- Begin | Header [[ Find at scss/framework/base/header/header.scss ]] -->
-<header id="header" class="bg-primary">
+<html>
+<head>
 
-    <div class="d-flex align-items-center">
+    <title>Music Time</title>
+
+    <link href='<c:url value="/resource/img/purple-img.png"/>' rel="icon"/>
+
+    <!-- Styles -->
+    <link href='<c:url value="/assets/css/vendors.bundle.css"/>' rel="stylesheet" type="text/css"/>
+    <link href='<c:url value="/assets/css/styles.bundle.css"/>' rel="stylesheet" type="text/css"/>
+
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700" rel="stylesheet">
 
 
-        <form action="${pageContext.servletContext.contextPath}/controller?command=search" method="post" id="searchForm">
+    <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/audio-touch/audio-touch.css"/>
 
-            <button type="button" class="btn ion-ios-search"></button>
-            <input type="text" placeholder="<fmt:message key="label.search" bundle="${loc}"/>" id="searchInput"
-                   name="searchInput"
-                   class="form-control"
-                   autocomplete="off">
+    <script src="assets/js/vendors.bundle.js"></script>
+    <script src="assets/js/scripts.bundle.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
 
 
-            <%--&lt;%&ndash;ARTISTS&ndash;%&gt;
-            <div class="search-card" data-scrollable="true">
+<body>
+
+<jsp:include page="../fragment/loading.jsp"/>
+
+<!-- Begin | Wrapper [[ Find at scss/framework/base/wrapper/wrapper.scss ]] -->
+<div id="wrapper" data-scrollable="true">
+
+
+    <%--<jsp:include page="../fragment/left-aside-admin.jsp"/>--%>
+    <c:if test="${sessionScope.user.role.accountRole == 'CLIENT'}">
+        <jsp:include page="../fragment/left-aside-client.jsp"/>
+    </c:if>
+    <c:if test="${sessionScope.user.role.accountRole == 'ADMIN'}">
+        <jsp:include page="../fragment/left-aside-admin.jsp"/>
+    </c:if>
+
+
+    <!-- Begin | Page Wrapper [[ Find at scss/framework/base/wrapper/wrapper.scss ]] -->
+    <main id="pageWrapper">
+
+        <jsp:include page="../fragment/header.jsp"/>
+
+        <!-- Page Banner [[ Find at scss/base/core.scss ]] -->
+        <div class="banner bg-song"></div>
+
+        <!-- Begin | Main Container [[ Find at scss/base/core.scss ]] -->
+        <div class="main-container" id="appRoute">
+
+
+            <div class="heading">
+                <div class="d-flex flex-wrap align-items-end">
+                    <div class="flex-grow-1">
+                        <h4>Search Result</h4>
+                    </div>
+                    <%--<a href="songs.html" class="btn btn-sm btn-pill btn-air btn-primary">View All</a>--%>
+                </div>
+                <hr>
+            </div>
+
+
+            <%--ARTISTS--%>
+            <div class="section">
+            <%--<div class="search-card" data-scrollable="true">--%>
 
                 <!-- Begin | Search Result List -->
                 <div class="mb-3">
@@ -63,7 +120,7 @@
 
 
                 <c:if test="${not empty requestScope.songsList}">
-                    &lt;%&ndash;TODO&ndash;%&gt;
+                    <%--TODO--%>
                     <!-- Begin | Search Result List -->
                     <div class="mb-3">
                         <!-- Begin | Search Result List Header -->
@@ -144,68 +201,24 @@
                 </div>
                 <!-- End | Search Result List -->
 
-            </div>--%>
-        </form>
-
-        <!-- Begin | Header Options -->
-        <ul class="header-options d-flex align-items-center">
-
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
-                <jsp:include page="../fragment/nav-language.jsp">
-                    <jsp:param name="page" value="login"/>
-                </jsp:include>
             </div>
 
 
-            <li class="dropdown fade-in">
-                <a href="javascript:void(0);" class="d-flex align-items-center py-2" role="button"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="pl-2"><fmt:message key="title.language" bundle="${loc}"/></span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
 
-                    <a class="dropdown-item"
-                       href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=en_EN&page=${param.page}">
-                        <span><fmt:message bundle="${loc}" key="label.languageEn"/></span>
-                    </a>
+        </div>
+        <!-- End | Main Container -->
 
-                    <a class="dropdown-item"
-                       href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=ru_RU&page=${param.page}">
-                        <span><fmt:message bundle="${loc}" key="label.languageRu"/></span>
-                    </a>
+        <footer id="footer" class="bg-img"></footer>
 
-                </div>
-            </li>
+    </main>
+    <!-- End | Page Wrapper -->
 
-            <li class="dropdown fade-in">
-                <a href="javascript:void(0);" class="d-flex align-items-center py-2" role="button" id="userMenu"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <%--
-                                        <div class="avatar avatar-sm avatar-circle"><img src="${pageContext.request.contextPath}/assets/images/users/thumb.jpg" alt="user"></div>
-                    --%>
-                    <span class="pl-2">Halo Admin</span> <%--TODO: имя пользователя--%>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
-                    <a class="dropdown-item"
-                       href="${pageContext.servletContext.contextPath}/controller?command=profilePage">
-                        <i class="ion-md-contact"></i>
-                        <span><fmt:message key="label.profile" bundle="${loc}"/></span>
-                    </a>
+</div>
+<!-- End | Wrapper -->
 
-                    <div class="dropdown-divider"></div>
-                    <div class="px-4 py-2">
-                        <a href="${pageContext.servletContext.contextPath}/controller?command=logout"
-                           class="btn btn-sm btn-air btn-pill btn-danger">
-                            <fmt:message key="label.logout" bundle="${loc}"/>
-                        </a>
-                    </div>
-                </div>
-            </li>
-        </ul>
-        <!-- End | Header Options -->
-    </div>
+<!-- Back Drop -->
+<div class="backdrop header-backdrop"></div>
+<div class="backdrop sidebar-backdrop"></div>
 
-</header>
-
-<div class="banner"></div>
-<!-- End | Header -->
+</body>
+</html>
