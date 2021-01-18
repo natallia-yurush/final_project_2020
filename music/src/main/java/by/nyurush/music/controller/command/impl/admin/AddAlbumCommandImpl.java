@@ -2,7 +2,6 @@ package by.nyurush.music.controller.command.impl.admin;
 
 import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandResult;
-import by.nyurush.music.dao.DaoHelperFactory;
 import by.nyurush.music.entity.Album;
 import by.nyurush.music.service.exception.ServiceException;
 import by.nyurush.music.service.impl.AlbumService;
@@ -25,8 +24,8 @@ public class AddAlbumCommandImpl implements Command {
 
         ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
         try {
-            AlbumService albumService = new AlbumService(new DaoHelperFactory());
-            ArtistService artistService = new ArtistService(new DaoHelperFactory());
+            AlbumService albumService = new AlbumService();
+            ArtistService artistService = new ArtistService();
 
             albumService.save(new Album(null, albumName, year, 0, artistService.findByName(artistsName).get(0)));
 

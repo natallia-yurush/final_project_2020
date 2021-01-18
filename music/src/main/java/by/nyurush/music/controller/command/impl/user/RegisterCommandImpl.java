@@ -78,7 +78,7 @@ public class RegisterCommandImpl implements Command {
         User user;
         try {
             user = buildUser(request);
-            UserService userService = new UserService(new DaoHelperFactory());
+            UserService userService = new UserService();
             if (userService.isFreeLogin(user.getLogin())) {
 
                 //SendingEmail.verify(login, email);  //TODO: send email

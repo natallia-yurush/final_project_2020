@@ -16,7 +16,7 @@ public class GenresCommandImpl implements Command {
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
 
         try {
-            TrackService trackService = new TrackService(new DaoHelperFactory());
+            TrackService trackService = new TrackService();
             req.setAttribute(ConstantAttributes.SONGS_LIST, trackService.findByGenre(req.getParameter(ConstantAttributes.GENRE)));
 
 

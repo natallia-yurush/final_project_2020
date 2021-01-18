@@ -2,7 +2,6 @@ package by.nyurush.music.controller.command.impl.common;
 
 import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandResult;
-import by.nyurush.music.dao.DaoHelperFactory;
 import by.nyurush.music.service.exception.ServiceException;
 import by.nyurush.music.service.impl.AlbumService;
 import by.nyurush.music.service.impl.ArtistService;
@@ -20,18 +19,18 @@ public class ArtistsCommandImpl implements Command {
         try {
 
             String albumName = req.getParameter(ConstantAttributes.ALBUM_NAME);
-            ArtistService artistService = new ArtistService(new DaoHelperFactory());
+            ArtistService artistService = new ArtistService();
             req.setAttribute(ConstantAttributes.ARTISTS_LIST, artistService.findAll());
 
 
-            TrackService trackService = new TrackService(new DaoHelperFactory());
+            TrackService trackService = new TrackService();
             if(albumName == null || albumName.isEmpty()) {
                 req.setAttribute(ConstantAttributes.SONGS_LIST, trackService.findByArtist(req.getParameter(ConstantAttributes.ARTIST_NAME)));
             } else {
                 req.setAttribute(ConstantAttributes.SONGS_LIST, trackService.findByAlbumName(albumName));
             }
 
-            AlbumService albumService = new AlbumService(new DaoHelperFactory());
+            AlbumService albumService = new AlbumService();
             req.setAttribute(ConstantAttributes.ALBUMS, albumService.findByArtistName(req.getParameter(ConstantAttributes.ARTIST_NAME)));
 
         } catch (ServiceException e) {

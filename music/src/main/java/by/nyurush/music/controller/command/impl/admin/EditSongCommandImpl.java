@@ -2,7 +2,6 @@ package by.nyurush.music.controller.command.impl.admin;
 
 import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandResult;
-import by.nyurush.music.dao.DaoHelperFactory;
 import by.nyurush.music.entity.Track;
 import by.nyurush.music.service.exception.ServiceException;
 import by.nyurush.music.service.impl.AlbumService;
@@ -19,14 +18,14 @@ public class EditSongCommandImpl implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            ArtistService artistService = new ArtistService(new DaoHelperFactory());
+            ArtistService artistService = new ArtistService();
             req.setAttribute(ConstantAttributes.ARTISTS_NAME, artistService.findAll());
 
             //TODO: список альбомов должен изменяться!
-            AlbumService albumService = new AlbumService(new DaoHelperFactory());
+            AlbumService albumService = new AlbumService();
             req.setAttribute(ConstantAttributes.ALBUMS, albumService.findAll());
 
-            TrackService trackService = new TrackService(new DaoHelperFactory());
+            TrackService trackService = new TrackService();
             Track track = trackService.findById(Integer.parseInt(req.getParameter(ConstantAttributes.SONG_ID))).get();
             req.setAttribute(ConstantAttributes.SONG, track);
         } catch (ServiceException e) {

@@ -16,7 +16,7 @@ public class ArtistsPageCommandImpl implements Command {
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
         try {
 
-            ArtistService artistService = new ArtistService(new DaoHelperFactory());
+            ArtistService artistService = new ArtistService();
             req.setAttribute(ConstantAttributes.ARTISTS_LIST, artistService.findAll());
 
         } catch (ServiceException e) {

@@ -251,7 +251,7 @@ public class AddArtistCommandImpl implements Command {
         ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
 
         try {
-            ArtistService artistService = new ArtistService(new DaoHelperFactory());
+            ArtistService artistService = new ArtistService();
             artistService.save(artist);
 
             req.setAttribute(ConstantAttributes.SAVE_RESULT, rb.getString(ConstantMessages.SUCCESSFUL_ARTIST_SAVE_RESULT));

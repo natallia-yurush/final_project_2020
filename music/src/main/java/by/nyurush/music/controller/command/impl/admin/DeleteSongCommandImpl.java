@@ -21,7 +21,7 @@ public class DeleteSongCommandImpl implements Command {
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
         /*TODO: add message about successful or not delete*/
         try {
-            TrackService trackService = new TrackService(new DaoHelperFactory());
+            TrackService trackService = new TrackService();
             Integer id = Integer.parseInt(req.getParameter(ConstantAttributes.SONG_ID));
             Track track = trackService.findById(id).get();
             trackService.delete(track);

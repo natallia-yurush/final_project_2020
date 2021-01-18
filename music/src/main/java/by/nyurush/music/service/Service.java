@@ -8,6 +8,25 @@ import by.nyurush.music.service.exception.ServiceException;
 public abstract class Service {
     protected final DaoHelper daoHelper;
 
+    public Service() throws ServiceException {
+        try {
+            daoHelper = new DaoHelperFactory().create();
+        } catch (DaoException e) {
+            throw new ServiceException(e.getMessage());
+        }
+
+
+        /*try (DaoHelper daoHelper = new DaoHelperFactory().create()){
+            //userDao = daoHelper.createUserDao();
+        } catch (DaoException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            //TODO
+            e.printStackTrace();
+        }*/
+    }
+
+
     public Service(DaoHelperFactory factory) throws ServiceException {
         try {
             daoHelper = factory.create();

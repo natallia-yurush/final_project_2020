@@ -22,7 +22,7 @@ public class HomeCommandImpl implements Command {
             int recordsPerPage = 10;
             if (req.getParameter("page") != null)
                 page = Integer.parseInt(req.getParameter("page"));
-            TrackService trackService = new TrackService(new DaoHelperFactory());
+            TrackService trackService = new TrackService();
             List<Track> list = trackService.findForPage((page - 1) * recordsPerPage, recordsPerPage);
             int noOfRecords = trackService.getNoOfRecords();
             int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);

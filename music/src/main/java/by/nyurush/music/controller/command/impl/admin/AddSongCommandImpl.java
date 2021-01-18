@@ -2,7 +2,6 @@ package by.nyurush.music.controller.command.impl.admin;
 
 import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandResult;
-import by.nyurush.music.dao.DaoHelperFactory;
 import by.nyurush.music.entity.Album;
 import by.nyurush.music.entity.Track;
 import by.nyurush.music.service.exception.ServiceException;
@@ -90,7 +89,7 @@ public class AddSongCommandImpl implements Command {
 
         Album album = null;
         try {
-            AlbumService albumService = new AlbumService(new DaoHelperFactory());
+            AlbumService albumService = new AlbumService();
             album = albumService.findByArtistAndAlbumName(artistsName.get(0), albumName).get();
         } catch (ServiceException e) {
             e.printStackTrace();
@@ -102,7 +101,7 @@ public class AddSongCommandImpl implements Command {
         Track track = new Track(id, songName, songFile, 0, genre, album);
         ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
         try {
-            TrackService trackService = new TrackService(new DaoHelperFactory());
+            TrackService trackService = new TrackService();
             trackService.save(track);
 
             req.setAttribute(ConstantAttributes.SAVE_RESULT, rb.getString(ConstantMessages.SUCCESSFUL_SONG_SAVE_RESULT));

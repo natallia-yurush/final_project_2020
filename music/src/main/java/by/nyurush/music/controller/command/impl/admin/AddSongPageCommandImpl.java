@@ -2,7 +2,6 @@ package by.nyurush.music.controller.command.impl.admin;
 
 import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandResult;
-import by.nyurush.music.dao.DaoHelperFactory;
 import by.nyurush.music.service.exception.ServiceException;
 import by.nyurush.music.service.impl.AlbumService;
 import by.nyurush.music.service.impl.ArtistService;
@@ -17,11 +16,11 @@ public class AddSongPageCommandImpl implements Command {
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
         //TODO: заполнить артистов, жанры
         try {
-            ArtistService artistService = new ArtistService(new DaoHelperFactory());
+            ArtistService artistService = new ArtistService();
             req.setAttribute(ConstantAttributes.ARTISTS_NAME, artistService.findAll());
 
             //TODO: список альбомов должен изменяться!
-            AlbumService albumService = new AlbumService(new DaoHelperFactory());
+            AlbumService albumService = new AlbumService();
             req.setAttribute(ConstantAttributes.ALBUMS, albumService.findAll());
 
         } catch (ServiceException e) {

@@ -2,7 +2,6 @@ package by.nyurush.music.controller.command.impl.user;
 
 import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandResult;
-import by.nyurush.music.dao.DaoHelperFactory;
 import by.nyurush.music.entity.Account;
 import by.nyurush.music.entity.AccountRole;
 import by.nyurush.music.service.exception.ServiceException;
@@ -47,13 +46,14 @@ public class LoginCommandImpl implements Command {
         }
 
         try {
-            TrackService trackService = new TrackService(new DaoHelperFactory());
+            TrackService trackService = new TrackService();
 
 
             session.setAttribute("genres", GenreUtil.getGenres(trackService.findAllGenres(), rb));
 
-            AccountService accountService = new AccountService(new DaoHelperFactory());
-            UserService userService = new UserService(new DaoHelperFactory());
+            AccountService accountService = new AccountService();
+            //UserService userService = new UserService(new DaoHelperFactory());
+            UserService userService = new UserService();
 
             Optional<Account> account = accountService.isAccountExist(login, password);
             if (account.isPresent()) {

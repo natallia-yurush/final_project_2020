@@ -2,7 +2,6 @@ package by.nyurush.music.controller.command.impl.common;
 
 import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandResult;
-import by.nyurush.music.dao.DaoHelperFactory;
 import by.nyurush.music.service.exception.ServiceException;
 import by.nyurush.music.service.impl.AlbumService;
 import by.nyurush.music.service.impl.ArtistService;
@@ -20,15 +19,15 @@ public class SearchCommandImpl implements Command {
         try {
             String input = req.getParameter(ConstantAttributes.SEARCH_INPUT);
 
-            ArtistService artistService = new ArtistService(new DaoHelperFactory());
+            ArtistService artistService = new ArtistService();
             req.setAttribute(ConstantAttributes.ARTISTS_LIST, artistService.findByName(input));
 
 
-            TrackService trackService = new TrackService(new DaoHelperFactory());
+            TrackService trackService = new TrackService();
             req.setAttribute(ConstantAttributes.SONGS_LIST, trackService.findByName(input));
 
 
-            AlbumService albumService = new AlbumService(new DaoHelperFactory());
+            AlbumService albumService = new AlbumService();
             req.setAttribute(ConstantAttributes.ALBUMS, albumService.findByName(input));
 
         } catch (ServiceException e) {

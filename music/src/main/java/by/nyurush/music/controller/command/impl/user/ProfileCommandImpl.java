@@ -65,7 +65,7 @@ public class ProfileCommandImpl implements Command {
 
         //TODO: ввод старого пароля
         try {
-            UserService userService = new UserService(new DaoHelperFactory());
+            UserService userService = new UserService();
             userService.save(currentUser);
             session.setAttribute(USER, currentUser);
 

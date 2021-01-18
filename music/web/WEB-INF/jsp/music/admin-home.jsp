@@ -71,7 +71,8 @@
         <div class="main-container" id="appRoute">
 
 
-            <!-- Begin | Section [[ Find at scss/base/core.scss ]] -->
+            <jsp:include page="../fragment/songs.jsp"/>
+            <%--<!-- Begin | Section [[ Find at scss/base/core.scss ]] -->
             <div class="section">
 
                 <div class="heading">
@@ -80,7 +81,7 @@
                             <h4>Songs</h4>
                             <p>Listen and Enjoy</p>
                         </div>
-                        <%--<a href="songs.html" class="btn btn-sm btn-pill btn-air btn-primary">View All</a>--%>
+                        &lt;%&ndash;<a href="songs.html" class="btn btn-sm btn-pill btn-air btn-primary">View All</a>&ndash;%&gt;
                     </div>
                     <hr>
                 </div>
@@ -113,11 +114,11 @@
 
                                         <td>
                                             <ul class="custom-card--labels d-flex ml-auto">
-                                                    <%--TODO: появляется, если в избранном--%>
-                                                    <%--
+                                                    &lt;%&ndash;TODO: появляется, если в избранном&ndash;%&gt;
+                                                    &lt;%&ndash;
                                                     <li><span class="badge badge-pill badge-danger">
                                                         <i class="la la-heart"></i></span></li>
-                                                    --%>
+                                                    &ndash;%&gt;
 
 
                                                 <li class="dropleft">
@@ -153,7 +154,7 @@
 
 
 
-                                                            <%--<ul class="dropdown-menu ">
+                                                            &lt;%&ndash;<ul class="dropdown-menu ">
                                                                 <li class="dropdown-item">
                                                                     <a href="javascript:void(0);"
                                                                        class="dropdown-link">
@@ -168,7 +169,7 @@
                                                                         <span>;uhikgydtfd</span>
                                                                     </a>
                                                                 </li>
-                                                            </ul>--%>
+                                                            </ul>&ndash;%&gt;
                                                         </li>
 
 
@@ -197,12 +198,12 @@
                             </table>
 
 
-                            <%--For displaying Page numbers.
-                            The when condition does not display a link for the current page--%>
+                            &lt;%&ndash;For displaying Page numbers.
+                            The when condition does not display a link for the current page&ndash;%&gt;
                             <table class="page-table">
                                 <tr>
 
-                                    <%--For displaying Previous link except for the 1st page --%>
+                                    &lt;%&ndash;For displaying Previous link except for the 1st page &ndash;%&gt;
                                     <c:if test="${requestScope.currentPage != 1}">
                                         <td>
                                             <a href="${pageContext.servletContext.contextPath}/controller?command=home&page=${requestScope.currentPage - 1}"
@@ -224,7 +225,7 @@
                                     </c:forEach>
 
 
-                                    <%--For displaying Next link --%>
+                                    &lt;%&ndash;For displaying Next link &ndash;%&gt;
                                     <c:if test="${requestScope.currentPage lt requestScope.noOfPages}">
                                         <td>
                                             <a href="${pageContext.servletContext.contextPath}/controller?command=home&page=${requestScope.currentPage + 1}"
@@ -243,7 +244,7 @@
                     </div>
                     <!-- End | Custom List Item -->
                 </div>
-            </div>
+            </div>--%>
 
             <div class="section for-genres">
                 <div class="heading">
@@ -305,7 +306,7 @@
 <div class="backdrop sidebar-backdrop"></div>
 
 <!-- Scripts -->
-<script>
+<%--<script>
     function disp(form) {
         if (form.style.display == "none") {
             form.style.display = "block";
@@ -313,7 +314,7 @@
             form.style.display = "none";
         }
     }
-</script>
+</script>--%>
 
 </body>
 </html>
