@@ -57,4 +57,6 @@ public class ConstantAttributes {
     public static final String SONGS_LIST = "songsList";
     public static final String ARTISTS_LIST = "artistsList";
     public static final String SEARCH_INPUT = "searchInput";
+    public static final String SONG_ID = "songId";
+    public static final String SONG = "song";
 }

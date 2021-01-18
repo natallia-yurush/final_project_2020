@@ -31,6 +31,9 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700" rel="stylesheet">
 
+    <script src="assets/js/vendors.bundle.js"></script>
+    <script src="assets/js/scripts.bundle.js"></script>
+
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -42,15 +45,18 @@
 
 <div id="wrapper" data-scrollable="true">
 
-    <jsp:include page="../fragment/left-aside-client.jsp"/>
+    <c:if test="${sessionScope.user.role.accountRole == 'CLIENT'}">
+        <jsp:include page="../fragment/left-aside-client.jsp"/>
+    </c:if>
+    <c:if test="${sessionScope.user.role.accountRole == 'ADMIN'}">
+        <jsp:include page="../fragment/left-aside-admin.jsp"/>
+    </c:if>
 
     <!-- Begin | Page Wrapper [[ Find at scss/framework/base/wrapper/wrapper.scss ]] -->
     <main id="pageWrapper">
 
         <%--TODO: delete если изменишь подход к смене языка (switch)--%>
-        <jsp:include page="../fragment/header.jsp">
-            <jsp:param name="page" value="profile"/>
-        </jsp:include>
+            <jsp:include page="../fragment/header.jsp"/>
 
 
         <!-- Begin | Main Container [[ Find at scss/base/core.scss ]] -->
@@ -68,7 +74,7 @@
                                             <fmt:message key="label.firstName" bundle="${loc}"/>
                                         </label>
                                         <input type="text" id="firstName" name="firstName" class="form-control"
-                                               value="${user.firstName}">
+                                               value="${user.firstName}" required>
                                     </div>
                                     <c:if test="${not empty requestScope.invalidFirstName}">
                                         <div class="errorInfo"><c:out value="${requestScope.invalidFirstName}"/></div>
@@ -78,7 +84,7 @@
                                         <label for="lastName" class="form-label">
                                             <fmt:message key="label.lastName" bundle="${loc}"/>
                                         </label>
-                                        <input type="text" id="lastName" name="lastName" class="form-control"
+                                        <input type="text" id="lastName" name="lastName" class="form-control" required
                                                value="${user.lastName}">
                                     </div>
                                     <c:if test="${not empty requestScope.invalidLastName}">
@@ -87,7 +93,7 @@
 
                                     <div class="col-12 form-group">
                                         <label for="email" class="form-label">Email</label>
-                                        <input type="email" id="email" name="email" class="form-control"
+                                        <input type="email" id="email" name="email" class="form-control" required
                                                value="${user.email}">
                                     </div>
                                     <c:if test="${not empty requestScope.invalidEmail}">
@@ -98,7 +104,7 @@
                                         <label for="login" class="form-label">
                                             <fmt:message key="label.login" bundle="${loc}"/>
                                         </label>
-                                        <input type="text" id="login" name="login" class="form-control"
+                                        <input type="text" id="login" name="login" class="form-control" required
                                                value="${user.login}">
                                     </div>
                                     <c:if test="${not empty requestScope.invalidLogin}">
@@ -143,19 +149,16 @@
         </div>
 
         <footer id="footer" class="bg-img"></footer>
-        <jsp:include page="../fragment/audio-player.jsp"/>
 
     </main>
     <!-- End | Page Wrapper -->
-
+</div>
     <!-- Back Drop -->
-    <%--    <div class="backdrop header-backdrop"></div>
-        <div class="backdrop sidebar-backdrop"></div>--%>
+    <div class="backdrop header-backdrop"></div>
+    <div class="backdrop sidebar-backdrop"></div>
 
     <!-- Scripts -->
-    <script src="${pageContext.request.contextPath}/assets/js/vendors.bundle.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/js/scripts.bundle.js"></script>
 
-</div>
+
 </body>
 </html>

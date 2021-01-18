@@ -114,8 +114,12 @@
                                         <td>
                                             <ul class="custom-card--labels d-flex ml-auto">
                                                     <%--TODO: появляется, если в избранном--%>
-                                                <li><span class="badge badge-pill badge-danger">
-                                                    <i class="la la-heart"></i></span></li>
+                                                    <%--
+                                                    <li><span class="badge badge-pill badge-danger">
+                                                        <i class="la la-heart"></i></span></li>
+                                                    --%>
+
+
                                                 <li class="dropleft">
                                                     <a href="javascript:void(0);"
                                                        class="btn btn-icon-only p-0 w-auto h-auto"
@@ -131,10 +135,56 @@
                                                                 <span>Favorite</span>
                                                             </a>
                                                         </li>
+
+
+
+
                                                         <li class="dropdown-item">
-                                                            <a href="javascript:void(0);" class="dropdown-link">
+                                                            <a onclick="disp(document.getElementById('form1'))"
+                                                               class="dropdown-link">
                                                                 <i class="la la-plus"></i>
                                                                 <span>Add to Playlist</span>
+                                                            </a>
+
+
+                                                            <form id="form1" style="display: none;">
+                                                                <input type="text" value="Я тут">
+                                                            </form>
+
+
+
+                                                            <%--<ul class="dropdown-menu ">
+                                                                <li class="dropdown-item">
+                                                                    <a href="javascript:void(0);"
+                                                                       class="dropdown-link">
+                                                                        <i class="la la-heart-o"></i>
+                                                                        <span>l,kjmnhgfvds</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="dropdown-item">
+                                                                    <a href="javascript:void(0);"
+                                                                       class="dropdown-link">
+                                                                        <i class="la la-heart-o"></i>
+                                                                        <span>;uhikgydtfd</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>--%>
+                                                        </li>
+
+
+
+
+
+                                                        <li class="dropdown-item">
+                                                            <a href="${pageContext.servletContext.contextPath}/controller?command=deleteSong&songId=${song.id}" class="dropdown-link">
+                                                                <i class="la la-trash"></i>
+                                                                <span>Delete</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="dropdown-item">
+                                                            <a href="${pageContext.servletContext.contextPath}/controller?command=editSong&songId=${song.id}" class="dropdown-link">
+                                                                <i class="la la-edit"></i>
+                                                                <span>Edit</span>
                                                             </a>
                                                         </li>
                                                     </ul>
@@ -146,39 +196,46 @@
                                 </c:forEach>
                             </table>
 
-                            <%--For displaying Previous link except for the 1st page --%>
-                            <c:if test="${requestScope.currentPage != 1}">
-                                <td><a href="${pageContext.servletContext.contextPath}/controller?command=home&page=${requestScope.currentPage - 1}">Previous</a></td>
-                            </c:if>
 
                             <%--For displaying Page numbers.
                             The when condition does not display a link for the current page--%>
-                            <table border="1" cellpadding="5" cellspacing="5">
+                            <table class="page-table">
                                 <tr>
+
+                                    <%--For displaying Previous link except for the 1st page --%>
+                                    <c:if test="${requestScope.currentPage != 1}">
+                                        <td>
+                                            <a href="${pageContext.servletContext.contextPath}/controller?command=home&page=${requestScope.currentPage - 1}"
+                                               class="for-page">Previous</a></td>
+                                    </c:if>
+
+
                                     <c:forEach begin="1" end="${requestScope.noOfPages}" var="i">
                                         <c:choose>
                                             <c:when test="${requestScope.currentPage eq i}">
                                                 <td>${i}</td>
                                             </c:when>
                                             <c:otherwise>
-                                                <td><a href="${pageContext.servletContext.contextPath}/controller?command=home&page=${i}">${i}</a></td>
+                                                <td>
+                                                    <a href="${pageContext.servletContext.contextPath}/controller?command=home&page=${i}"
+                                                       class="for-page">${i}</a></td>
                                             </c:otherwise>
                                         </c:choose>
                                     </c:forEach>
+
+
+                                    <%--For displaying Next link --%>
+                                    <c:if test="${requestScope.currentPage lt requestScope.noOfPages}">
+                                        <td>
+                                            <a href="${pageContext.servletContext.contextPath}/controller?command=home&page=${requestScope.currentPage + 1}"
+                                               class="for-page">Next</a></td>
+                                    </c:if>
+
+
                                 </tr>
+
+
                             </table>
-
-                            <%--For displaying Next link --%>
-                            <c:if test="${requestScope.currentPage lt requestScope.noOfPages}">
-                                <td><a href="${pageContext.servletContext.contextPath}/controller?command=home&page=${requestScope.currentPage + 1}">Next</a></td>
-                            </c:if>
-
-
-
-
-
-
-
 
 
                         </div>
@@ -206,7 +263,7 @@
                     <c:forEach items="${sessionScope.genres}" var="genre">
                         <div class="custom-card">
                             <div class="custom-card--img">
-                                <a href="javascript:void(0);">
+                                <a href="${pageContext.servletContext.contextPath}/controller?command=genres&genre=${genre.key}">
                                     <img src="${pageContext.request.contextPath}/resource/img/genres/Music-ear-Image.jpg"
                                          alt="${genre.value}"
                                          class="card-img--radius-md">
@@ -248,7 +305,15 @@
 <div class="backdrop sidebar-backdrop"></div>
 
 <!-- Scripts -->
-
+<script>
+    function disp(form) {
+        if (form.style.display == "none") {
+            form.style.display = "block";
+        } else {
+            form.style.display = "none";
+        }
+    }
+</script>
 
 </body>
 </html>

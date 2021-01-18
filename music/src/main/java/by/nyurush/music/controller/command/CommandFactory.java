@@ -26,13 +26,15 @@ public class CommandFactory {
         commands.put("logout", new LogoutCommandImpl());
         commands.put("addArtistPage", new AddArtistPageCommandImpl());
         commands.put("addArtist", new AddArtistCommandImpl());
-        commands.put("addMusicPage", new AddMusicPageCommandImpl());
-        commands.put("addMusic", new AddMusicCommandImpl());
+        commands.put("addMusicPage", new AddSongPageCommandImpl());
+        commands.put("addMusic", new AddSongCommandImpl());
         commands.put("addAlbumPage", new AddAlbumPageCommandImpl());
         commands.put("addAlbum", new AddAlbumCommandImpl());
         commands.put("genres", new GenresCommandImpl());
         commands.put("artists", new ArtistsCommandImpl());
         commands.put("search", new SearchCommandImpl());
+        commands.put("deleteSong", new DeleteSongCommandImpl());
+        commands.put("editSong", new EditSongCommandImpl());
     }
 
     public static Command getCommand(String commandName) {
