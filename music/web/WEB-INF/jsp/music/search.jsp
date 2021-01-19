@@ -63,7 +63,9 @@
     <!-- Begin | Page Wrapper [[ Find at scss/framework/base/wrapper/wrapper.scss ]] -->
     <main id="pageWrapper">
 
-        <jsp:include page="../fragment/header.jsp"/>
+        <jsp:include page="../fragment/header.jsp">
+            <jsp:param name="page" value="search"/>
+        </jsp:include>
 
         <!-- Page Banner [[ Find at scss/base/core.scss ]] -->
         <div class="banner bg-song"></div>
@@ -75,7 +77,7 @@
             <div class="heading">
                 <div class="d-flex flex-wrap align-items-end">
                     <div class="flex-grow-1">
-                        <h4>Search Result</h4>
+                        <h4><fmt:message key="label.searchResult" bundle="${loc}"/></h4>
                     </div>
                     <%--<a href="songs.html" class="btn btn-sm btn-pill btn-air btn-primary">View All</a>--%>
                 </div>
@@ -92,8 +94,12 @@
                     <c:if test="${not empty requestScope.artistsList}">
                         <!-- Begin | Search Result List Header -->
                         <div class="d-flex">
-                            <span class="text-uppercase mr-auto font-weight-bold text-dark">Artists</span>
-                            <a href="${pageContext.servletContext.contextPath}/controller?command=artists">View All</a>
+                            <span class="text-uppercase mr-auto font-weight-bold text-dark">
+                                <fmt:message key="label.addSong" bundle="${loc}"/>
+                            </span>
+                            <a href="${pageContext.servletContext.contextPath}/controller?command=artists">
+                                <fmt:message key="label.viewAll" bundle="${loc}"/>
+                            </a>
                         </div>
                         <!-- End | Search Result List Header -->
                         <hr>
@@ -125,8 +131,12 @@
                     <div class="mb-3">
                         <!-- Begin | Search Result List Header -->
                         <div class="d-flex">
-                            <span class="text-uppercase mr-auto font-weight-bold text-dark">Track</span>
-                            <a href="${pageContext.servletContext.contextPath}/controller?command=home">View All</a>
+                            <span class="text-uppercase mr-auto font-weight-bold text-dark">
+                                <fmt:message key="label.track" bundle="${loc}"/>
+                            </span>
+                            <a href="${pageContext.servletContext.contextPath}/controller?command=home">
+                                <fmt:message key="label.viewAll" bundle="${loc}"/>
+                            </a>
                         </div>
                         <!-- End | Search Result List Header -->
                         <hr>
@@ -173,8 +183,10 @@
                     <c:if test="${not empty requestScope.albums}">
                         <!-- Begin | Search Result List Header -->
                         <div class="d-flex">
-                            <span class="text-uppercase mr-auto font-weight-bold text-dark">Albums</span>
-                            <a href="songs.html">View All</a>
+                            <span class="text-uppercase mr-auto font-weight-bold text-dark">
+                                <fmt:message key="label.albums" bundle="${loc}"/>
+                            </span>
+                            <a href="songs.html"><fmt:message key="label.viewAll" bundle="${loc}"/></a>
                         </div>
                         <!-- End | Search Result List Header -->
                         <hr>

@@ -235,7 +235,7 @@ $(function () {
             AppConfig.initSlickCarousel();
             AppConfig.materialTab();
             AppConfig.initCountdown();
-            AppConfig.addFavorite();
+           // AppConfig.addFavorite();
            // AudioPlayer.init(); /*todo*/
             Analytics.init();
         },
@@ -503,7 +503,7 @@ $(function () {
         },
 
         //=> Add favorite
-        addFavorite: function () {
+        /*addFavorite: function () {
             var $favorite = $('.favorite');
             var heart = '<li><span class="badge badge-pill badge-danger"><i class="la la-heart"></i></span></li>';
 
@@ -522,7 +522,7 @@ $(function () {
                     info.prepend($labels);
                 }
             })
-        }
+        }*/
     };
 
     var $body = $('body'),
@@ -557,7 +557,7 @@ $(function () {
                 return false;
             }
             AudioPlayer.initAudioPlayer();
-            AudioPlayer.volumeDropdownClick();
+            AudioPlayer.volumedropdownClick();
             AudioPlayer.volumeIconClick();
             AudioPlayer.addAudioInPlayer();
         },
@@ -633,7 +633,7 @@ $(function () {
         },
 
         //=> Volume dropdown click
-        volumeDropdownClick: function () {
+        volumedropdownClick: function () {
             $(document).on('click', '.volume-dropdown-menu', function (e) {
                 e.stopPropagation();
             });

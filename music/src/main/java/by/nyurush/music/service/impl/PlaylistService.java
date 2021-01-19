@@ -81,4 +81,22 @@ public class PlaylistService {//} extends Service {
             throw new ServiceException(e.getMessage());
         }
     }
+
+    public List<Playlist> findByUserId(Integer userId) throws ServiceException {
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            playlistDao = daoHelper.createPlaylistDao();
+            return playlistDao.findByUserId(userId);
+        } catch (Exception e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public Optional<Playlist> findByNameAndUserId(String name, Integer userId) throws ServiceException {
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            playlistDao = daoHelper.createPlaylistDao();
+            return playlistDao.findByNameAndUserId(name, userId);
+        } catch (Exception e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
 }

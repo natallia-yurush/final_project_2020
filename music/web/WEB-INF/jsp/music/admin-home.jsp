@@ -29,9 +29,10 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700" rel="stylesheet">
 
-
     <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/audio-touch/audio-touch.css"/>
 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.7/js/min/perfect-scrollbar.jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="assets/js/vendors.bundle.js"></script>
     <script src="assets/js/scripts.bundle.js"></script>
 
@@ -62,7 +63,9 @@
     <!-- Begin | Page Wrapper [[ Find at scss/framework/base/wrapper/wrapper.scss ]] -->
     <main id="pageWrapper">
 
-        <jsp:include page="../fragment/header.jsp"/>
+        <jsp:include page="../fragment/header.jsp">
+            <jsp:param name="page" value="home"/>
+        </jsp:include>
 
         <!-- Page Banner [[ Find at scss/base/core.scss ]] -->
         <div class="banner bg-song"></div>
@@ -250,11 +253,13 @@
                 <div class="heading">
                     <div class="d-flex flex-wrap align-items-end">
                         <div class="flex-grow-1">
-                            <h4>Genres</h4>
-                            <p>Select your genre</p>
+                            <h4><fmt:message key="label.genres" bundle="${loc}"/></h4>
+                            <p><fmt:message key="label.selectGenre" bundle="${loc}"/></p>
                         </div>
                         <a href="${pageContext.servletContext.contextPath}/controller?command=genres"
-                           class="btn btn-sm btn-pill btn-air btn-primary">View All</a>
+                           class="btn btn-sm btn-pill btn-air btn-primary">
+                            <fmt:message key="label.viewAll" bundle="${loc}"/>
+                        </a>
                     </div>
                     <hr>
                 </div>
@@ -306,7 +311,7 @@
 <div class="backdrop sidebar-backdrop"></div>
 
 <!-- Scripts -->
-<%--<script>
+<script>
     function disp(form) {
         if (form.style.display == "none") {
             form.style.display = "block";
@@ -314,7 +319,7 @@
             form.style.display = "none";
         }
     }
-</script>--%>
+</script>
 
 </body>
 </html>

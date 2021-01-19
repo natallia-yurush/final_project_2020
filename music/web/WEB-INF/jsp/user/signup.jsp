@@ -12,7 +12,6 @@
 
 <fmt:setLocale value="${cookie.language.value}"/>
 <fmt:setBundle basename="pagecontent" var="loc"/>
-<%--TODO: нормальная локализация locale--%>
 
 <html>
 <head>

@@ -62,7 +62,9 @@
     <!-- Begin | Page Wrapper [[ Find at scss/framework/base/wrapper/wrapper.scss ]] -->
     <main id="pageWrapper">
 
-        <jsp:include page="../fragment/header.jsp"/>
+        <jsp:include page="../fragment/header.jsp">
+            <jsp:param name="page" value="genres"/>
+        </jsp:include>
 
         <!-- Page Banner [[ Find at scss/base/core.scss ]] -->
         <div class="banner bg-song"></div>
@@ -78,9 +80,10 @@
                     <div class="heading">
                         <div class="d-flex flex-wrap align-items-end">
                             <div class="flex-grow-1">
-                                <h4><c:out value="${sessionScope.genres.get(param.genre)}"/> Songs</h4>
+                                <h4><c:out value="${sessionScope.genres.get(param.genre)}"/>
+                                    <fmt:message key="label.songs" bundle="${loc}"/></h4>
                                     <%--<p></p>--%>
-                                <p>Listen and Enjoy</p>
+                                <p><fmt:message key="label.listenEnjoy" bundle="${loc}"/></p>
                             </div>
                                 <%--<a href="songs.html" class="btn btn-sm btn-pill btn-air btn-primary">View All</a>--%>
                         </div>

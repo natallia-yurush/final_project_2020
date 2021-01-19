@@ -35,6 +35,9 @@ public class CommandFactory {
         commands.put("search", new SearchCommandImpl());
         commands.put("deleteSong", new DeleteSongCommandImpl());
         commands.put("editSong", new EditSongCommandImpl());
+        commands.put("addToPlaylistPage", new AddToPlaylistPageCommandImpl());
+        commands.put("addToPlaylist", new AddToPlaylistCommandImpl());
+        commands.put("createAndAddToPlaylist", new CreatePlaylistAndAddSongCommandImpl());
     }
 
     public static Command getCommand(String commandName) {

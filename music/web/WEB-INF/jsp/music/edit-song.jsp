@@ -54,8 +54,9 @@
     <!-- Begin | Page Wrapper [[ Find at scss/framework/base/wrapper/wrapper.scss ]] -->
     <main id="pageWrapper">
 
-        <%--TODO: delete если изменишь подход к смене языка (switch)--%>
-        <jsp:include page="../fragment/header.jsp"/>
+        <jsp:include page="../fragment/header.jsp">
+            <jsp:param name="page" value="editSongPage"/>
+        </jsp:include>
 
         <!-- Begin | Main Container [[ Find at scss/base/core.scss ]] -->
         <div class="main-container under-banner-content" id="appRoute">
@@ -67,14 +68,17 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h6 class="card-title mb-0">Edit Song</h6>
+                            <h6 class="card-title mb-0">
+                                <fmt:message key="label.editSong" bundle="${loc}"/>
+                            </h6>
                         </div>
                         <div class="card-body">
                             <form method="post" enctype="multipart/form-data" acceptcharset="UTF-8"
                                   action="${pageContext.servletContext.contextPath}/controller?command=addSong">
                                 <div class="form-row form-group">
-                                    <label for="songName" class="col-md-4 text-md-right col-form-label">Song
-                                        Name</label>
+                                    <label for="songName" class="col-md-4 text-md-right col-form-label">
+                                        <fmt:message key="label.songName" bundle="${loc}"/>
+                                    </label>
                                     <div class="col-md-7">
                                         <input type="text" id="songName" name="songName" class="form-control"
                                                value="${song.trackName}" required>
@@ -82,10 +86,12 @@
                                 </div>
 
                                 <div class="form-row form-group">
-                                    <label class="col-md-4 text-md-right col-form-label">Genre</label>
+                                    <label class="col-md-4 text-md-right col-form-label">
+                                        <fmt:message key="label.genre" bundle="${loc}"/>
+                                    </label>
                                     <div class="col-md-7">
                                         <%--<select class="form-control chosen-select">--%>
-                                        <select data-placeholder="Choose a Genre..." class="form-control chosen-select"
+                                        <select data-placeholder="<fmt:message key="label.chooseGenre" bundle="${loc}"/>" class="form-control chosen-select"
                                                 name="genre" value="${song.genre}" required>
                                             <c:forEach var="genre" items="${sessionScope.genres}">
                                                 <option>${genre.value}</option>
@@ -95,23 +101,27 @@
                                 </div>
 
                                 <div class="form-row form-group">
-                                    <label for="songFile" class="col-md-4 text-md-right col-form-label">Song
-                                        File</label>
+                                    <label for="songFile" class="col-md-4 text-md-right col-form-label">
+                                        <fmt:message key="label.songFile" bundle="${loc}"/>
+                                    </label>
                                     <div class="col-md-7">
                                         <div class=" custom-file">
                                             <input type="file" class="custom-file-input" id="songFile" name="songFile"
                                                    required>
                                             <%--todo--%>
-                                            <label class="custom-file-label" for="songFile" id="file">Choose
-                                                file</label>
+                                            <label class="custom-file-label" for="songFile" id="file">
+                                                <fmt:message key="label.chooseFile" bundle="${loc}"/>
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="form-row form-group">
-                                    <label class="col-md-4 text-md-right col-form-label">Artist Name</label>
+                                    <label class="col-md-4 text-md-right col-form-label">
+                                        <fmt:message key="label.artistName" bundle="${loc}"/>
+                                    </label>
                                     <div class="col-md-7">
-                                        <select data-placeholder="Choose a Artist(s)..."
+                                        <select data-placeholder="<fmt:message key="label.chooseArtist" bundle="${loc}"/>"
                                                 required class="form-control chosen-select" multiple name="artistsName"
                                                 value="${song.album.artist.artistName}">
 
@@ -124,13 +134,15 @@
                                 </div>
 
                                 <div class="form-row form-group">
-                                    <label class="col-md-4 text-md-right col-form-label">Album</label>
+                                    <label class="col-md-4 text-md-right col-form-label">
+                                        <fmt:message key="label.album" bundle="${loc}"/>
+                                    </label>
                                     <div class="col-md-7">
                                         <select class="form-control chosen-select" name="album"
                                                 value="${song.album.albumName}" required>
 
                                             <%--TODO: разобраться, как вывести альбомы артиста--%>
-                                            <option>Single</option>
+                                            <option><fmt:message key="label.single" bundle="${loc}"/></option>
                                             <c:forEach var="item" items="${requestScope.albums}">
                                                 <option>${item.albumName}</option>
                                             </c:forEach>
@@ -142,7 +154,9 @@
                                     <div class="row">
                                         <div class="col-md-4"></div>
                                         <div class="col-md-7">
-                                            <button type="submit" class="btn btn-brand btn-air">Save Song</button>
+                                            <button type="submit" class="btn btn-brand btn-air">
+                                                <fmt:message key="label.saveSong" bundle="${loc}"/>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

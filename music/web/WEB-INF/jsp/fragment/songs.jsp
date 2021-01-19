@@ -13,14 +13,28 @@
 <fmt:setLocale value="${cookie.language.value}"/>
 <fmt:setBundle basename="pagecontent" var="loc"/>
 
+
+
+
+<div class="alert alert-success alert-dismissible">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Success!</strong> Indicates a successful or positive action.
+</div>
+
+<div class="alert alert-info">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Info!</strong> Indicates a neutral informative change or action.
+</div>
+
+
 <!-- Begin | Section [[ Find at scss/base/core.scss ]] -->
 <div class="section">
 
     <div class="heading">
         <div class="d-flex flex-wrap align-items-end">
             <div class="flex-grow-1">
-                <h4>Songs</h4>
-                <p>Listen and Enjoy</p>
+                <h4><fmt:message key="label.songs" bundle="${loc}"/></h4>
+                <p><fmt:message key="label.listenEnjoy" bundle="${loc}"/></p>
             </div>
             <%--<a href="songs.html" class="btn btn-sm btn-pill btn-air btn-primary">View All</a>--%>
         </div>
@@ -31,12 +45,17 @@
         <!-- Begin | Custom List Item -->
         <div class="custom-list--item">
             <div class="text-dark custom-card--inline">
+
+
+
                 <table>
                     <c:forEach items="${requestScope.songs}" var="song">
+
+
                         <tr>
                             <td>
                                 <div class="custom-card--inline-img">
-                                    <img src="${pageContext.request.contextPath}/resource/img/artists/${song.album.artist.imagePath}"
+                                    <img src="${pageContext.request.contextPath}/resource/img/artists/${song.album.artist.imagePath}" alt="${song.album.artist.imagePath}"
                                          class="card-img--radius-sm">
                                 </div>
                             </td>
@@ -63,7 +82,7 @@
 
 
                                     <li class="dropleft">
-                                        <a href="javascript:void(0);"
+                                        <a href=""
                                            class="btn btn-icon-only p-0 w-auto h-auto"
                                            data-toggle="dropdown" aria-haspopup="true"
                                            aria-expanded="false">
@@ -71,62 +90,32 @@
                                         </a>
                                         <ul class="dropdown-menu">
                                             <li class="dropdown-item">
-                                                <a href="javascript:void(0);"
-                                                   class="dropdown-link favorite">
+                                                <a href="">
                                                     <i class="la la-heart-o"></i>
-                                                    <span>Favorite</span>
+                                                    <span><fmt:message key="label.favorite" bundle="${loc}"/></span>
                                                 </a>
                                             </li>
 
-
-
-
                                             <li class="dropdown-item">
-                                                <a onclick="disp(document.getElementById('form1'))"
-                                                   class="dropdown-link">
+                                                <a href="${pageContext.servletContext.contextPath}/controller?command=addToPlaylistPage&songId=${song.id}"
+                                                   >
                                                     <i class="la la-plus"></i>
-                                                    <span>Add to Playlist</span>
+                                                    <span><fmt:message key="label.addToPlaylist" bundle="${loc}"/></span>
                                                 </a>
-
-
-                                                <form id="form1" style="display: none;">
-                                                    <input type="text" value="Я тут">
-                                                </form>
-
-
-
-                                                    <%--<ul class="dropdown-menu ">
-                                                        <li class="dropdown-item">
-                                                            <a href="javascript:void(0);"
-                                                               class="dropdown-link">
-                                                                <i class="la la-heart-o"></i>
-                                                                <span>l,kjmnhgfvds</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="dropdown-item">
-                                                            <a href="javascript:void(0);"
-                                                               class="dropdown-link">
-                                                                <i class="la la-heart-o"></i>
-                                                                <span>;uhikgydtfd</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>--%>
                                             </li>
 
-
-
-
-
                                             <li class="dropdown-item">
-                                                <a href="${pageContext.servletContext.contextPath}/controller?command=deleteSong&songId=${song.id}" class="dropdown-link">
+                                                <a href="${pageContext.servletContext.contextPath}/controller?command=deleteSong&songId=${song.id}"
+                                                   >
                                                     <i class="la la-trash"></i>
-                                                    <span>Delete</span>
+                                                    <span><fmt:message key="label.delete" bundle="${loc}"/></span>
                                                 </a>
                                             </li>
                                             <li class="dropdown-item">
-                                                <a href="${pageContext.servletContext.contextPath}/controller?command=editSong&songId=${song.id}" class="dropdown-link">
+                                                <a href="${pageContext.servletContext.contextPath}/controller?command=editSong&songId=${song.id}"
+                                                   >
                                                     <i class="la la-edit"></i>
-                                                    <span>Edit</span>
+                                                    <span><fmt:message key="label.edit" bundle="${loc}"/></span>
                                                 </a>
                                             </li>
                                         </ul>
@@ -135,9 +124,53 @@
                             </td>
 
                         </tr>
+
+
+
+
+
+
                     </c:forEach>
                 </table>
 
+
+                <%--<div class="popup-fade">
+                    <div class="popup">
+                        &lt;%&ndash; <a class="popup-close" href="#">Close</a>&ndash;%&gt;
+                        <div class="card-header">
+                            <h6 class="card-title mb-0">Add To Playlist</h6>
+                        </div>
+                        <div class="card-body">
+                            <form action="#" method="post">
+
+                                <div class="form-row form-group">
+                                    <select name="playlistsList" class="form-control" style="width: 300px">
+
+                                        <option value="" disabled selected hidden>Choose a Playlist...</option>
+
+                                        <option>${editId}</option>
+
+                                        <c:forEach var="item" items="${requestScope.playlistList}">
+                                            <option>${item.artistName}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+
+                                <button type="submit" class="btn btn-brand btn-air btn-center">Add to Playlist</button>
+                            </form>
+
+                            <form action="#" method="post">
+
+                                <div class="form-row form-group">
+                                    <input type="text" class="form-control" placeholder="Create new Playlist"
+                                           id="playlistName" name="playlistName" style="width: 300px"
+                                           autocomplete="off">
+                                </div>
+                                <button type="submit" class="btn btn-brand btn-air btn-center">Create and Add</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>--%>
 
                 <%--For displaying Page numbers.
                 The when condition does not display a link for the current page--%>
@@ -188,6 +221,7 @@
 </div>
 
 
+
 <script>
     function disp(form) {
         if (form.style.display == "none") {
@@ -196,4 +230,45 @@
             form.style.display = "none";
         }
     }
+
+    function openForm() {
+        document.getElementById("myForm").style.display = "flex";
+    }
+
+    function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+    }
+
+
+    function changeValue(x) {
+
+    }
+
+
+    $(document).ready(function ($) {
+        $('.popup-open').click(function () {
+            $('.popup-fade').fadeIn();
+            return false;
+        });
+
+        $('.popup-close').click(function () {
+            $(this).parents('.popup-fade').fadeOut();
+            return false;
+        });
+
+        $(document).keydown(function (e) {
+            if (e.keyCode === 27) {
+                e.stopPropagation();
+                $('.popup-fade').fadeOut();
+            }
+        });
+
+        $('.popup-fade').click(function (e) {
+            if ($(e.target).closest('.popup').length == 0) {
+                $(this).fadeOut();
+            }
+        });
+    });
+
+
 </script>

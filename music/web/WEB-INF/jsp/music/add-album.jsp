@@ -49,7 +49,9 @@
     <!-- Begin | Page Wrapper [[ Find at scss/framework/base/wrapper/wrapper.scss ]] -->
     <main id="pageWrapper">
 
-        <jsp:include page="../fragment/header.jsp"/>
+        <jsp:include page="../fragment/header.jsp">
+            <jsp:param name="page" value="addAlbumPage"/>
+        </jsp:include>
 
 
         <!-- Begin | Main Container [[ Find at scss/base/core.scss ]] -->
@@ -58,30 +60,35 @@
                 <div class="col-xl-8 col-md-10 mx-auto">
                     <div class="card">
                         <div class="card-header">
-                            <h6 class="card-title mb-0">Create Album</h6>
+                            <h6 class="card-title mb-0"><fmt:message key="label.createAlbum" bundle="${loc}"/></h6>
                         </div>
                         <div class="card-body">
                             <form method="post"
                                   action="${pageContext.servletContext.contextPath}/controller?command=addAlbum">
                                 <div class="form-row form-group">
-                                    <label for="albumName" class="col-md-4 text-md-right col-form-label">Album
-                                        Name</label>
+                                    <label for="albumName" class="col-md-4 text-md-right col-form-label">
+                                        <fmt:message key="label.albumName" bundle="${loc}"/>
+                                    </label>
                                     <div class="col-md-7">
                                         <input type="text" id="albumName" name="albumName" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="form-row form-group">
-                                    <label for="year" class="col-md-4 text-md-right col-form-label">Year</label>
+                                    <label for="year" class="col-md-4 text-md-right col-form-label">
+                                        <fmt:message key="label.year" bundle="${loc}"/>
+                                    </label>
                                     <div class="col-md-7">
                                         <input type="number" id="year" name="year" value="2020" min="1900" max="${currentYear}" step="1">
                                     </div>
                                 </div>
 
                                 <div class="form-row form-group">
-                                    <label class="col-md-4 text-md-right col-form-label">Artist Name</label>
+                                    <label class="col-md-4 text-md-right col-form-label">
+                                        <fmt:message key="label.artistName" bundle="${loc}"/>
+                                    </label>
                                     <div class="col-md-7">
-                                        <select data-placeholder="Choose a Artist..." class="form-control chosen-select"
+                                        <select data-placeholder="<fmt:message key="label.chooseArtist" bundle="${loc}"/>" class="form-control chosen-select"
                                                 name="artistsName">
                                             <c:forEach var="item" items="${requestScope.artistsName}">
                                                 <option>${item.artistName}</option>
@@ -94,8 +101,12 @@
                                     <div class="row">
                                         <div class="col-md-4"></div>
                                         <div class="col-md-7">
-                                            <button type="submit" class="btn btn-brand btn-air">Save Album</button>
-                                            <button type="button" class="btn btn-outline-secondary">Clear Form</button>
+                                            <button type="submit" class="btn btn-brand btn-air">
+                                                <fmt:message key="label.saveAlbum" bundle="${loc}"/>
+                                            </button>
+                                            <button type="button" class="btn btn-outline-secondary">
+                                                <fmt:message key="label.clearForm" bundle="${loc}"/>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

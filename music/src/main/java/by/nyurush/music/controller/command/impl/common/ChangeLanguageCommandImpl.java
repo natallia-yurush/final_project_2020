@@ -2,9 +2,13 @@ package by.nyurush.music.controller.command.impl.common;
 
 import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandResult;
+import by.nyurush.music.controller.command.impl.user.HomeCommandImpl;
+import by.nyurush.music.service.exception.ServiceException;
+import by.nyurush.music.service.impl.TrackService;
 import by.nyurush.music.util.constant.ConstantAttributes;
 import by.nyurush.music.util.constant.ConstantMessages;
 import by.nyurush.music.util.constant.ConstantPathPages;
+import by.nyurush.music.util.language.GenreUtil;
 import by.nyurush.music.util.language.ResourceBundleUtil;
 import by.nyurush.music.util.validation.StringUtil;
 
@@ -37,7 +41,7 @@ public class ChangeLanguageCommandImpl implements Command {
             langCookie = new Cookie(ConstantAttributes.LANGUAGE, ConstantAttributes.DEFAULT_LANG);
         }
 
-       // ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
+
         /*
         if (!StringUtil.areNotNull(page)) {
             session.setAttribute("parametersInfo", rb.getString(ConstantMessages.WRONG_OPERATION_KEY));
@@ -53,11 +57,20 @@ public class ChangeLanguageCommandImpl implements Command {
             throw new UnsupportedOperationException("Unknown language: " + lang);
         }
 
+        ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
+        TrackService trackService = new TrackService();
+        try {
+            session.setAttribute(ConstantAttributes.GENRES, GenreUtil.getGenres(trackService.findAllGenres(), rb));
+        } catch (ServiceException e) {
+            //TODO
+            e.printStackTrace();
+        }
+
         //TODO: All pages
-        System.out.println(req.getContextPath());
+/*        System.out.println(req.getContextPath());
         System.out.println(req.getRequestURI());
         System.out.println(req.getRequestURL());
-        System.out.println(req.getHeader("Refer"));
+        System.out.println(req.getHeader("Refer"));*/
 
 
         String uri = req.getRequestURI();
@@ -82,10 +95,28 @@ public class ChangeLanguageCommandImpl implements Command {
             case "register":
             case "signup":
                 return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
+            case "profilePage":
             case "profile":
                 return CommandResult.forward(ConstantPathPages.PATH_PAGE_PROFILE);
             case "home":
+                new HomeCommandImpl().execute(req, resp);
                 return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME);
+            case "addArtistPage":
+                return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_ARTIST);
+            case "addMusicPage":
+                return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_SONG);
+            case "addAlbumPage":
+                return CommandResult.forward(ConstantPathPages.PATH_PAGE_CREATE_ALBUM);
+            case "genres":
+                return CommandResult.forward(ConstantPathPages.PATH_PAGE_GENRES);
+            case "artists":
+                return CommandResult.forward(ConstantPathPages.PATH_PAGE_ARTISTS);
+            case "search" :
+                return CommandResult.forward(ConstantPathPages.PATH_PAGE_SEARCH);
+            case "editSong":
+                return CommandResult.forward(ConstantPathPages.PATH_PAGE_EDIT_SONG);
+            case "addToPlaylistPage":
+                return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_TO_PLAYLIST);
 
 
 

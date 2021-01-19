@@ -5,17 +5,17 @@ import java.util.Objects;
 public class Playlist extends Entity {
     private String playlistName;
     private Boolean visible;
-    private User user;
+    private Account account;
 
     public Playlist(Integer id) {
         super(id);
     }
 
-    public Playlist(Integer id, String playlistName, Boolean visible, User user) {
+    public Playlist(Integer id, String playlistName, Boolean visible, Account account) {
         super(id);
         this.playlistName = playlistName;
         this.visible = visible;
-        this.user = user;
+        this.account = account;
     }
 
     public String getPlaylistName() {
@@ -34,12 +34,12 @@ public class Playlist extends Entity {
         this.visible = visible;
     }
 
-    public User getUser() {
-        return user;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @Override
@@ -50,12 +50,12 @@ public class Playlist extends Entity {
         Playlist playlist = (Playlist) o;
         return Objects.equals(playlistName, playlist.playlistName) &&
                 Objects.equals(visible, playlist.visible) &&
-                Objects.equals(user, playlist.user);
+                Objects.equals(account, playlist.account);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), playlistName, visible, user);
+        return Objects.hash(super.hashCode(), playlistName, visible, account);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class Playlist extends Entity {
         return "Playlist{" +
                 "playlistName='" + playlistName + '\'' +
                 ", visible=" + visible +
-                ", user=" + user +
+                ", account=" + account +
                 '}';
     }
 }

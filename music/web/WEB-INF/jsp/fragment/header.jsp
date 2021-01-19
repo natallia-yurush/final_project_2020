@@ -44,6 +44,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
                     <a class="dropdown-item"
+
                        href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=en_EN&page=${param.page}">
                         <span><fmt:message bundle="${loc}" key="label.languageEn"/></span>
                     </a>
@@ -61,7 +62,7 @@
                     <span class="pl-2">Halo Admin</span> <%--TODO: имя пользователя--%>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
-                    <c:if test="${sessionScope.user.role.accountRole == 'ADMIN'}">
+                    <c:if test="${sessionScope.user.role.accountRole == 'CLIENT'}">
                         <a class="dropdown-item"
                            href="${pageContext.servletContext.contextPath}/controller?command=profilePage">
                             <i class="ion-md-contact"></i>

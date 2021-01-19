@@ -46,6 +46,7 @@ public class ConstantAttributes {
     //music
     public static final String SONG_NAME = "songName";
     public static final String GENRE = "genre";
+    public static final String GENRES = "genres";
     public static final String SONG_FILE = "songFile";
     public static final String ARTISTS_NAME = "artistsName";
     public static final String ALBUM = "album";
@@ -59,4 +60,7 @@ public class ConstantAttributes {
     public static final String SEARCH_INPUT = "searchInput";
     public static final String SONG_ID = "songId";
     public static final String SONG = "song";
+    public static final String PLAYLIST = "playlist";
+    public static final String PLAYLIST_LIST = "playlistList";
+    public static final String PLAYLIST_NAME = "playlistName";
 }

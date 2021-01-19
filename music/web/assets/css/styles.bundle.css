@@ -2843,4 +2843,141 @@ audio:nth-child(2), audio:nth-child(4), audio:nth-child(6) {
 }
 
 
+/*///////////////////////////////////*/
+.open-button {
+  background-color: #2196F3;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 23px;
+  right: 28px;
+  width: 280px;
+}
+
+.form-popup {
+  /*display: none;*/
+  /*position: center;*/
+  /*bottom: 0;
+  right: 15px;*/
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  /*background-color: rgba(0, 0, 0, 0.3);*/
+  /*z-index: 1;*/
+
+
+
+}
+
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+
+
+  z-index: 9;
+  position: center;
+}
+
+.form-container input[type=text], .form-container input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #cbcbcb;
+}
+
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+  background-color: #cbcbcb;
+  outline: none;
+}
+
+.form-container .btn {
+  background-color: #1976D2;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.form-container .cancel {
+  background-color: #448AFF;
+}
+
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
+
+
+
+
+
+
+.popup-fade {
+/*  content: '';*/
+  background: #5d5b5b;
+/*  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;*/
+  /*opacity: 0.7;*/
+  /*z-index: 9999;*/
+}
+/*.popup-fade:before {
+  content: '';
+  background: #000;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.7;
+  z-index: 9999;
+}*/
+.popup {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  padding: 20px;
+  width: 360px;
+  margin-left: -200px;
+/*  background: #fff;
+  border: 1px solid #7028a5;*/
+/*  border-radius: 4px;
+  z-index: 99999;
+  opacity: 1;*/
+}
+.popup-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.btn-center {
+  margin: auto;
+  display: block;
+  position: relative;
+}
+
+
 

@@ -61,7 +61,9 @@
     <!-- Begin | Page Wrapper [[ Find at scss/framework/base/wrapper/wrapper.scss ]] -->
     <main id="pageWrapper">
 
-        <jsp:include page="../fragment/header.jsp"/>
+        <jsp:include page="../fragment/header.jsp">
+            <jsp:param name="page" value="artists"/>
+        </jsp:include>
 
         <!-- Page Banner [[ Find at scss/base/core.scss ]] -->
         <div class="banner bg-song"></div>
@@ -81,16 +83,16 @@
 
                             <c:choose>
                                 <c:when test="${not empty param.albumName}">
-                                    <h4>Album <c:out value="${param.albumName}"/>. Songs</h4>
+                                    <h4><fmt:message key="label.album" bundle="${loc}"/> <c:out value="${param.albumName}"/>. <fmt:message key="label.songs" bundle="${loc}"/></h4>
                                 </c:when>
                                 <c:otherwise>
-                                    <h4>Artist <c:out value="${param.artistName}"/>. Songs</h4>
+                                    <h4><fmt:message key="label.artist" bundle="${loc}"/> <c:out value="${param.artistName}"/>. <fmt:message key="label.songs" bundle="${loc}"/></h4>
                                 </c:otherwise>
                             </c:choose>
 
 
                                 <%--<h4><c:out value="${param.artistName}"/> Songs</h4>--%>
-                            <p>Listen and Enjoy</p>
+                            <p><fmt:message key="label.listenEnjoy" bundle="${loc}"/></p>
                         </div>
                         <hr>
                     </div>
@@ -105,7 +107,7 @@
                                     <tr>
                                         <td>
                                             <div class="custom-card--inline-img">
-                                                <img src="${pageContext.request.contextPath}/resource/img/artists/${song.album.artist.imagePath}"
+                                                <img src="${pageContext.request.contextPath}/resource/img/artists/${song.album.artist.imagePath}" width="100px" height="100px"
                                                      class="card-img--radius-sm">
                                             </div>
                                         </td>
@@ -171,7 +173,7 @@
                     <div class="heading">
                         <div class="d-flex flex-wrap align-items-end">
                             <div class="flex-grow-1">
-                                <h4>Albums</h4>
+                                <h4><fmt:message key="label.albums" bundle="${loc}"/></h4>
                                 <p><c:out value="${param.artistName}"/></p>
                             </div>
                         </div>
@@ -201,7 +203,7 @@
                 <div class="heading">
                     <div class="d-flex flex-wrap align-items-end">
                         <div class="flex-grow-1">
-                            <h4>Artists</h4>
+                            <h4><fmt:message key="label.artists" bundle="${loc}"/></h4>
                         </div>
                     </div>
                     <hr>

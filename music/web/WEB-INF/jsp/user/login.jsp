@@ -10,15 +10,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
-<%--<fmt:setLocale value="${sessionScope.local}" scope="session"/>--%>
 <fmt:setLocale value="${cookie.language.value}"/>
 <fmt:setBundle basename="pagecontent" var="loc"/>
 
-
 <html>
 <head>
-    <title><fmt:message key="title.login" bundle="${loc}"/></title>
+    <title>Music Time <fmt:message key="title.login" bundle="${loc}"/></title>
     <link rel="shortcut icon" href='<c:url value="/resource/img/wallpaper-music.png"/>' type="image/png">
     <link type="text/css" rel="stylesheet" href='<c:url value="/resource/css/loginpage.css"/>'>
 </head>
@@ -28,7 +25,6 @@
 <div id="head">
     <nav>
         <ul>
-            <%--TODO: delete если изменишь подход к смене языка (switch)--%>
             <jsp:include page="../fragment/nav-language.jsp">
                 <jsp:param name="page" value="login"/>
             </jsp:include>

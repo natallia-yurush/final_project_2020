@@ -46,7 +46,9 @@
     <!-- Begin | Page Wrapper [[ Find at scss/framework/base/wrapper/wrapper.scss ]] -->
     <main id="pageWrapper">
 
-        <jsp:include page="../fragment/header.jsp"/>
+        <jsp:include page="../fragment/header.jsp">
+            <jsp:param name="page" value="addArtistPage"/>
+        </jsp:include>
 
 
         <!-- Begin | Main Container [[ Find at scss/base/core.scss ]] -->
@@ -55,26 +57,32 @@
                 <div class="col-xl-8 col-md-10 mx-auto">
                     <div class="card">
                         <div class="card-header">
-                            <h6 class="card-title mb-0">Add Artist</h6>
+                            <h6 class="card-title mb-0">
+                                <fmt:message key="label.addArtist" bundle="${loc}"/>
+                            </h6>
                         </div>
                         <div class="card-body">
                             <form method="post" enctype="multipart/form-data"
                                   action="${pageContext.servletContext.contextPath}/controller?command=addArtist">
                                 <div class="form-row form-group">
-                                    <label for="artistName" class="col-md-4 text-md-right col-form-label">Artist
-                                        Name</label>
+                                    <label for="artistName" class="col-md-4 text-md-right col-form-label">
+                                        <fmt:message key="label.artistName" bundle="${loc}"/>
+                                    </label>
                                     <div class="col-md-7">
                                         <input type="text" id="artistName" name="artistName" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-row form-group">
-                                    <label for="artistImage" class="col-md-4 text-md-right col-form-label">Artist
-                                        Image</label>
+                                    <label for="artistImage" class="col-md-4 text-md-right col-form-label">
+                                        <fmt:message key="label.artistImage" bundle="${loc}"/>
+                                    </label>
                                     <div class="col-md-7">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="artistImage"
                                                    name="artistImage">
-                                            <label class="custom-file-label" for="artistImage">Choose file</label>
+                                            <label class="custom-file-label" for="artistImage">
+                                                <fmt:message key="label.chooseFile" bundle="${loc}"/>
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -85,8 +93,12 @@
                                     <div class="row">
                                         <div class="col-md-4"></div>
                                         <div class="col-md-7">
-                                            <button type="submit" class="btn btn-brand btn-air">Save Artist</button>
-                                            <button type="button" class="btn btn-outline-secondary">Clear Form</button>
+                                            <button type="submit" class="btn btn-brand btn-air">
+                                                <fmt:message key="label.saveArtist" bundle="${loc}"/>
+                                            </button>
+                                            <button type="button" class="btn btn-outline-secondary">
+                                                <fmt:message key="label.clearForm" bundle="${loc}"/>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

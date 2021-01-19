@@ -47,9 +47,8 @@ public class LoginCommandImpl implements Command {
 
         try {
             TrackService trackService = new TrackService();
+            session.setAttribute(ConstantAttributes.GENRES, GenreUtil.getGenres(trackService.findAllGenres(), rb));
 
-
-            session.setAttribute("genres", GenreUtil.getGenres(trackService.findAllGenres(), rb));
 
             AccountService accountService = new AccountService();
             //UserService userService = new UserService(new DaoHelperFactory());
@@ -58,9 +57,11 @@ public class LoginCommandImpl implements Command {
             Optional<Account> account = accountService.isAccountExist(login, password);
             if (account.isPresent()) {
                 /*session.setAttribute("role", user.get().getRole());*/
-
-                if(account.get().getRole() == AccountRole.ADMIN) {
-                    session.setAttribute("user", account.get());
+                Account acc = account.get();
+                if(acc.getRole() == AccountRole.ADMIN) {
+                    session.setAttribute(ConstantAttributes.USER, acc);
+                   // PlaylistService playlistService = new PlaylistService();
+                   // session.setAttribute(ConstantAttributes.PLAYLIST, playlistService.findByUserId(acc.getId()));
 
                     //TODO?
                     new HomeCommandImpl().execute(req, resp);
@@ -81,7 +82,7 @@ public class LoginCommandImpl implements Command {
             req.setAttribute(ConstantAttributes.ERROR_AUTH, rb.getString(ConstantMessages.AUTHORISATION_FAILED_KEY));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_LOGIN);
         } catch (ServiceException e) {
-            e.printStackTrace();//TODO LOGGER ( AND throw? )
+            e.printStackTrace();//TODO LOGGER ( AND show message )
         }
         return null; //todo delete this line after logger?
     }
