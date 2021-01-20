@@ -71,7 +71,7 @@
                             <form action="${pageContext.servletContext.contextPath}/controller?command=addToPlaylist&songId=${param.songId}"
                                   method="post">
                                 <div class="form-row form-group">
-                                    <select name="playlistsList" class="form-control" style="width: 300px">
+                                    <select name="playlistName" class="form-control" style="width: 300px">
 
                                         <option value="" disabled selected hidden><fmt:message key="label.choosePlaylist" bundle="${loc}"/></option>
 

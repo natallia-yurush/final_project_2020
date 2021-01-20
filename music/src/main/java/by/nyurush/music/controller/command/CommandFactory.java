@@ -38,6 +38,10 @@ public class CommandFactory {
         commands.put("addToPlaylistPage", new AddToPlaylistPageCommandImpl());
         commands.put("addToPlaylist", new AddToPlaylistCommandImpl());
         commands.put("createAndAddToPlaylist", new CreatePlaylistAndAddSongCommandImpl());
+        commands.put("favorites", new FavoritesCommandImpl());
+        commands.put("playlistsPage", new PlaylistsPageCommandImpl());
+        commands.put("playlists", new PlaylistsCommandImpl());
+        commands.put("deletePlaylist", new DeletePlaylistCommandImpl());
     }
 
     public static Command getCommand(String commandName) {

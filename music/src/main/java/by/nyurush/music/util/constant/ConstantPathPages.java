@@ -14,7 +14,9 @@ public class ConstantPathPages {
     public static final String PATH_PAGE_EDIT_SONG = "/WEB-INF/jsp/music/edit-song.jsp";
 
     public static final String PATH_PAGE_GENRES = "/WEB-INF/jsp/music/genres.jsp";
+    public static final String PATH_PAGE_FAVORITES = "/WEB-INF/jsp/user/favorites.jsp";
     public static final String PATH_PAGE_ARTISTS = "/WEB-INF/jsp/music/artists.jsp";
+    public static final String PATH_PAGE_PLAYLISTS = "/WEB-INF/jsp/user/playlists.jsp";
     public static final String PATH_PAGE_ADD_TO_PLAYLIST = "/WEB-INF/jsp/fragment/add-to-playlist.jsp";
 
     public static final String PATH_PAGE_SEARCH = "/WEB-INF/jsp/music/search.jsp";

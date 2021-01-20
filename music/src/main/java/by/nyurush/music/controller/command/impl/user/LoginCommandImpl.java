@@ -58,24 +58,25 @@ public class LoginCommandImpl implements Command {
             if (account.isPresent()) {
                 /*session.setAttribute("role", user.get().getRole());*/
                 Account acc = account.get();
+                new HomeCommandImpl().execute(req, resp);
                 if(acc.getRole() == AccountRole.ADMIN) {
                     session.setAttribute(ConstantAttributes.USER, acc);
                    // PlaylistService playlistService = new PlaylistService();
                    // session.setAttribute(ConstantAttributes.PLAYLIST, playlistService.findByUserId(acc.getId()));
 
                     //TODO?
-                    new HomeCommandImpl().execute(req, resp);
 
-                    return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME); //TODO: чтобы везде возвращало сюда
+
+                    //return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME); //TODO: чтобы везде возвращало сюда
                     //TODO ADMIN
                     //return CommandResult.forward(ConstantPathPages.PATH_PAGE_MAIN); //ADMIN
                 } else {
                     session.setAttribute("user", userService.findByLogin(login).get());
-                    return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME);
+
                     //TODO CLIENT + можно найти именно юзера и установить его в сессию, а может и не нужно:)
                     //return CommandResult.forward(ConstantPathPages.PATH_PAGE_MAIN); //CLIENT
                 }
-
+                return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME);
 
             }
 

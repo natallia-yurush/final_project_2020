@@ -73,8 +73,20 @@
         <!-- Begin | Main Container [[ Find at scss/base/core.scss ]] -->
         <div class="main-container" id="appRoute">
 
+            <div class="heading">
+                <div class="d-flex flex-wrap align-items-end">
+                    <div class="flex-grow-1">
+                        <h4><fmt:message key="label.songs" bundle="${loc}"/></h4>
+                        <p><fmt:message key="label.listenEnjoy" bundle="${loc}"/></p>
+                    </div>
+                    <%--<a href="songs.html" class="btn btn-sm btn-pill btn-air btn-primary">View All</a>--%>
+                </div>
+                <hr>
+            </div>
 
-            <jsp:include page="../fragment/songs.jsp"/>
+            <jsp:include page="../fragment/songs.jsp">
+                <jsp:param name="page" value="home"/>
+            </jsp:include>
             <%--<!-- Begin | Section [[ Find at scss/base/core.scss ]] -->
             <div class="section">
 

@@ -59,7 +59,14 @@
             <li class="dropdown fade-in">
                 <a href="javascript:void(0);" class="d-flex align-items-center py-2" role="button" id="userMenu"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="pl-2">Halo Admin</span> <%--TODO: имя пользователя--%>
+                    <span class="pl-2">
+                        <c:if test="${sessionScope.user.role.accountRole == 'CLIENT'}">
+                            <fmt:message key="label.hello" bundle="${loc}"/> ${sessionScope.user.firstName}!
+                        </c:if>
+                        <c:if test="${sessionScope.user.role.accountRole == 'ADMIN'}">
+                            <fmt:message key="label.helloAdmin" bundle="${loc}"/>
+                        </c:if>
+                    </span> <%--TODO: имя пользователя--%>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
                     <c:if test="${sessionScope.user.role.accountRole == 'CLIENT'}">

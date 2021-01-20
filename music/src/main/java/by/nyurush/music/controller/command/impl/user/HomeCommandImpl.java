@@ -20,8 +20,8 @@ public class HomeCommandImpl implements Command {
         try {
             int page = 1;
             int recordsPerPage = 10;
-            if (req.getParameter("page") != null)
-                page = Integer.parseInt(req.getParameter("page"));
+            if (req.getParameter("pageNo") != null)
+                page = Integer.parseInt(req.getParameter("pageNo"));
             TrackService trackService = new TrackService();
             List<Track> list = trackService.findForPage((page - 1) * recordsPerPage, recordsPerPage);
             int noOfRecords = trackService.getNoOfRecords();

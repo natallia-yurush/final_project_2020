@@ -28,7 +28,7 @@ public class PlaylistService {//} extends Service {
         }
     }
 
-    public Optional<Playlist> findBuId(Integer id) throws ServiceException {
+    public Optional<Playlist> findById(Integer id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             playlistDao = daoHelper.createPlaylistDao();
             return playlistDao.findById(id);

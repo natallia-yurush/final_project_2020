@@ -15,21 +15,21 @@
 
 <html>
 <head>
+
     <title>Music Time</title>
 
-    <!-- Favicon -->
     <link href='<c:url value="/resource/img/purple-img.png"/>' rel="icon"/>
-
-    <!-- IOS Touch Icons -->
 
     <!-- Styles -->
     <link href='<c:url value="/assets/css/vendors.bundle.css"/>' rel="stylesheet" type="text/css"/>
     <link href='<c:url value="/assets/css/styles.bundle.css"/>' rel="stylesheet" type="text/css"/>
-    <link href='<c:url value="/resource/css/loginpage.css"/>' rel="stylesheet" type="text/css"/>
 
     <!-- Google fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/audio-touch/audio-touch.css"/>
 
     <script src="assets/js/vendors.bundle.js"></script>
     <script src="assets/js/scripts.bundle.js"></script>
@@ -39,12 +39,17 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
+
+
 <body>
 
 <jsp:include page="../fragment/loading.jsp"/>
 
+<!-- Begin | Wrapper [[ Find at scss/framework/base/wrapper/wrapper.scss ]] -->
 <div id="wrapper" data-scrollable="true">
 
+
+    <%--<jsp:include page="../fragment/left-aside-admin.jsp"/>--%>
     <c:if test="${sessionScope.user.role.accountRole == 'CLIENT'}">
         <jsp:include page="../fragment/left-aside-client.jsp"/>
     </c:if>
@@ -52,14 +57,17 @@
         <jsp:include page="../fragment/left-aside-admin.jsp"/>
     </c:if>
 
+
     <!-- Begin | Page Wrapper [[ Find at scss/framework/base/wrapper/wrapper.scss ]] -->
     <main id="pageWrapper">
 
-        <%--TODO: delete если изменишь подход к смене языка (switch)--%>
-            <jsp:include page="../fragment/header.jsp"/>
+        <jsp:include page="../fragment/header.jsp">
+            <jsp:param name="page" value="profile"/>
+        </jsp:include>
 
 
-        <!-- Begin | Main Container [[ Find at scss/base/core.scss ]] -->
+
+
         <div class="main-container under-banner-content" id="appRoute">
             <div class="row section">
                 <div class="col-xl-10 mx-auto">
@@ -148,16 +156,34 @@
             </div>
         </div>
 
-        <footer id="footer" class="bg-img"></footer>
+
+
+
+        <!--TODO: удалить верхнее объявление дива и редачить нижнее!-->
+
+        <!-- End | Main Container -->
+
+        <!-- Begin | Footer [[ Find at scss/framework/base/footer/footer.scss ]] -->
+        <footer id="footer" class="bg-img">
+
+        </footer>
+        <!-- End | Footer -->
+
+        <%--TODO: playeer--%>
+        <%--
+        <jsp:include page="../fragment/audio-player.jsp"/>--%>
 
     </main>
     <!-- End | Page Wrapper -->
-</div>
-    <!-- Back Drop -->
-    <div class="backdrop header-backdrop"></div>
-    <div class="backdrop sidebar-backdrop"></div>
 
-    <!-- Scripts -->
+</div>
+<!-- End | Wrapper -->
+
+<!-- Back Drop -->
+<div class="backdrop header-backdrop"></div>
+<div class="backdrop sidebar-backdrop"></div>
+
+<!-- Scripts -->
 
 
 </body>

@@ -28,7 +28,7 @@ public class PlaylistDaoImpl extends AbstractDao<Playlist> {
     private static final String FIND_BY_NAME_AND_USER_ID = "SELECT playlist.id, playlist.name, playlist.visible, account_id, account.id, login, password, role  " +
             "FROM playlist " +
             "JOIN account ON playlist.account_id = account.id " +
-            "WHERE playlist.name LIKE ? AND playlist.id = ?";
+            "WHERE playlist.name LIKE ? AND account.id = ?";
     private static final String FIND_BY_USER_ID = "SELECT playlist.id, playlist.name, playlist.visible, account_id, account.id, login, password, role  " +
             "FROM playlist " +
             "JOIN account ON playlist.account_id = account.id " +

@@ -107,7 +107,7 @@
                                     <tr>
                                         <td>
                                             <div class="custom-card--inline-img">
-                                                <img src="${pageContext.request.contextPath}/resource/img/artists/${song.album.artist.imagePath}" width="100px" height="100px"
+                                                <img src="${pageContext.request.contextPath}/resource/img/artists/${song.album.artist.imagePath}" alt="${song.album.artist.imagePath}"
                                                      class="card-img--radius-sm">
                                             </div>
                                         </td>
@@ -125,37 +125,6 @@
                                                 <source src='${pageContext.request.contextPath}/resource/songs/${song.trackPath}'/>
                                             </audio>
                                         </td>
-                                            <%--
-                                                                                        <td>
-                                                                                            <ul class="custom-card--labels d-flex ml-auto">
-                                                                                                    &lt;%&ndash;TODO: появляется, если в избранном&ndash;%&gt;
-                                                                                                <li><span class="badge badge-pill badge-danger">
-                                                                                                <i class="la la-heart"></i></span></li>
-                                                                                                <li> &lt;%&ndash;class="dropleft">&ndash;%&gt;
-                                                                                                    <a href=""
-                                                                                                       class="btn btn-icon-only p-0 w-auto h-auto"
-                                                                                                       data-toggle="dropdown" aria-haspopup="true"
-                                                                                                       aria-expanded="false">
-                                                                                                        <i class="la la-ellipsis-h"></i>
-                                                                                                    </a>
-                                                                                                    <ul class="dropdown-menu">
-                                                                                                        <li> &lt;%&ndash;class="dropdown-item">&ndash;%&gt;
-                                                                                                            <a href=""
-                                                                                                               class="dropdown-link favorite">
-                                                                                                                <i class="la la-heart-o"></i>
-                                                                                                                <span>Favorite</span>
-                                                                                                            </a>
-                                                                                                        </li>
-                                                                                                        <li class="dropdown-item">
-                                                                                                            <a href="javascript:void(0);" class="dropdown-link">
-                                                                                                                <i class="la la-plus"></i>
-                                                                                                                <span>Add to Playlist</span>
-                                                                                                            </a>
-                                                                                                        </li>
-                                                                                                    </ul>
-                                                                                                </li>
-                                                                                            </ul>
-                                                                                        </td>--%>
 
                                     </tr>
                                 </c:forEach>

@@ -37,17 +37,17 @@
         <ul class="navbar-nav" data-scrollable="true">
             <li class="nav-item nav-header"><fmt:message key="label.browseMusic" bundle="${loc}"/></li>
             <li class="nav-item">
-                <a href="home.html" class="nav-link active"><i class="la la-home"></i><span>
+                <a href="${pageContext.servletContext.contextPath}/controller?command=home" class="nav-link active"><i class="la la-home"></i><span>
                     <fmt:message key="label.home" bundle="${loc}"/>
                 </span></a>
             </li>
             <li class="nav-item">
-                <a href="genres.html" class="nav-link"><i class="la la-diamond"></i><span>
+                <a href="${pageContext.servletContext.contextPath}/controller?command=genres" class="nav-link"><i class="la la-diamond"></i><span>
                     <fmt:message key="label.genres" bundle="${loc}"/>
                 </span></a>
             </li>
             <li class="nav-item">
-                <a href="artists.html" class="nav-link"><i class="la la-microphone"></i><span>
+                <a href="${pageContext.servletContext.contextPath}/controller?command=artists" class="nav-link"><i class="la la-microphone"></i><span>
                     <fmt:message key="label.artists" bundle="${loc}"/>
                 </span></a>
             </li>
@@ -56,12 +56,12 @@
                 <fmt:message key="lable.yourMusic" bundle="${loc}"/>
             </li>
             <li class="nav-item">
-                <a href="favorites.html" class="nav-link"><i class="la la-heart-o"></i><span>
+                <a href="${pageContext.servletContext.contextPath}/controller?command=favorites" class="nav-link"><i class="la la-heart-o"></i><span>
                     <fmt:message key="lable.favorites" bundle="${loc}"/>
                 </span></a>
             </li>
             <li class="nav-item">
-                <a href="history.html" class="nav-link"><i class="la la-history"></i><span>
+                <a href="${pageContext.servletContext.contextPath}/controller?command=playlistsPage" class="nav-link"><i class="la la-history"></i><span>
                     <fmt:message key="label.myPlaylists" bundle="${loc}"/>
                 </span></a>
             </li>

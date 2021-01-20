@@ -87,7 +87,7 @@
 
             <%--ARTISTS--%>
             <div class="section">
-            <%--<div class="search-card" data-scrollable="true">--%>
+                <%--<div class="search-card" data-scrollable="true">--%>
 
                 <!-- Begin | Search Result List -->
                 <div class="mb-3">
@@ -95,7 +95,7 @@
                         <!-- Begin | Search Result List Header -->
                         <div class="d-flex">
                             <span class="text-uppercase mr-auto font-weight-bold text-dark">
-                                <fmt:message key="label.addSong" bundle="${loc}"/>
+                                <fmt:message key="label.artists" bundle="${loc}"/>
                             </span>
                             <a href="${pageContext.servletContext.contextPath}/controller?command=artists">
                                 <fmt:message key="label.viewAll" bundle="${loc}"/>
@@ -125,57 +125,77 @@
                 <!-- End | Search Result List -->
 
 
-                <c:if test="${not empty requestScope.songsList}">
-                    <%--TODO--%>
-                    <!-- Begin | Search Result List -->
-                    <div class="mb-3">
-                        <!-- Begin | Search Result List Header -->
-                        <div class="d-flex">
-                            <span class="text-uppercase mr-auto font-weight-bold text-dark">
-                                <fmt:message key="label.track" bundle="${loc}"/>
-                            </span>
-                            <a href="${pageContext.servletContext.contextPath}/controller?command=home">
-                                <fmt:message key="label.viewAll" bundle="${loc}"/>
-                            </a>
-                        </div>
-                        <!-- End | Search Result List Header -->
-                        <hr>
-                        <!-- Begin | Result List -->
-                        <div class="row">
-                            <div class="col-xl-4 col-md-6 col-12">
-                                <div class="custom-card mb-3">
-                                    <table>
-                                        <c:forEach items="${requestScope.songsList}" var="song">
-                                            <tr>
-                                                <td>
-                                                    <div class="custom-card--inline-img">
-                                                        <img src="${pageContext.request.contextPath}/resource/img/artists/${song.album.artist.imagePath}"
-                                                             class="card-img--radius-sm">
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="custom-card--inline-desc">
-                                                        <p class="text-truncate mb-0"><c:out value="${ song.trackName }"/></p>
-                                                        <p class="text-truncate text-muted font-sm"><c:out
-                                                                value="${ song.album.artist.artistName }"/></p>
-                                                    </div>
-                                                </td>
+                <%-- <c:if test="${not empty requestScope.songsList}">--%>
 
-                                                <td>
-                                                    <audio preload="auto" controls>
-                                                        <source src='${pageContext.request.contextPath}/resource/songs/${song.trackPath}'/>
-                                                    </audio>
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
-                                    </table>
-                                </div>
+
+                <c:if test="${not empty requestScope.songs}">
+
+
+                    <div class="heading">
+                        <div class="d-flex flex-wrap align-items-end">
+                            <div class="flex-grow-1">
+                                <h4><fmt:message key="label.songs" bundle="${loc}"/></h4>
+                                <p><fmt:message key="label.listenEnjoy" bundle="${loc}"/></p>
                             </div>
                         </div>
-                        <!-- End | Result List -->
+                        <hr>
                     </div>
-                    <!-- End | Search Result List -->
+                    <jsp:include page="../fragment/songs.jsp">
+                        <jsp:param name="page" value="search"/>
+                    </jsp:include>
                 </c:if>
+
+
+                <%--TODO--%>
+                <!-- Begin | Search Result List -->
+                <%--<div class="mb-3">
+                    <!-- Begin | Search Result List Header -->
+                    <div class="d-flex">
+                        <span class="text-uppercase mr-auto font-weight-bold text-dark">
+                            <fmt:message key="label.songs" bundle="${loc}"/>
+                        </span>
+                        <a href="${pageContext.servletContext.contextPath}/controller?command=home">
+                            <fmt:message key="label.viewAll" bundle="${loc}"/>
+                        </a>
+                    </div>
+                    <!-- End | Search Result List Header -->
+                    <hr>
+                    <!-- Begin | Result List -->
+                    <div class="row">
+                        <div class="col-xl-4 col-md-6 col-12">
+                            <div class="custom-card mb-3">
+                                <table>
+                                    <c:forEach items="${requestScope.songsList}" var="song">
+                                        <tr>
+                                            <td>
+                                                <div class="custom-card--inline-img">
+                                                    <img src="${pageContext.request.contextPath}/resource/img/artists/${song.album.artist.imagePath}"
+                                                         class="card-img--radius-sm">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="custom-card--inline-desc">
+                                                    <p class="text-truncate mb-0"><c:out value="${ song.trackName }"/></p>
+                                                    <p class="text-truncate text-muted font-sm"><c:out
+                                                            value="${ song.album.artist.artistName }"/></p>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <audio preload="auto" controls>
+                                                    <source src='${pageContext.request.contextPath}/resource/songs/${song.trackPath}'/>
+                                                </audio>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End | Result List -->
+                </div>--%>
+                <!-- End | Search Result List -->
+                <%--</c:if>--%>
 
 
                 <!-- Begin | Search Result List -->
@@ -214,7 +234,6 @@
                 <!-- End | Search Result List -->
 
             </div>
-
 
 
         </div>

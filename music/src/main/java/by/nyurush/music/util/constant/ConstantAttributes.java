@@ -63,4 +63,6 @@ public class ConstantAttributes {
     public static final String PLAYLIST = "playlist";
     public static final String PLAYLIST_LIST = "playlistList";
     public static final String PLAYLIST_NAME = "playlistName";
+    public static final String PLAYLIST_ID = "playlistId";
+    public static final String FAVORITE = "favorite";
 }

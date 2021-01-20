@@ -49,6 +49,11 @@
             <li class="nav-item">
                 <a href="${pageContext.servletContext.contextPath}/controller?command=artists" class="nav-link"><i class="la la-microphone"></i><span><fmt:message key="label.artists" bundle="${loc}"/></span></a>
             </li>
+            <li class="nav-item">
+                <a href="${pageContext.servletContext.contextPath}/controller?command=playlistsPage" class="nav-link"><i class="la la-history"></i><span>
+                    <fmt:message key="label.playlists" bundle="${loc}"/>
+                </span></a>
+            </li>
             <%--
             <li class="nav-item">
                 <a href="history.html" class="nav-link"><i class="la la-history"></i><span>Albums</span></a>

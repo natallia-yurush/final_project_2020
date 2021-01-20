@@ -41,7 +41,7 @@ public class TrackDaoImpl extends AbstractDao<Track> {
             "JOIN genre ON track.genre_name = genre.name " +
             "JOIN album ON track.album_id = album.id " +
             "JOIN artist on album.artist_id = artist.id " +
-            "WHERE track.name LIKE ?";
+            "WHERE track.name LIKE ? LIMIT ?, ?";
     private static final String FIND_BY_ALBUM_NAME =
             "SELECT  track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path " +
             "FROM track " +
@@ -55,7 +55,7 @@ public class TrackDaoImpl extends AbstractDao<Track> {
             "JOIN genre ON track.genre_name = genre.name " +
             "JOIN album ON track.album_id = album.id " +
             "JOIN artist on album.artist_id = artist.id " +
-            "WHERE track.genre_name=?";
+            "WHERE track.genre_name=? LIMIT ?, ?";
     private static final String FIND_BY_ARTIST =
             "SELECT track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path " +
             "FROM artist_track " +
@@ -72,7 +72,7 @@ public class TrackDaoImpl extends AbstractDao<Track> {
             "JOIN genre ON track.genre_name = genre.name " +
             "JOIN album ON track.album_id = album.id " +
             "JOIN artist ON album.artist_id = artist.id " +
-            "WHERE playlist.id = ?";
+            "WHERE playlist.id = ? LIMIT ?, ?";
     private static final String FIND_BY_PLAYLIST_NAME = "SELECT track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path, playlist.id, playlist.name, playlist.visible " +
             "FROM playlist_track " +
             "JOIN playlist ON playlist_track.playlist_id = playlist.id " +
@@ -88,6 +88,12 @@ public class TrackDaoImpl extends AbstractDao<Track> {
     private static final String DELETE = "DELETE FROM track WHERE id=?";
     private static final String FIND_ALL_GENRES = "SELECT name FROM genre";
     private static final String GET_NUMBER_OF_RECORDS = "SELECT COUNT(*) FROM track";
+    private static final String GET_NUMBER_OF_RECORDS_BY_GENRE = "SELECT COUNT(*) FROM track WHERE genre_name = ?";
+    private static final String GET_NUMBER_OF_RECORDS_BY_NAME = "SELECT COUNT(*) FROM track WHERE name = ?";
+    private static final String GET_NUMBER_OF_RECORDS_BY_PLAYLIST_ID = "SELECT COUNT(*) FROM playlist_track " +
+            "JOIN playlist ON playlist_track.playlist_id = playlist.id  " +
+            "WHERE playlist.id = ?";
+
 
     public TrackDaoImpl(Connection connection) {
         super(connection);
@@ -183,11 +189,13 @@ public class TrackDaoImpl extends AbstractDao<Track> {
         return true;
     }
 
-    public List<Track> findByName(String name) throws DaoException {
+    public List<Track> findByName(String name, Integer offset, Integer recordsPerPage) throws DaoException {
         List<Track> tracksList = new ArrayList<>();
         Track track;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_NAME)) {
             preparedStatement.setString(1, "%" + name + "%");
+            preparedStatement.setInt(2, offset);
+            preparedStatement.setInt(3, recordsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 track = new TrackBuilder().build(resultSet);
@@ -215,11 +223,13 @@ public class TrackDaoImpl extends AbstractDao<Track> {
         return tracksList;
     }
 
-    public List<Track> findByGenre(String genre) throws DaoException {
+    public List<Track> findByGenre(String genre, Integer offset, Integer recordsPerPage) throws DaoException {
         List<Track> tracksList = new ArrayList<>();
         Track track;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_GENRE)) {
             preparedStatement.setString(1, genre);
+            preparedStatement.setInt(2, offset);
+            preparedStatement.setInt(3, recordsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 track = new TrackBuilder().build(resultSet);
@@ -247,11 +257,13 @@ public class TrackDaoImpl extends AbstractDao<Track> {
         return tracksList;
     }
 
-    public List<Track> findByPlaylistId(Integer playlistId) throws DaoException {
+    public List<Track> findByPlaylistId(Integer playlistId, Integer offset, Integer recordsPerPage) throws DaoException {
         List<Track> tracksList = new ArrayList<>();
         Track track;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_PLAYLIST_ID)) {
             preparedStatement.setInt(1, playlistId);
+            preparedStatement.setInt(2, offset);
+            preparedStatement.setInt(3, recordsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 track = new TrackBuilder().build(resultSet);
@@ -313,6 +325,46 @@ public class TrackDaoImpl extends AbstractDao<Track> {
         int count;
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(GET_NUMBER_OF_RECORDS);
+            resultSet.next();
+            count = resultSet.getInt(1);
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return count;
+    }
+
+    public Integer getNoOfRecordsByGenre(String genre) throws DaoException {
+        int count;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_NUMBER_OF_RECORDS_BY_GENRE)) {
+            preparedStatement.setString(1, genre);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            count = resultSet.getInt(1);
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return count;
+    }
+
+    public Integer getNoOfRecordsByName(String name) throws DaoException {
+        int count;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_NUMBER_OF_RECORDS_BY_NAME)) {
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            count = resultSet.getInt(1);
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return count;
+    }
+
+    public Integer getNoOfRecordsByPlaylistId(Integer id) throws DaoException {
+        int count;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_NUMBER_OF_RECORDS_BY_PLAYLIST_ID)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             count = resultSet.getInt(1);
         } catch (SQLException e) {

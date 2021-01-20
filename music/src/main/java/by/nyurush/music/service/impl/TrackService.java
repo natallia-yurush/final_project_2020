@@ -55,10 +55,10 @@ public class TrackService {// extends Service {
         }
     }
 
-    public List<Track> findByName(String name) throws ServiceException {
+    public List<Track> findByName(String name, Integer offset, Integer recordsPerPage) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             trackDao = daoHelper.createTrackDao();
-            return trackDao.findByName(name);
+            return trackDao.findByName(name, offset, recordsPerPage);
         } catch (Exception e) {
             throw new ServiceException(e.getMessage());
         }
@@ -73,10 +73,10 @@ public class TrackService {// extends Service {
         }
     }
 
-    public List<Track> findByGenre(String genre) throws ServiceException {
+    public List<Track> findByGenre(String genre, Integer offset, Integer recordsPerPage) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             trackDao = daoHelper.createTrackDao();
-            return trackDao.findByGenre(genre);
+            return trackDao.findByGenre(genre, offset, recordsPerPage);
         } catch (Exception e) {
             throw new ServiceException(e.getMessage());
         }
@@ -91,10 +91,10 @@ public class TrackService {// extends Service {
         }
     }
 
-    public List<Track> findByPlaylistId(Integer playlistId) throws ServiceException {
+    public List<Track> findByPlaylistId(Integer playlistId, Integer offset, Integer recordsPerPage) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             trackDao = daoHelper.createTrackDao();
-            return trackDao.findByPlaylistId(playlistId);
+            return trackDao.findByPlaylistId(playlistId, offset, recordsPerPage);
         } catch (Exception e) {
             throw new ServiceException(e.getMessage());
         }
@@ -131,6 +131,33 @@ public class TrackService {// extends Service {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             trackDao = daoHelper.createTrackDao();
             return trackDao.getNoOfRecords();
+        } catch (Exception e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public Integer getNoOfRecordsByGenre(String genre) throws ServiceException {
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            trackDao = daoHelper.createTrackDao();
+            return trackDao.getNoOfRecordsByGenre(genre);
+        } catch (Exception e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public Integer getNoOfRecordsByName(String name) throws ServiceException {
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            trackDao = daoHelper.createTrackDao();
+            return trackDao.getNoOfRecordsByName(name);
+        } catch (Exception e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public Integer getNoOfRecordsByPlaylistId(Integer id) throws ServiceException {
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            trackDao = daoHelper.createTrackDao();
+            return trackDao.getNoOfRecordsByPlaylistId(id);
         } catch (Exception e) {
             throw new ServiceException(e.getMessage());
         }

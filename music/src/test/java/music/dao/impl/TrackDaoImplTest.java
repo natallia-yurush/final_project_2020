@@ -45,7 +45,7 @@ public class TrackDaoImplTest {
 
     @Test
     public void findByNamePositiveTest() throws DaoException {
-        assertTrue(trackDao.findByName("никому").size() > 0);
+        assertTrue(trackDao.findByName("никому", 0, 1000).size() > 0);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class TrackDaoImplTest {
 
     @Test
     public void findByGenre() throws DaoException {
-        assertTrue(trackDao.findByGenre("ROCK").size() > 0);
+        assertTrue(trackDao.findByGenre("ROCK", 0, 1000).size() > 0);
     }
 
     @Test
@@ -65,7 +65,7 @@ public class TrackDaoImplTest {
 
     @Test
     public void findByPlaylistId() throws DaoException {
-        assertTrue(trackDao.findByPlaylistId(1).size() > 0);
+        assertTrue(trackDao.findByPlaylistId(1, 0, 1000).size() > 0);
     }
 
     @Test

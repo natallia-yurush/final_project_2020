@@ -14,8 +14,6 @@
 <fmt:setBundle basename="pagecontent" var="loc"/>
 
 
-
-
 <div class="alert alert-success alert-dismissible">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
     <strong>Success!</strong> Indicates a successful or positive action.
@@ -30,22 +28,21 @@
 <!-- Begin | Section [[ Find at scss/base/core.scss ]] -->
 <div class="section">
 
-    <div class="heading">
+    <%--<div class="heading">
         <div class="d-flex flex-wrap align-items-end">
             <div class="flex-grow-1">
                 <h4><fmt:message key="label.songs" bundle="${loc}"/></h4>
                 <p><fmt:message key="label.listenEnjoy" bundle="${loc}"/></p>
             </div>
-            <%--<a href="songs.html" class="btn btn-sm btn-pill btn-air btn-primary">View All</a>--%>
+            <%--<a href="songs.html" class="btn btn-sm btn-pill btn-air btn-primary">View All</a>
         </div>
         <hr>
-    </div>
+    </div>--%>
     <!-- Begin | Custom List [[ Find at scss/framework/components/custom-list.scss ]] -->
     <div class="section custom-list">
         <!-- Begin | Custom List Item -->
         <div class="custom-list--item">
             <div class="text-dark custom-card--inline">
-
 
 
                 <table>
@@ -55,7 +52,8 @@
                         <tr>
                             <td>
                                 <div class="custom-card--inline-img">
-                                    <img src="${pageContext.request.contextPath}/resource/img/artists/${song.album.artist.imagePath}" alt="${song.album.artist.imagePath}"
+                                    <img src="${pageContext.request.contextPath}/resource/img/artists/${song.album.artist.imagePath}"
+                                         alt="${song.album.artist.imagePath}"
                                          class="card-img--radius-sm">
                                 </div>
                             </td>
@@ -89,45 +87,46 @@
                                             <i class="la la-ellipsis-h"></i>
                                         </a>
                                         <ul class="dropdown-menu">
-                                            <li class="dropdown-item">
-                                                <a href="">
-                                                    <i class="la la-heart-o"></i>
-                                                    <span><fmt:message key="label.favorite" bundle="${loc}"/></span>
-                                                </a>
-                                            </li>
+                                            <c:if test="${sessionScope.user.role.accountRole == 'CLIENT'}">
+                                                <li class="dropdown-item">
+                                                    <a href="${pageContext.servletContext.contextPath}/controller?command=addToPlaylist&songId=${song.id}&playlistName=favorite">
+                                                        <i class="la la-heart-o"></i>
+                                                        <span><fmt:message key="label.favorite" bundle="${loc}"/></span>
+                                                    </a>
+                                                </li>
+                                            </c:if>
 
                                             <li class="dropdown-item">
                                                 <a href="${pageContext.servletContext.contextPath}/controller?command=addToPlaylistPage&songId=${song.id}"
-                                                   >
+                                                >
                                                     <i class="la la-plus"></i>
-                                                    <span><fmt:message key="label.addToPlaylist" bundle="${loc}"/></span>
+                                                    <span><fmt:message key="label.addToPlaylist"
+                                                                       bundle="${loc}"/></span>
                                                 </a>
                                             </li>
 
-                                            <li class="dropdown-item">
-                                                <a href="${pageContext.servletContext.contextPath}/controller?command=deleteSong&songId=${song.id}"
-                                                   >
-                                                    <i class="la la-trash"></i>
-                                                    <span><fmt:message key="label.delete" bundle="${loc}"/></span>
-                                                </a>
-                                            </li>
-                                            <li class="dropdown-item">
-                                                <a href="${pageContext.servletContext.contextPath}/controller?command=editSong&songId=${song.id}"
-                                                   >
-                                                    <i class="la la-edit"></i>
-                                                    <span><fmt:message key="label.edit" bundle="${loc}"/></span>
-                                                </a>
-                                            </li>
+                                            <c:if test="${sessionScope.user.role.accountRole == 'ADMIN'}">
+                                                <li class="dropdown-item">
+                                                    <a href="${pageContext.servletContext.contextPath}/controller?command=deleteSong&songId=${song.id}"
+                                                    >
+                                                        <i class="la la-trash"></i>
+                                                        <span><fmt:message key="label.delete" bundle="${loc}"/></span>
+                                                    </a>
+                                                </li>
+                                                <li class="dropdown-item">
+                                                    <a href="${pageContext.servletContext.contextPath}/controller?command=editSong&songId=${song.id}"
+                                                    >
+                                                        <i class="la la-edit"></i>
+                                                        <span><fmt:message key="label.edit" bundle="${loc}"/></span>
+                                                    </a>
+                                                </li>
+                                            </c:if>
                                         </ul>
                                     </li>
                                 </ul>
                             </td>
 
                         </tr>
-
-
-
-
 
 
                     </c:forEach>
@@ -180,8 +179,8 @@
                         <%--For displaying Previous link except for the 1st page --%>
                         <c:if test="${requestScope.currentPage != 1}">
                             <td>
-                                <a href="${pageContext.servletContext.contextPath}/controller?command=home&page=${requestScope.currentPage - 1}"
-                                   class="for-page">Previous</a></td>
+                                <a href="${pageContext.servletContext.contextPath}/controller?command=${param.page}&pageNo=${requestScope.currentPage - 1}"
+                                   class="for-page"><fmt:message key="label.prev" bundle="${loc}"/></a></td>
                         </c:if>
 
 
@@ -192,7 +191,7 @@
                                 </c:when>
                                 <c:otherwise>
                                     <td>
-                                        <a href="${pageContext.servletContext.contextPath}/controller?command=home&page=${i}"
+                                        <a href="${pageContext.servletContext.contextPath}/controller?command=${param.page}&pageNo=${i}"
                                            class="for-page">${i}</a></td>
                                 </c:otherwise>
                             </c:choose>
@@ -202,8 +201,8 @@
                         <%--For displaying Next link --%>
                         <c:if test="${requestScope.currentPage lt requestScope.noOfPages}">
                             <td>
-                                <a href="${pageContext.servletContext.contextPath}/controller?command=home&page=${requestScope.currentPage + 1}"
-                                   class="for-page">Next</a></td>
+                                <a href="${pageContext.servletContext.contextPath}/controller?command=${param.page}&pageNo=${requestScope.currentPage + 1}"
+                                   class="for-page"><fmt:message key="label.next" bundle="${loc}"/></a></td>
                         </c:if>
 
 
@@ -219,7 +218,6 @@
         <!-- End | Custom List Item -->
     </div>
 </div>
-
 
 
 <script>

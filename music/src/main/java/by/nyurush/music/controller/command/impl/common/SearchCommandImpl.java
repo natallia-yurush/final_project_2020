@@ -2,6 +2,7 @@ package by.nyurush.music.controller.command.impl.common;
 
 import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandResult;
+import by.nyurush.music.entity.Track;
 import by.nyurush.music.service.exception.ServiceException;
 import by.nyurush.music.service.impl.AlbumService;
 import by.nyurush.music.service.impl.ArtistService;
@@ -11,6 +12,7 @@ import by.nyurush.music.util.constant.ConstantPathPages;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 public class SearchCommandImpl implements Command {
     @Override
@@ -23,8 +25,26 @@ public class SearchCommandImpl implements Command {
             req.setAttribute(ConstantAttributes.ARTISTS_LIST, artistService.findByName(input));
 
 
+
+
+            int page = 1;
+            int recordsPerPage = 10;
+            if (req.getParameter("pageNo") != null)
+                page = Integer.parseInt(req.getParameter("pageNo"));
             TrackService trackService = new TrackService();
-            req.setAttribute(ConstantAttributes.SONGS_LIST, trackService.findByName(input));
+            List<Track> list = trackService.findByName(input, (page - 1) * recordsPerPage, recordsPerPage);
+            int noOfRecords = trackService.getNoOfRecordsByName(input);
+            int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+
+            req.setAttribute("songs", list);
+            req.setAttribute("noOfPages", noOfPages);
+            req.setAttribute("currentPage", page);
+
+
+
+
+            //TrackService trackService = new TrackService();
+            //req.setAttribute(ConstantAttributes.SONGS, trackService.findByName(input));
 
 
             AlbumService albumService = new AlbumService();
