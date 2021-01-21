@@ -6,6 +6,7 @@ import by.nyurush.music.entity.Album;
 import by.nyurush.music.entity.Track;
 import by.nyurush.music.service.exception.ServiceException;
 import by.nyurush.music.service.impl.AlbumService;
+import by.nyurush.music.service.impl.ArtistService;
 import by.nyurush.music.service.impl.TrackService;
 import by.nyurush.music.util.constant.ConstantAttributes;
 import by.nyurush.music.util.constant.ConstantMessages;
@@ -14,42 +15,40 @@ import by.nyurush.music.util.language.ResourceBundleUtil;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static by.nyurush.music.util.constant.ConstantAttributes.*;
 
 public class AddSongCommandImpl implements Command {
+    private static final Logger LOGGER = LogManager.getLogger(AddSongCommandImpl.class);
 
     @Override
-    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
+    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
 
-        String songName = null;// = req.getParameter(ARTIST_NAME);
-        String genre = null;// = req.getParameter(ARTIST_IMAGE);
+        String songName = null;
+        String genre = null;
         String songFile = null;
         List<String> artistsName = new ArrayList<>();
         String albumName = null;
         Integer id = Integer.parseInt(req.getParameter(ConstantAttributes.SONG_ID));
+        ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
 
         try {
             List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(req);
             for (FileItem item : items) {
                 if (item.isFormField()) {
                     String fieldName = item.getFieldName();
-                    // Process regular form field (input type="text|radio|checkbox|etc", select, etc).
                     switch (fieldName) {
                         case SONG_NAME:
-/*
-
-                            ObjectInputStream ois = new ObjectInputStream(item.getInputStream());
-                            object = ois.readObject();
-*/
-
                             songName = item.getString(UTF_8);
                             break;
                         case GENRE:
@@ -57,65 +56,44 @@ public class AddSongCommandImpl implements Command {
                             break;
                         case ARTISTS_NAME:
                             artistsName.add(item.getString(UTF_8));
-                           // artistsName = Arrays.asList(item.getString());
                             break;
                         case ALBUM:
                             albumName = item.getString(UTF_8);
                             break;
                         default:
-                            //TODO logger
+                            LOGGER.warn("There is no such item");
                     }
-                    //artistName = item.getString();
-                   /* String fieldValue = item.getString();
-                    artistName = fieldValue;*/
-                    // ... (do your job here)
                 } else {
-                    // Process form file field (input type="file").
-                   // String fileName = new File(item.getName()).getName();
-                    //TODO: вынести в константу
-                   // songFile = fileName;
                     songFile = new File(item.getName()).getName();
-                    String filePath = "D:\\JAVA_ST_2020\\final_project\\music\\web\\resource\\songs\\" + songFile;
-
+                    String filePath = ConstantAttributes.PATH_TO_SONGS + songFile;
                     File storeFile = new File(filePath);
                     item.write(storeFile);
                 }
             }
-        } catch(Exception e) {
-            e.printStackTrace();
-            //TODO
+        } catch (Exception e) {
+            req.setAttribute(ERROR_MESSAGE, rb.getString(ConstantMessages.INVALID_SONG_SAVE_RESULT));
         }
 
-
-        Album album = null;
-        try {
-            AlbumService albumService = new AlbumService();
-            album = albumService.findByArtistAndAlbumName(artistsName.get(0), albumName).get();
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-        Track track = new Track(id, songName, songFile, 0, genre, album);
-        ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
-        try {
+        AlbumService albumService = new AlbumService();
+        Optional<Album> album = albumService.findByArtistAndAlbumName(artistsName.get(0), albumName);
+        if (album.isPresent()) {
+            Track track = new Track(id, songName, songFile, 0, genre, album.get());
             TrackService trackService = new TrackService();
-            trackService.save(track);
-
-            req.setAttribute(ConstantAttributes.SAVE_RESULT, rb.getString(ConstantMessages.SUCCESSFUL_SONG_SAVE_RESULT));
-
-
-        } catch (ServiceException e) {
-            req.setAttribute(ConstantAttributes.SAVE_RESULT, rb.getString(ConstantMessages.INVALID_SONG_SAVE_RESULT));
-            e.printStackTrace();//TODO
-            return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_ARTIST);
+            if (trackService.save(track) != null) {
+                req.setAttribute(SUCCESS_MESSAGE, rb.getString(ConstantMessages.SUCCESSFUL_SONG_SAVE_RESULT));
+            } else {
+                req.setAttribute(ERROR_MESSAGE, rb.getString(ConstantMessages.INVALID_SONG_SAVE_RESULT));
+                LOGGER.warn(rb.getString(ConstantMessages.INVALID_SONG_SAVE_RESULT));
+            }
+        } else {
+            req.setAttribute(ERROR_MESSAGE, rb.getString(ConstantMessages.INVALID_SONG_SAVE_RESULT));
         }
 
+        ArtistService artistService = new ArtistService();
+        req.setAttribute(ConstantAttributes.ARTISTS_NAME, artistService.findAll());
+        //TODO: not all albums
+        req.setAttribute(ConstantAttributes.ALBUMS, albumService.findAll());
 
         return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_SONG);
-
-
     }
 }

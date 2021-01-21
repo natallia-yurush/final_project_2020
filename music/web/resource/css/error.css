@@ -1,10 +1,19 @@
 body {
-    background-image: url(../img/404-error.jpg);
     -webkit-background-size: cover;
     background-size: cover;
     background-attachment: fixed;
+    font-size: 24px;
+}
+
+body.no-page {
+    background-image: url(../img/404-error.jpg);
     font-family: 'Open Sans', sans-serif;
-    font-size: 16px;
+}
+
+body.went-wrong {
+    background-image: url(../img/robot-error.png);
+    font-family: Courier, monospace;
+    font-weight: bold;
 }
 
 .content {
@@ -12,7 +21,7 @@ body {
     text-align: center;
     position: absolute;
     bottom: 10%;
-    left: 0px;
+    left: 0;
 }
 
 .content a {
@@ -26,4 +35,24 @@ body {
 
 .content a:hover {
     color: rgba(255, 255, 255, 0.5);
+}
+
+.message {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 10%;
+    left: 0;
+}
+
+.message a {
+    display: inline-block;
+}
+
+.message a, .message a:hover {
+    color: rgb(0 0 0);
+}
+
+.message a:hover {
+    color: rgb(79, 65, 65);
 }

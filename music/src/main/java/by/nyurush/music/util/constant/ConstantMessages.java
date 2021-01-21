@@ -17,4 +17,16 @@ public class ConstantMessages {
     public static final String SUCCESSFUL_SONG_SAVE_RESULT = "answer.successfulSongSaveResult";
     public static final String SUCCESSFUL_ALBUM_SAVE_RESULT = "answer.successfulAlbumSaveResult";
     public static final String INVALID_ALBUM_SAVE_RESULT = "answer.invalidAlbumSaveResult";
+
+    public static final String INVALID_ADD_PLAYLIST_RESULT = "answer.invalidAddPlaylistResult";
+    public static final String SUCCESSFUL_ADD_TO_PLAYLIST_RESULT = "answer.successfulAddPlaylistResult";
+    public static final String INVALID_DELETE_SONG = "answer.invalidDeleteSong";
+    public static final String SUCCESSFUL_DELETE_SONG = "answer.successfulDeleteSong";
+    public static final String INVALID_FIND_SONG = "answer.invalidFindSong";
+    public static final String INVALID_FIND_PLAYLIST = "answer.invalidFindPlaylist";
+    public static final String SUCCESSFUL_DELETE_PLAYLIST = "answer.successfulDeletePlaylist";
+
+    public static final String EMPTY_FIELDS = "answer.emptyFields";
+
+    public static final String ERROR_MESSAGE = "answer.errorMessage";
 }

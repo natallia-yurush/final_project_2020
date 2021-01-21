@@ -1,4 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%d{HH:mm:ss.SSS} %-5level] %logger{36} - %msg%n"/>
+        </Console>
+        <File name="File" fileName="logs/text.log">
+            <PatternLayout pattern="[%d{ISO8601} %-5level] %logger{36} - %msg%n"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="all">
+            <AppenderRef ref="Console" level="trace" />
+            <AppenderRef ref="File" level="error" />
+        </Root>
+    </Loggers>
+</Configuration>
+
+
+
+
+
+
+
+
+<!--<Configuration status="warn">
+    <Properties>
+        <Property name="patternfull">
+            %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{5} - %msg%n
+        </Property>
+        <Property name="patternshort">
+            %d{HH:mm:ss.SSS} [%t] %-5level %logger{1} - %msg%n
+        </Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${patternshort}" />
+        </Console>
+        <File name="File" fileName="logs/text.log" bufferedIO="true">
+            <PatternLayout pattern="${patternfull}" />
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="all">
+            <AppenderRef ref="File" level="error" />
+            <AppenderRef ref="Console" level="trace" />
+
+        </Root>
+    </Loggers>
+</Configuration>-->
+
+ <!--
+<?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
@@ -11,9 +63,9 @@
         </File>
     </Appenders>
     <Loggers>
-        <Root level="DEBUG">
+        <Root level="ERROR">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="ErrorLog"/>
         </Root>
     </Loggers>
-</Configuration>
+</Configuration>-->

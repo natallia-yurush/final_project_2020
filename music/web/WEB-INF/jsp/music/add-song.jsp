@@ -60,6 +60,10 @@
 
         <!-- Begin | Main Container [[ Find at scss/base/core.scss ]] -->
         <div class="main-container under-banner-content" id="appRoute">
+
+            <%-- ALERTS!!!--%>
+            <jsp:include page="../fragment/alerts.jsp"/>
+
             <div class="row section">
                 <div class="col-xl-8 col-md-10 mx-auto">
 
@@ -158,9 +162,9 @@
                                 </div>
                             </form>
 
-                            <c:if test="${not empty requestScope.saveResult}">
+                            <%--<c:if test="${not empty requestScope.saveResult}">
                                 <div class="errorInfo"><c:out value="${requestScope.saveResult}"/></div>
-                            </c:if>
+                            </c:if>--%>
 
                         </div>
 

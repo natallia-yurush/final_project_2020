@@ -2,7 +2,6 @@ package by.nyurush.music.controller.command.impl.user;
 
 import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandResult;
-import by.nyurush.music.dao.DaoHelperFactory;
 import by.nyurush.music.entity.User;
 import by.nyurush.music.service.exception.ServiceException;
 import by.nyurush.music.service.impl.UserService;
@@ -21,10 +20,10 @@ import static by.nyurush.music.util.constant.ConstantAttributes.*;
 
 public class ProfileCommandImpl implements Command {
     @Override
-    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
+    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         HttpSession session = req.getSession();
         ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
-        User currentUser = (User) session.getAttribute("user");
+        User currentUser = (User) session.getAttribute(USER);
 
         String firstName = req.getParameter(FIRST_NAME);
         String lastName = req.getParameter(LAST_NAME);
@@ -53,7 +52,6 @@ public class ProfileCommandImpl implements Command {
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_PROFILE);
         }
 
-
         currentUser.setFirstName(firstName);
         currentUser.setLastName(lastName);
         currentUser.setEmail(email);
@@ -62,21 +60,11 @@ public class ProfileCommandImpl implements Command {
             currentUser.setPassword(password);
         }
 
+        UserService userService = new UserService();
+        userService.save(currentUser);
+        session.setAttribute(USER, currentUser);
 
-        //TODO: ввод старого пароля
-        try {
-            UserService userService = new UserService();
-            userService.save(currentUser);
-            session.setAttribute(USER, currentUser);
-
-        } catch (ServiceException e) {
-            //TODO
-            e.printStackTrace();
-        }
-
-        req.setAttribute(SUCCESSFUL_CHANGES, rb.getString(ConstantMessages.SUCCESSFUL_CHANGES));
+        req.setAttribute(SUCCESS_MESSAGE, rb.getString(ConstantMessages.SUCCESSFUL_CHANGES));
         return CommandResult.forward(ConstantPathPages.PATH_PAGE_PROFILE);
-
     }
-
 }

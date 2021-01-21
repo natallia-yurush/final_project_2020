@@ -60,6 +60,10 @@
 
         <!-- Begin | Main Container [[ Find at scss/base/core.scss ]] -->
         <div class="main-container under-banner-content" id="appRoute">
+
+            <%-- ALERTS!!!--%>
+            <jsp:include page="../fragment/alerts.jsp"/>
+
             <div class="row section">
                 <div class="col-xl-10 mx-auto">
 

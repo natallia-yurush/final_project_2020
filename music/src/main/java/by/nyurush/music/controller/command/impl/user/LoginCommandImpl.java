@@ -4,6 +4,7 @@ import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandResult;
 import by.nyurush.music.entity.Account;
 import by.nyurush.music.entity.AccountRole;
+import by.nyurush.music.entity.User;
 import by.nyurush.music.service.exception.ServiceException;
 import by.nyurush.music.service.impl.AccountService;
 import by.nyurush.music.service.impl.TrackService;
@@ -24,15 +25,9 @@ import java.util.ResourceBundle;
 public class LoginCommandImpl implements Command {
 
     @Override
-    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
+    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
 
         HttpSession session = req.getSession();
-
-        //TODO: necessary or not?
-        //session.removeAttribute("user");
-        //session.removeAttribute("role");
-
-        //session.setAttribute(ConstantAttributes.ERROR_AUTH, null);
         req.setAttribute(ConstantAttributes.ERROR_AUTH, false);
 
         String login = req.getParameter(ConstantAttributes.LOGIN);
@@ -44,48 +39,27 @@ public class LoginCommandImpl implements Command {
             req.setAttribute(ConstantAttributes.PARAM_INFO, rb.getString(ConstantMessages.WRONG_OPERATION_KEY));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_LOGIN);
         }
-
-        try {
-            TrackService trackService = new TrackService();
-            session.setAttribute(ConstantAttributes.GENRES, GenreUtil.getGenres(trackService.findAllGenres(), rb));
+        TrackService trackService = new TrackService();
+        session.setAttribute(ConstantAttributes.GENRES, GenreUtil.getGenres(trackService.findAllGenres(), rb));
 
 
-            AccountService accountService = new AccountService();
-            //UserService userService = new UserService(new DaoHelperFactory());
-            UserService userService = new UserService();
+        AccountService accountService = new AccountService();
+        UserService userService = new UserService();
 
-            Optional<Account> account = accountService.isAccountExist(login, password);
-            if (account.isPresent()) {
-                /*session.setAttribute("role", user.get().getRole());*/
-                Account acc = account.get();
-                new HomeCommandImpl().execute(req, resp);
-                if(acc.getRole() == AccountRole.ADMIN) {
-                    session.setAttribute(ConstantAttributes.USER, acc);
-                   // PlaylistService playlistService = new PlaylistService();
-                   // session.setAttribute(ConstantAttributes.PLAYLIST, playlistService.findByUserId(acc.getId()));
-
-                    //TODO?
-
-
-                    //return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME); //TODO: чтобы везде возвращало сюда
-                    //TODO ADMIN
-                    //return CommandResult.forward(ConstantPathPages.PATH_PAGE_MAIN); //ADMIN
-                } else {
-                    session.setAttribute("user", userService.findByLogin(login).get());
-
-                    //TODO CLIENT + можно найти именно юзера и установить его в сессию, а может и не нужно:)
-                    //return CommandResult.forward(ConstantPathPages.PATH_PAGE_MAIN); //CLIENT
-                }
-                return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME);
-
+        Optional<Account> account = accountService.isAccountExist(login, password);
+        if (account.isPresent()) {
+            Account acc = account.get();
+            new HomeCommandImpl().execute(req, resp);
+            if (acc.getRole() == AccountRole.ADMIN) {
+                session.setAttribute(ConstantAttributes.USER, acc);
+            } else {
+                Optional<User> user = userService.findByLogin(login);
+                user.ifPresent(value -> session.setAttribute(ConstantAttributes.USER, value));
             }
-
-            req.setAttribute(ConstantAttributes.ERROR_AUTH, rb.getString(ConstantMessages.AUTHORISATION_FAILED_KEY));
-            return CommandResult.forward(ConstantPathPages.PATH_PAGE_LOGIN);
-        } catch (ServiceException e) {
-            e.printStackTrace();//TODO LOGGER ( AND show message )
+            return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME);
         }
-        return null; //todo delete this line after logger?
+        req.setAttribute(ConstantAttributes.ERROR_AUTH, rb.getString(ConstantMessages.AUTHORISATION_FAILED_KEY));
+        return CommandResult.forward(ConstantPathPages.PATH_PAGE_LOGIN);
     }
 
 

@@ -18,11 +18,11 @@
 
     <error-page>
         <exception-type>java.lang.RuntimeException</exception-type>
-        <location>/WEB-INF/jsp/error.jsp</location>
+        <location>/WEB-INF/jsp/error-404.jsp</location>
     </error-page>
     <error-page>
         <error-code>404</error-code>
-        <location>/WEB-INF/jsp/error.jsp</location>
+        <location>/WEB-INF/jsp/error-404.jsp</location>
     </error-page>
 
     <listener>

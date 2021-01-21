@@ -1,6 +1,9 @@
 package by.nyurush.music.util.constant;
 
 public class ConstantAttributes {
+    public static final String ERROR_MESSAGE = "errorMessage";
+    public static final String INFO_MESSAGE = "infoMessage";
+    public static final String SUCCESS_MESSAGE = "successMessage";
     public static final String ERROR_AUTH = "errorAuthorisation";
 
 
@@ -9,6 +12,9 @@ public class ConstantAttributes {
 
     public static final String SUCCESSFUL_CHANGES = "successfulChanges";
 
+    public static final String PAGE_NO = "pageNo";
+    public static final String NO_OF_PAGES = "noOfPages";
+    public static final String CURRENT_PAGE = "currentPage";
 
     public static final String INVALID_FIRST_NAME = "invalidFirstName";
     public static final String INVALID_LAST_NAME = "invalidLastName";
@@ -65,4 +71,8 @@ public class ConstantAttributes {
     public static final String PLAYLIST_NAME = "playlistName";
     public static final String PLAYLIST_ID = "playlistId";
     public static final String FAVORITE = "favorite";
+
+
+    public static final String PATH_TO_ARTISTS_IMAGES = "D:\\JAVA_ST_2020\\final_project\\music\\web\\resource\\img\\artists\\";
+    public static final String PATH_TO_SONGS = "D:\\JAVA_ST_2020\\final_project\\music\\web\\resource\\songs\\";
 }

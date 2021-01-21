@@ -13,18 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AddToPlaylistPageCommandImpl implements Command {
     @Override
-    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
-        try {
-
-            PlaylistService playlistService = new PlaylistService();
-
-            Account account = (Account) req.getSession().getAttribute(ConstantAttributes.USER);
-            req.setAttribute(ConstantAttributes.PLAYLIST_LIST, playlistService.findByUserId(account.getId()));
-
-        } catch (ServiceException e) {
-            e.printStackTrace();//todo
-        }
-
+    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
+        PlaylistService playlistService = new PlaylistService();
+        Account account = (Account) req.getSession().getAttribute(ConstantAttributes.USER);
+        req.setAttribute(ConstantAttributes.PLAYLIST_LIST, playlistService.findByUserId(account.getId()));
         return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_TO_PLAYLIST);
     }
 }

@@ -21,5 +21,6 @@ public class ConstantPathPages {
 
     public static final String PATH_PAGE_SEARCH = "/WEB-INF/jsp/music/search.jsp";
 
-    public static final String PATH_PAGE_ERROR = "/WEB-INF/jsp/error.jsp";
+    public static final String PATH_PAGE_ERROR = "/WEB-INF/jsp/error-404.jsp";
+    public static final String PATH_PAGE_ERROR_WENT_WRONG = "/WEB-INF/jsp/error-went-wrong.jsp";
 }

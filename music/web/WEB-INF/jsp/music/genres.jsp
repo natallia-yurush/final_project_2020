@@ -72,6 +72,9 @@
         <!-- Begin | Main Container [[ Find at scss/base/core.scss ]] -->
         <div class="main-container" id="appRoute">
 
+            <%-- ALERTS!!!--%>
+            <jsp:include page="../fragment/alerts.jsp"/>
+
             <div class="heading">
                 <div class="d-flex flex-wrap align-items-end">
                     <div class="flex-grow-1">

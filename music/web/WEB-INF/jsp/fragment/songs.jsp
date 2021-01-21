@@ -14,7 +14,14 @@
 <fmt:setBundle basename="pagecontent" var="loc"/>
 
 
-<div class="alert alert-success alert-dismissible">
+
+<%--<div class="alert alert-success alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Success!</strong> Indicates a successful or positive action.
+</div>--%>
+
+
+<%--<div class="alert alert-success alert-dismissible">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
     <strong>Success!</strong> Indicates a successful or positive action.
 </div>
@@ -23,6 +30,24 @@
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
     <strong>Info!</strong> Indicates a neutral informative change or action.
 </div>
+
+<div class="alert alert-secondary" role="alert">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Info!</strong> Indicates a neutral informative change or action.
+    &lt;%&ndash;This is a secondary alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.&ndash;%&gt;
+</div>
+
+<div class="alert alert-danger fade in alert-dismissible show">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true" style="font-size:20px">&times;</span>
+    </button>    <strong>Danger!</strong> This alert box indicates a dangerous or potentially negative action.
+</div>
+
+
+<div class="alert alert-secondary">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Secondary!</strong> Indicates a slightly less important action.
+</div>--%>
 
 
 <!-- Begin | Section [[ Find at scss/base/core.scss ]] -->

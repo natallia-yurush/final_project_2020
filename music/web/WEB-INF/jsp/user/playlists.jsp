@@ -63,6 +63,10 @@
         <div class="banner bg-song"></div>
 
         <div class="main-container" id="appRoute">
+
+            <%-- ALERTS!!!--%>
+            <jsp:include page="../fragment/alerts.jsp"/>
+
             <c:if test="${not empty requestScope.songs}">
             <div class="section">
                 <div class="heading">

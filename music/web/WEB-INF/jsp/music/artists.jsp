@@ -71,6 +71,9 @@
         <!-- Begin | Main Container [[ Find at scss/base/core.scss ]] -->
         <div class="main-container" id="appRoute">
 
+            <%-- ALERTS!!!--%>
+            <jsp:include page="../fragment/alerts.jsp"/>
+
 
             <c:if test="${not empty requestScope.songsList}">
             <!-- Begin | Section [[ Find at scss/base/core.scss ]] -->

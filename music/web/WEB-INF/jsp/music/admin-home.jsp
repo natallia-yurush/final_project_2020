@@ -31,7 +31,8 @@
 
     <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/audio-touch/audio-touch.css"/>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.7/js/min/perfect-scrollbar.jquery.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.7/js/min/perfect-scrollbar.jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="assets/js/vendors.bundle.js"></script>
     <script src="assets/js/scripts.bundle.js"></script>
@@ -67,11 +68,24 @@
             <jsp:param name="page" value="home"/>
         </jsp:include>
 
+
+        <%--<div class="alert alert-info">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Info!</strong> Indicates a neutral informative change or action.
+        </div>--%>
+
+
         <!-- Page Banner [[ Find at scss/base/core.scss ]] -->
         <div class="banner bg-song"></div>
 
+
         <!-- Begin | Main Container [[ Find at scss/base/core.scss ]] -->
         <div class="main-container" id="appRoute">
+
+
+            <%-- ALERTS!!!--%>
+            <jsp:include page="../fragment/alerts.jsp"/>
+
 
             <div class="heading">
                 <div class="d-flex flex-wrap align-items-end">
@@ -79,7 +93,6 @@
                         <h4><fmt:message key="label.songs" bundle="${loc}"/></h4>
                         <p><fmt:message key="label.listenEnjoy" bundle="${loc}"/></p>
                     </div>
-                    <%--<a href="songs.html" class="btn btn-sm btn-pill btn-air btn-primary">View All</a>--%>
                 </div>
                 <hr>
             </div>

@@ -10,34 +10,35 @@ import by.nyurush.music.service.exception.ServiceException;
 import by.nyurush.music.service.impl.PlaylistService;
 import by.nyurush.music.service.impl.TrackService;
 import by.nyurush.music.util.constant.ConstantAttributes;
+import by.nyurush.music.util.constant.ConstantMessages;
 import by.nyurush.music.util.constant.ConstantPathPages;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 public class AddToPlaylistCommandImpl implements Command {
+    private static final Logger LOGGER = LogManager.getLogger(AddToPlaylistCommandImpl.class);
+
     @Override
-    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
+    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         String playlistName = req.getParameter(ConstantAttributes.PLAYLIST_NAME);
         Integer songId = Integer.parseInt(req.getParameter(ConstantAttributes.SONG_ID));
+        Account account = (Account) req.getSession().getAttribute(ConstantAttributes.USER);
+        PlaylistService playlistService = new PlaylistService();
+        Optional<Playlist> playlist = playlistService.findByNameAndUserId(playlistName, account.getId());
+        TrackService trackService = new TrackService();
+        Optional<Track> track = trackService.findById(songId);
 
-
-        try {
-            Account account = (Account) req.getSession().getAttribute(ConstantAttributes.USER);
-            PlaylistService playlistService = new PlaylistService();
-            Optional<Playlist> playlist = playlistService.findByNameAndUserId(playlistName, account.getId());
-            TrackService trackService = new TrackService();
-            Optional<Track> track = trackService.findById(songId);
-
-            if(playlist.isPresent() && track.isPresent()) {
-                playlistService.addTrack(playlist.get(), track.get());
-            }
-
-        } catch (ServiceException e) {
-            e.printStackTrace();
+        if (playlist.isPresent() && track.isPresent()) {
+            playlistService.addTrack(playlist.get(), track.get());
+        } else {
+            LOGGER.warn("Playlist or Track was not found");
+            req.setAttribute(ConstantAttributes.ERROR_MESSAGE, ConstantMessages.INVALID_ADD_PLAYLIST_RESULT);
         }
-
+        req.setAttribute(ConstantAttributes.SUCCESS_MESSAGE, ConstantMessages.SUCCESSFUL_ADD_TO_PLAYLIST_RESULT);
         new HomeCommandImpl().execute(req, resp);
         return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME);
     }

@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Natallia Yurush
-  Date: 30-Dec-20
-  Time: 17:50
+  Date: 21-Jan-21
+  Time: 22:50
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -15,12 +15,12 @@
 <head>
     <title>Error</title>
     <link type="text/css" rel="stylesheet" href='<c:url value="/resource/css/error.css"/>'>
-
 </head>
-<body>
-<div class="content">
+
+<body class="went-wrong">
+<div class="message">
     <a onclick="history.back(); return false;">
-        <fmt:message bundle="${loc}" key="answer.error404"/>
+        <fmt:message bundle="${loc}" key="answer.errorWentWrong"/>
     </a>
 </div>
 </body>

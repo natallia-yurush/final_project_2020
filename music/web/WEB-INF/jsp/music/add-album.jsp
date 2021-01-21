@@ -56,6 +56,10 @@
 
         <!-- Begin | Main Container [[ Find at scss/base/core.scss ]] -->
         <div class="main-container under-banner-content" id="appRoute">
+
+            <%-- ALERTS!!!--%>
+            <jsp:include page="../fragment/alerts.jsp"/>
+
             <div class="row section">
                 <div class="col-xl-8 col-md-10 mx-auto">
                     <div class="card">
@@ -70,7 +74,7 @@
                                         <fmt:message key="label.albumName" bundle="${loc}"/>
                                     </label>
                                     <div class="col-md-7">
-                                        <input type="text" id="albumName" name="albumName" class="form-control">
+                                        <input type="text" id="albumName" name="albumName" class="form-control" required>
                                     </div>
                                 </div>
 
@@ -79,7 +83,7 @@
                                         <fmt:message key="label.year" bundle="${loc}"/>
                                     </label>
                                     <div class="col-md-7">
-                                        <input type="number" id="year" name="year" value="2020" min="1900" max="${currentYear}" step="1">
+                                        <input type="number" id="year" name="year" value="2020" min="1900" max="${currentYear}" step="1" required>
                                     </div>
                                 </div>
 
@@ -89,7 +93,7 @@
                                     </label>
                                     <div class="col-md-7">
                                         <select data-placeholder="<fmt:message key="label.chooseArtist" bundle="${loc}"/>" class="form-control chosen-select"
-                                                name="artistsName">
+                                                name="artistsName" required>
                                             <c:forEach var="item" items="${requestScope.artistsName}">
                                                 <option>${item.artistName}</option>
                                             </c:forEach>
@@ -111,9 +115,7 @@
                                     </div>
                                 </div>
                             </form>
-                            <c:if test="${not empty requestScope.saveResult}">
-                                <div class="errorInfo"><c:out value="${requestScope.saveResult}"/></div>
-                            </c:if>
+
                         </div>
                     </div>
                 </div>

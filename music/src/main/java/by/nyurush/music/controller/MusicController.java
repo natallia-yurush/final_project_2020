@@ -3,7 +3,10 @@ package by.nyurush.music.controller;
 import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandFactory;
 import by.nyurush.music.controller.command.CommandResult;
+import by.nyurush.music.controller.command.impl.user.HomeCommandImpl;
+import by.nyurush.music.service.exception.ServiceException;
 import by.nyurush.music.util.constant.ConstantAttributes;
+import by.nyurush.music.util.constant.ConstantPathPages;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,11 +36,15 @@ public class MusicController extends HttpServlet {
     private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String parameter = req.getParameter(ConstantAttributes.PARAMETER_COMMAND);
 
-        Command command = CommandFactory.getCommand(parameter);
-
-        CommandResult page = command.execute(req, resp);
-        dispatch(req, resp, page);
-
+        try {
+            Command command = CommandFactory.getCommand(parameter);
+            CommandResult page = command.execute(req, resp);
+            dispatch(req, resp, page);
+        } catch (ServiceException e) {
+            LOGGER.error(e);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(ConstantPathPages.PATH_PAGE_ERROR_WENT_WRONG);
+            dispatcher.forward(req, resp);
+        }
     }
 
     private void dispatch(HttpServletRequest req, HttpServletResponse resp, CommandResult page)

@@ -13,20 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AddSongPageCommandImpl implements Command {
     @Override
-    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
-        //TODO: заполнить артистов, жанры
-        try {
-            ArtistService artistService = new ArtistService();
-            req.setAttribute(ConstantAttributes.ARTISTS_NAME, artistService.findAll());
+    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
 
-            //TODO: список альбомов должен изменяться!
-            AlbumService albumService = new AlbumService();
-            req.setAttribute(ConstantAttributes.ALBUMS, albumService.findAll());
-
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
-
+        ArtistService artistService = new ArtistService();
+        req.setAttribute(ConstantAttributes.ARTISTS_NAME, artistService.findAll());
+        //TODO: список альбомов должен изменяться!
+        AlbumService albumService = new AlbumService();
+        req.setAttribute(ConstantAttributes.ALBUMS, albumService.findAll());
         return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_SONG);
     }
 }

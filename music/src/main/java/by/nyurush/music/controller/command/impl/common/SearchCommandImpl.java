@@ -16,47 +16,28 @@ import java.util.List;
 
 public class SearchCommandImpl implements Command {
     @Override
-    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
+    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
 
-        try {
-            String input = req.getParameter(ConstantAttributes.SEARCH_INPUT);
+        String input = req.getParameter(ConstantAttributes.SEARCH_INPUT);
+        ArtistService artistService = new ArtistService();
+        req.setAttribute(ConstantAttributes.ARTISTS_LIST, artistService.findByName(input));
 
-            ArtistService artistService = new ArtistService();
-            req.setAttribute(ConstantAttributes.ARTISTS_LIST, artistService.findByName(input));
+        int page = 1;
+        int recordsPerPage = 10;
+        if (req.getParameter(ConstantAttributes.PAGE_NO) != null)
+            page = Integer.parseInt(req.getParameter(ConstantAttributes.PAGE_NO));
+        TrackService trackService = new TrackService();
+        List<Track> list = trackService.findByName(input, (page - 1) * recordsPerPage, recordsPerPage);
+        int noOfRecords = trackService.getNoOfRecordsByName(input);
+        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 
+        req.setAttribute(ConstantAttributes.SONGS, list);
+        req.setAttribute(ConstantAttributes.NO_OF_PAGES, noOfPages);
+        req.setAttribute(ConstantAttributes.CURRENT_PAGE, page);
 
-
-
-            int page = 1;
-            int recordsPerPage = 10;
-            if (req.getParameter("pageNo") != null)
-                page = Integer.parseInt(req.getParameter("pageNo"));
-            TrackService trackService = new TrackService();
-            List<Track> list = trackService.findByName(input, (page - 1) * recordsPerPage, recordsPerPage);
-            int noOfRecords = trackService.getNoOfRecordsByName(input);
-            int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-
-            req.setAttribute("songs", list);
-            req.setAttribute("noOfPages", noOfPages);
-            req.setAttribute("currentPage", page);
-
-
-
-
-            //TrackService trackService = new TrackService();
-            //req.setAttribute(ConstantAttributes.SONGS, trackService.findByName(input));
-
-
-            AlbumService albumService = new AlbumService();
-            req.setAttribute(ConstantAttributes.ALBUMS, albumService.findByName(input));
-
-        } catch (ServiceException e) {
-            e.printStackTrace();//todo
-        }
-
+        AlbumService albumService = new AlbumService();
+        req.setAttribute(ConstantAttributes.ALBUMS, albumService.findByName(input));
 
         return CommandResult.forward(ConstantPathPages.PATH_PAGE_SEARCH);
-
-        //return null; //TODO ?
     }
 }
