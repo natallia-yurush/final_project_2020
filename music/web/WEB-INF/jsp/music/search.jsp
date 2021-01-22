@@ -47,11 +47,9 @@
 
 <jsp:include page="../fragment/loading.jsp"/>
 
-<!-- Begin | Wrapper [[ Find at scss/framework/base/wrapper/wrapper.scss ]] -->
+<!-- Begin | Wrapper  -->
 <div id="wrapper" data-scrollable="true">
 
-
-    <%--<jsp:include page="../fragment/left-aside-admin.jsp"/>--%>
     <c:if test="${sessionScope.user.role.accountRole == 'CLIENT'}">
         <jsp:include page="../fragment/left-aside-client.jsp"/>
     </c:if>
@@ -59,39 +57,32 @@
         <jsp:include page="../fragment/left-aside-admin.jsp"/>
     </c:if>
 
-
-    <!-- Begin | Page Wrapper [[ Find at scss/framework/base/wrapper/wrapper.scss ]] -->
+    <!-- Begin | Page Wrapper -->
     <main id="pageWrapper">
 
         <jsp:include page="../fragment/header.jsp">
             <jsp:param name="page" value="search"/>
         </jsp:include>
 
-        <!-- Page Banner [[ Find at scss/base/core.scss ]] -->
         <div class="banner bg-song"></div>
 
-        <!-- Begin | Main Container [[ Find at scss/base/core.scss ]] -->
+        <!-- Begin | Main Container  -->
         <div class="main-container" id="appRoute">
 
             <%-- ALERTS!!!--%>
             <jsp:include page="../fragment/alerts.jsp"/>
-
 
             <div class="heading">
                 <div class="d-flex flex-wrap align-items-end">
                     <div class="flex-grow-1">
                         <h4><fmt:message key="label.searchResult" bundle="${loc}"/></h4>
                     </div>
-                    <%--<a href="songs.html" class="btn btn-sm btn-pill btn-air btn-primary">View All</a>--%>
                 </div>
                 <hr>
             </div>
 
-
             <%--ARTISTS--%>
             <div class="section">
-                <%--<div class="search-card" data-scrollable="true">--%>
-
                 <!-- Begin | Search Result List -->
                 <div class="mb-3">
                     <c:if test="${not empty requestScope.artistsList}">
@@ -127,13 +118,7 @@
                 </div>
                 <!-- End | Search Result List -->
 
-
-                <%-- <c:if test="${not empty requestScope.songsList}">--%>
-
-
                 <c:if test="${not empty requestScope.songs}">
-
-
                     <div class="heading">
                         <div class="d-flex flex-wrap align-items-end">
                             <div class="flex-grow-1">
@@ -148,59 +133,6 @@
                     </jsp:include>
                 </c:if>
 
-
-                <%--TODO--%>
-                <!-- Begin | Search Result List -->
-                <%--<div class="mb-3">
-                    <!-- Begin | Search Result List Header -->
-                    <div class="d-flex">
-                        <span class="text-uppercase mr-auto font-weight-bold text-dark">
-                            <fmt:message key="label.songs" bundle="${loc}"/>
-                        </span>
-                        <a href="${pageContext.servletContext.contextPath}/controller?command=home">
-                            <fmt:message key="label.viewAll" bundle="${loc}"/>
-                        </a>
-                    </div>
-                    <!-- End | Search Result List Header -->
-                    <hr>
-                    <!-- Begin | Result List -->
-                    <div class="row">
-                        <div class="col-xl-4 col-md-6 col-12">
-                            <div class="custom-card mb-3">
-                                <table>
-                                    <c:forEach items="${requestScope.songsList}" var="song">
-                                        <tr>
-                                            <td>
-                                                <div class="custom-card--inline-img">
-                                                    <img src="${pageContext.request.contextPath}/resource/img/artists/${song.album.artist.imagePath}"
-                                                         class="card-img--radius-sm">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="custom-card--inline-desc">
-                                                    <p class="text-truncate mb-0"><c:out value="${ song.trackName }"/></p>
-                                                    <p class="text-truncate text-muted font-sm"><c:out
-                                                            value="${ song.album.artist.artistName }"/></p>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <audio preload="auto" controls>
-                                                    <source src='${pageContext.request.contextPath}/resource/songs/${song.trackPath}'/>
-                                                </audio>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End | Result List -->
-                </div>--%>
-                <!-- End | Search Result List -->
-                <%--</c:if>--%>
-
-
                 <!-- Begin | Search Result List -->
                 <div>
                     <c:if test="${not empty requestScope.albums}">
@@ -209,7 +141,7 @@
                             <span class="text-uppercase mr-auto font-weight-bold text-dark">
                                 <fmt:message key="label.albums" bundle="${loc}"/>
                             </span>
-                            <a href="songs.html"><fmt:message key="label.viewAll" bundle="${loc}"/></a>
+                            <a href="${pageContext.servletContext.contextPath}/controller?command=home"><fmt:message key="label.viewAll" bundle="${loc}"/></a>
                         </div>
                         <!-- End | Search Result List Header -->
                         <hr>
@@ -222,7 +154,7 @@
                                             <div class="custom-card--img">
                                                 <a href="${pageContext.servletContext.contextPath}/controller?command=artists&artistName=${param.artistName}&albumName=${album.albumName}">
                                                     <img src="resource/img/album1.jpg"
-                                                         class="card-img--radius-md">
+                                                         class="card-img--radius-md" alt="album1.jpg">
                                                     <span class="bg-blur"><c:out value="${album.albumName}"/></span>
                                                 </a>
                                             </div>
@@ -235,22 +167,14 @@
                     </c:if>
                 </div>
                 <!-- End | Search Result List -->
-
             </div>
-
-
         </div>
         <!-- End | Main Container -->
-
         <footer id="footer" class="bg-img"></footer>
 
     </main>
-    <!-- End | Page Wrapper -->
-
 </div>
-<!-- End | Wrapper -->
 
-<!-- Back Drop -->
 <div class="backdrop header-backdrop"></div>
 <div class="backdrop sidebar-backdrop"></div>
 

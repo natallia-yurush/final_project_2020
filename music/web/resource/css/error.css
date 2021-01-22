@@ -16,6 +16,12 @@ body.went-wrong {
     font-weight: bold;
 }
 
+body.no-access {
+    background-image: url(../img/wall-behind-the-door.jpg);
+    font-family: Courier, monospace;
+    font-weight: bold;
+}
+
 .content {
     width: 100%;
     text-align: center;

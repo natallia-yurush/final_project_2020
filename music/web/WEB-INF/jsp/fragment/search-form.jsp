@@ -61,7 +61,6 @@
 
 
         <c:if test="${not empty requestScope.songsList}">
-            <%--TODO--%>
             <!-- Begin | Search Result List -->
             <div class="mb-3">
                 <!-- Begin | Search Result List Header -->
@@ -85,7 +84,7 @@
                                         <td>
                                             <div class="custom-card--inline-img">
                                                 <img src="${pageContext.request.contextPath}/resource/img/artists/${song.album.artist.imagePath}"
-                                                     class="card-img--radius-sm">
+                                                     class="card-img--radius-sm" alt="${song.album.artist.imagePath}">
                                             </div>
                                         </td>
                                         <td>
@@ -121,7 +120,7 @@
                     <span class="text-uppercase mr-auto font-weight-bold text-dark">
                         <fmt:message key="label.albums" bundle="${loc}"/>
                     </span>
-                    <a href="songs.html"><fmt:message key="label.viewAll" bundle="${loc}"/></a>
+                    <a href="${pageContext.servletContext.contextPath}/controller?command=home"><fmt:message key="label.viewAll" bundle="${loc}"/></a>
                 </div>
                 <!-- End | Search Result List Header -->
                 <hr>
@@ -133,7 +132,7 @@
                                 <div class="custom-card">
                                     <div class="custom-card--img">
                                         <a href="${pageContext.servletContext.contextPath}/controller?command=artists&artistName=${param.artistName}&albumName=${album.albumName}">
-                                            <img src="resource/img/album1.jpg"
+                                            <img src="resource/img/album1.jpg" alt="album1.jpg"
                                                  class="card-img--radius-md">
                                             <span class="bg-blur"><c:out value="${album.albumName}"/></span>
                                         </a>

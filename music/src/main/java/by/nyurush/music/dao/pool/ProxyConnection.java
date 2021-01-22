@@ -65,7 +65,7 @@ public class ProxyConnection implements Connection, AutoCloseable{
         }
         catch (SQLException e) {
             LOGGER.error("Connection is not returned tu AUTO-commit state", e);
-            throw new RuntimeException("database is not closed", e);
+            throw new RuntimeException("Database is not closed", e);
         }
         ConnectionPool.getInstance().closeConnection(this);
     }
@@ -75,8 +75,8 @@ public class ProxyConnection implements Connection, AutoCloseable{
             connection.close();
         }
         catch (SQLException e) {
-            LOGGER.error("database is not closed", e);
-            throw new RuntimeException("database is not closed", e);
+            LOGGER.error("Database is not closed", e);
+            throw new RuntimeException("Database is not closed", e);
         }
     }
 

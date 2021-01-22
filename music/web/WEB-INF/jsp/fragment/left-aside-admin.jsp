@@ -12,14 +12,11 @@
 <fmt:setLocale value="${cookie.language.value}"/>
 <fmt:setBundle basename="pagecontent" var="loc"/>
 
-<!-- Begin | Sidebar [[ Find at scss/framework/base/sidebar/left/sidebar.scss ]] -->
-<%--TODO: add localization--%>
-
 <aside id="sidebar" class="sidebar-primary">
 
     <!-- Begin | Sidebar Header -->
     <div class="sidebar-header d-flex align-items-center">
-        <a href="home.jsp" class="brand"> <!-- переход на home page (себя же) -->
+        <a href="home.jsp" class="brand">
             <img src="${pageContext.request.contextPath}/resource/img/purple-img.png" alt="listen-app">
         </a>
 
@@ -63,7 +60,6 @@
     </nav>
     <!-- End | Navbar -->
 
-    <!--TODO: only ADMIN-->
     <!-- Begin | Sidebar Footer -->
     <div class="sidebar-footer">
         <a href="${pageContext.servletContext.contextPath}/controller?command=addArtistPage" class="btn btn-block btn-danger btn-air btn-bold">
@@ -81,9 +77,6 @@
 
 
     </div>
-
-
-    <!-- End | Sidebar Footer -->
 
 </aside>
 <!-- End | Sidebar -->

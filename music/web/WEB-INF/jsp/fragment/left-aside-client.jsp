@@ -10,13 +10,11 @@
 <fmt:setLocale value="${cookie.language.value}"/>
 <fmt:setBundle basename="pagecontent" var="loc"/>
 
-<!-- Begin | Sidebar [[ Find at scss/framework/base/sidebar/left/sidebar.scss ]] -->
-<%--TODO: add localization--%>
 <aside id="sidebar" class="sidebar-primary">
 
     <!-- Begin | Sidebar Header -->
     <div class="sidebar-header d-flex align-items-center">
-        <a href="home.jsp" class="brand"> <!-- переход на home page (себя же) -->
+        <a href="home.jsp" class="brand">
             <img src="${pageContext.request.contextPath}/resource/img/purple-img.png" alt="listen-app">
         </a>
 
@@ -32,7 +30,7 @@
     </div>
     <!-- End | Sidebar Header -->
 
-    <!-- Begin | Navbar [[ Find at scss/framework/components/navbar/navbar.scss ]] -->
+    <!-- Begin | Navbar  -->
     <nav class="navbar">
         <ul class="navbar-nav" data-scrollable="true">
             <li class="nav-item nav-header"><fmt:message key="label.browseMusic" bundle="${loc}"/></li>
@@ -49,6 +47,11 @@
             <li class="nav-item">
                 <a href="${pageContext.servletContext.contextPath}/controller?command=artists" class="nav-link"><i class="la la-microphone"></i><span>
                     <fmt:message key="label.artists" bundle="${loc}"/>
+                </span></a>
+            </li>
+            <li class="nav-item">
+                <a href="${pageContext.servletContext.contextPath}/controller?command=playlistsPage&all=1" class="nav-link"><i class="la la-headphones"></i><span>
+                    <fmt:message key="label.playlists" bundle="${loc}"/>
                 </span></a>
             </li>
 
@@ -68,16 +71,6 @@
         </ul>
     </nav>
     <!-- End | Navbar -->
-
-    <!--TODO: only ADMIN-->
-    <!-- Begin | Sidebar Footer -->
-    <%--<div class="sidebar-footer">
-        <a href="add-music.html" class="btn btn-block btn-danger btn-air btn-bold">
-            <i class="ion-md-musical-note"></i>
-            <span>Add Music</span>
-        </a>
-    </div>--%>
-    <!-- End | Sidebar Footer -->
 
 </aside>
 <!-- End | Sidebar -->

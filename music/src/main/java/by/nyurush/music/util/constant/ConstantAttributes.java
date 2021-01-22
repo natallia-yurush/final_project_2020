@@ -35,8 +35,8 @@ public class ConstantAttributes {
     public static final String LAST_NAME = "lastName";
 
 
-    public static final String RESOURCE = "pagecontent";
-    public static final String RES_GENRE = "genre";
+    public static final String RESOURCE = "resourcebundle.pagecontent";
+    public static final String RES_GENRE = "resourcebundle.genre";
     public static final String LANGUAGE = "language";
     public static final String DEFAULT_LANG = "";
     public static final String EN_LANG = "en_EN";

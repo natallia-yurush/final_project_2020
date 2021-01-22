@@ -9,14 +9,9 @@ import by.nyurush.music.service.exception.ServiceException;
 import java.util.List;
 import java.util.Optional;
 
-public class AlbumService {//} extends Service {
+public class AlbumService {
     private AlbumDaoImpl albumDao;
     private final DaoHelperFactory daoHelperFactory = new DaoHelperFactory();
-
-    /*public AlbumService(DaoHelperFactory factory) throws ServiceException {
-        super(factory);
-        albumDao = daoHelper.createAlbumDao();
-    }*/
 
     public List<Album> findAll() throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {

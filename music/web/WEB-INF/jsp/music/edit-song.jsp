@@ -144,8 +144,6 @@
                                     <div class="col-md-7">
                                         <select class="form-control chosen-select" name="album"
                                                 value="${song.album.albumName}" required>
-
-                                            <%--TODO: разобраться, как вывести альбомы артиста--%>
                                             <option><fmt:message key="label.single" bundle="${loc}"/></option>
                                             <c:forEach var="item" items="${requestScope.albums}">
                                                 <option>${item.albumName}</option>
@@ -166,10 +164,6 @@
                                 </div>
                             </form>
 
-                            <c:if test="${not empty requestScope.saveResult}">
-                                <div class="errorInfo"><c:out value="${requestScope.saveResult}"/></div>
-                            </c:if>
-
                         </div>
 
                     </div>
@@ -187,9 +181,6 @@
 <!-- Back Drop -->
 <div class="backdrop header-backdrop"></div>
 <div class="backdrop sidebar-backdrop"></div>
-
-<!-- Scripts -->
-
 
 </body>
 </html>

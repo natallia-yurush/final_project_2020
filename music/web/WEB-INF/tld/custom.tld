@@ -5,16 +5,14 @@
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
     <tlib-version>1.0</tlib-version>
     <short-name>ctg</short-name>
-    <uri>custom</uri>
+    <uri>customTag</uri>
     <tag>
-        <name>welcome</name>
-        <tag-class>by.praded.ask_and_go.tags.HelloTag</tag-class>
-        <body-content>empty</body-content>
+        <name>playlistListBody</name>
+        <tag-class>by.nyurush.music.tag.PlaylistListBody</tag-class>
         <attribute>
-            <name>user</name>
-            <required>true</required>
+            <name>objects</name>
+            <type>java.util.List</type>
             <rtexprvalue>true</rtexprvalue>
-            <type>by.nyurush.music.entity.User</type>
         </attribute>
     </tag>
 </taglib>

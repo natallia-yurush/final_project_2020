@@ -10,20 +10,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ResourceBundleUtil {
-/*
-    public static ResourceBundle getResourceBundle(HttpSession session) {
-        Object localParameter = session.getAttribute("javax.servlet.jsp.jstl.fmt.locale.session");
-        Locale currentLang;
-        if (localParameter != null) {
-            String string = String.valueOf(localParameter);
-            String[] langParameters = string.split("_");
-            currentLang = new Locale(langParameters[0], langParameters[1]);
-        } else {
-            currentLang = new Locale("");
-        }
-        return ResourceBundle.getBundle("pagecontent", currentLang);
-    }
-    */
 
     public static ResourceBundle getResourceBundle(HttpServletRequest request) {
         Optional<String> language = Arrays.stream(request.getCookies())

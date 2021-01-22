@@ -90,8 +90,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <%--</form>
-                            </div>--%>
 
                                 <div class="card-footer">
                                     <div class="row">
@@ -107,9 +105,6 @@
                                     </div>
                                 </div>
                             </form>
-                            <%--<c:if test="${not empty requestScope.saveResult}">
-                                <div class="errorInfo"><c:out value="${requestScope.saveResult}"/></div>
-                            </c:if>--%>
                         </div>
                     </div>
                 </div>
@@ -118,14 +113,8 @@
 
 
         <footer id="footer" class="bg-img"></footer>
-        <%--<jsp:include page="../fragment/audio-player.jsp"/>--%>
 
     </main>
-    <!-- End | Page Wrapper -->
-
-    <!-- Back Drop -->
-    <%--    <div class="backdrop header-backdrop"></div>
-        <div class="backdrop sidebar-backdrop"></div>--%>
 
     <!-- Scripts -->
     <code>$(".chosen-select").chosen()</code>

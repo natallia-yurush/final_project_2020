@@ -66,7 +66,7 @@
                         <c:if test="${sessionScope.user.role.accountRole == 'ADMIN'}">
                             <fmt:message key="label.helloAdmin" bundle="${loc}"/>
                         </c:if>
-                    </span> <%--TODO: имя пользователя--%>
+                    </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
                     <c:if test="${sessionScope.user.role.accountRole == 'CLIENT'}">

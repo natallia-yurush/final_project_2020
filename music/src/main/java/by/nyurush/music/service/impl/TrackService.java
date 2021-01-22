@@ -2,31 +2,16 @@ package by.nyurush.music.service.impl;
 
 import by.nyurush.music.dao.DaoHelper;
 import by.nyurush.music.dao.DaoHelperFactory;
-import by.nyurush.music.dao.exception.DaoException;
 import by.nyurush.music.dao.impl.TrackDaoImpl;
 import by.nyurush.music.entity.Track;
-import by.nyurush.music.service.Service;
 import by.nyurush.music.service.exception.ServiceException;
 
 import java.util.List;
 import java.util.Optional;
 
-public class TrackService {// extends Service {
+public class TrackService {
     private TrackDaoImpl trackDao;
     private final DaoHelperFactory daoHelperFactory = new DaoHelperFactory();
-
-   /* public TrackService(DaoHelperFactory factory) throws ServiceException {
-        super(factory);
-        trackDao = daoHelper.createTrackDao();
-    }
-
-    public List<Track> findAll() throws ServiceException {
-        try {
-            return trackDao.findAll();
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage());
-        }
-    }*/
 
     public Optional<Track> findById(Integer id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {

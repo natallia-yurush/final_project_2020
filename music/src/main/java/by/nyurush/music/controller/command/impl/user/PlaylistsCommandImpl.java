@@ -27,7 +27,12 @@ public class PlaylistsCommandImpl implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         String playlistName = req.getParameter(ConstantAttributes.PLAYLIST_NAME);
-        Account account = (Account) req.getSession().getAttribute(ConstantAttributes.USER);
+        Account account;
+        if (req.getParameter("all") == null) {
+            account = (Account) req.getSession().getAttribute(ConstantAttributes.USER);
+        } else {
+            account = new Account(1);
+        }
         PlaylistService playlistService = new PlaylistService();
         Optional<Playlist> playlist = playlistService.findByNameAndUserId(playlistName, account.getId());
         if (playlist.isPresent()) {

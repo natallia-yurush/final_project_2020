@@ -45,11 +45,9 @@
 
 <jsp:include page="../fragment/loading.jsp"/>
 
-<!-- Begin | Wrapper [[ Find at scss/framework/base/wrapper/wrapper.scss ]] -->
+<!-- Begin | Wrapper  -->
 <div id="wrapper" data-scrollable="true">
 
-
-    <%--<jsp:include page="../fragment/left-aside-admin.jsp"/>--%>
     <c:if test="${sessionScope.user.role.accountRole == 'CLIENT'}">
         <jsp:include page="../fragment/left-aside-client.jsp"/>
     </c:if>
@@ -58,17 +56,17 @@
     </c:if>
 
 
-    <!-- Begin | Page Wrapper [[ Find at scss/framework/base/wrapper/wrapper.scss ]] -->
+    <!-- Begin | Page Wrapper  -->
     <main id="pageWrapper">
 
         <jsp:include page="../fragment/header.jsp">
             <jsp:param name="page" value="artists"/>
         </jsp:include>
 
-        <!-- Page Banner [[ Find at scss/base/core.scss ]] -->
+        <!-- Page Banner  -->
         <div class="banner bg-song"></div>
 
-        <!-- Begin | Main Container [[ Find at scss/base/core.scss ]] -->
+        <!-- Begin | Main Container  -->
         <div class="main-container" id="appRoute">
 
             <%-- ALERTS!!!--%>
@@ -76,14 +74,12 @@
 
 
             <c:if test="${not empty requestScope.songsList}">
-            <!-- Begin | Section [[ Find at scss/base/core.scss ]] -->
+            <!-- Begin | Section  -->
             <div class="section">
 
                 <div class="heading">
                     <div class="d-flex flex-wrap align-items-end">
                         <div class="flex-grow-1">
-
-
                             <c:choose>
                                 <c:when test="${not empty param.albumName}">
                                     <h4><fmt:message key="label.album" bundle="${loc}"/> <c:out value="${param.albumName}"/>. <fmt:message key="label.songs" bundle="${loc}"/></h4>
@@ -92,15 +88,13 @@
                                     <h4><fmt:message key="label.artist" bundle="${loc}"/> <c:out value="${param.artistName}"/>. <fmt:message key="label.songs" bundle="${loc}"/></h4>
                                 </c:otherwise>
                             </c:choose>
-
-
-                                <%--<h4><c:out value="${param.artistName}"/> Songs</h4>--%>
                             <p><fmt:message key="label.listenEnjoy" bundle="${loc}"/></p>
                         </div>
                         <hr>
                     </div>
                 </div>
-                <!-- Begin | Custom List [[ Find at scss/framework/components/custom-list.scss ]] -->
+
+                <!-- Begin | Custom List -->
                 <div class="section custom-list">
                     <!-- Begin | Custom List Item -->
                     <div class="custom-list--item">
@@ -132,10 +126,7 @@
                                     </tr>
                                 </c:forEach>
                             </table>
-
-
                         </div>
-
                     </div>
                     <!-- End | Custom List Item -->
                 </div>
@@ -158,16 +149,13 @@
                             <div class="custom-card">
                                 <div class="custom-card--img">
                                     <a href="${pageContext.servletContext.contextPath}/controller?command=artists&artistName=${param.artistName}&albumName=${album.albumName}">
-                                        <img src="resource/img/album1.jpg"
-                                             class="card-img--radius-md">
+                                        <img src="resource/img/album1.jpg" class="card-img--radius-md" alt="">
                                         <span class="bg-blur"><c:out value="${album.albumName}"/></span>
                                     </a>
                                 </div>
                             </div>
                         </c:forEach>
                     </div>
-
-
                 </div>
                 </c:if>
 
@@ -188,7 +176,7 @@
                                 <div class="custom-card--img">
                                     <a href="${pageContext.servletContext.contextPath}/controller?command=artists&artistName=${artist.artistName}">
                                         <img src="${pageContext.request.contextPath}/resource/img/artists/${artist.imagePath}"
-                                             class="card-img--radius-lg">
+                                             class="card-img--radius-lg" alt="${artist.imagePath}">
                                     </a>
                                 </div>
 
@@ -200,25 +188,11 @@
                         </div>
                     </c:forEach>
                 </div>
-
-
             </div>
-
-
-            <!--TODO: удалить верхнее объявление дива и редачить нижнее!-->
-
             <!-- End | Main Container -->
 
-            <!-- Begin | Footer [[ Find at scss/framework/base/footer/footer.scss ]] -->
             <footer id="footer" class="bg-img">
-
             </footer>
-            <!-- End | Footer -->
-
-            <%--TODO: playeer--%>
-            <%--
-            <jsp:include page="../fragment/audio-player.jsp"/>--%>
-
     </main>
     <!-- End | Page Wrapper -->
 
@@ -228,9 +202,6 @@
 <!-- Back Drop -->
 <div class="backdrop header-backdrop"></div>
 <div class="backdrop sidebar-backdrop"></div>
-
-<!-- Scripts -->
-
 
 </body>
 </html>

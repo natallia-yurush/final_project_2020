@@ -81,8 +81,8 @@ public class ConnectionPool {
 
     public void closeConnection(ProxyConnection proxyConnection) {
         usedConnections.remove(proxyConnection);
-        if (freeConnections.offer(proxyConnection)) {
-            LOGGER.error("Connection successfully returned: ", proxyConnection.toString());
+        if (!freeConnections.offer(proxyConnection)) {
+            LOGGER.error("Problem with connection returned: ", proxyConnection.toString());
         }
     }
 

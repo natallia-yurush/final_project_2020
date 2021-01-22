@@ -4,9 +4,11 @@ import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandFactory;
 import by.nyurush.music.controller.command.CommandResult;
 import by.nyurush.music.controller.command.impl.user.HomeCommandImpl;
+import by.nyurush.music.dao.pool.ConnectionPool;
 import by.nyurush.music.service.exception.ServiceException;
 import by.nyurush.music.util.constant.ConstantAttributes;
 import by.nyurush.music.util.constant.ConstantPathPages;
+import com.mysql.cj.jdbc.AbandonedConnectionCleanupThread;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,7 +37,6 @@ public class MusicController extends HttpServlet {
 
     private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String parameter = req.getParameter(ConstantAttributes.PARAMETER_COMMAND);
-
         try {
             Command command = CommandFactory.getCommand(parameter);
             CommandResult page = command.execute(req, resp);
@@ -57,5 +58,10 @@ public class MusicController extends HttpServlet {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(pageToDispatch);
             dispatcher.forward(req, resp);
         }
+    }
+
+    @Override
+    public void destroy() {
+        ConnectionPool.getInstance().destroyConnectionPool();
     }
 }

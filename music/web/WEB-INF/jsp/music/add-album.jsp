@@ -124,16 +124,8 @@
 
 
         <footer id="footer" class="bg-img"></footer>
-        <%--<jsp:include page="../fragment/audio-player.jsp"/>--%>
 
     </main>
-    <!-- End | Page Wrapper -->
-
-    <!-- Back Drop -->
-    <%--    <div class="backdrop header-backdrop"></div>
-        <div class="backdrop sidebar-backdrop"></div>--%>
-
-    <!-- Scripts -->
 
     <script src="${pageContext.request.contextPath}/assets/js/vendors.bundle.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/scripts.bundle.js"></script>

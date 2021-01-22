@@ -47,7 +47,7 @@
 
 <div class="server-answer">
     <c:if test="${not empty requestScope.parametersInfo}">
-        <p class="infos">${sessionScope.parametersInfo}</p>
+        <p class="infos">${requestScope.parametersInfo}</p>
     </c:if>
 </div>
 

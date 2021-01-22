@@ -1,23 +1,15 @@
 package by.nyurush.music;
 
-import by.nyurush.music.dao.DaoHelper;
-import by.nyurush.music.dao.DaoHelperFactory;
 import by.nyurush.music.dao.exception.DaoException;
-import by.nyurush.music.dao.impl.AccountDaoImpl;
-
-import javax.management.relation.RoleInfoNotFoundException;
-import java.util.*;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Runner {
     public static void main(String[] args) throws DaoException {
 
 
-
+        Logger LOGGER = LogManager.getLogger(Runner.class);
+        LOGGER.error("hygtfds");
 
 
 
@@ -148,18 +140,19 @@ public class Runner {
     }
 
 
-
 }
 
 class Order {
     long orderId;
     double amount;
+
     public Order(long orderId, double amount) {
         this.orderId = orderId;
         this.amount = amount;
     }
+
     public String toString() {
-        return orderId + ", " + amount ;
+        return orderId + ", " + amount;
     }
 }
 

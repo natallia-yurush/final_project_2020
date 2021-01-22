@@ -28,7 +28,6 @@ public class EditSongCommandImpl implements Command {
         ArtistService artistService = new ArtistService();
         req.setAttribute(ConstantAttributes.ARTISTS_NAME, artistService.findAll());
 
-        //TODO: список альбомов должен изменяться!
         AlbumService albumService = new AlbumService();
         req.setAttribute(ConstantAttributes.ALBUMS, albumService.findAll());
 

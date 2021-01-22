@@ -2,37 +2,17 @@ package by.nyurush.music.service.impl;
 
 import by.nyurush.music.dao.DaoHelper;
 import by.nyurush.music.dao.DaoHelperFactory;
-import by.nyurush.music.dao.exception.DaoException;
 import by.nyurush.music.dao.impl.AccountDaoImpl;
 import by.nyurush.music.entity.Account;
-import by.nyurush.music.entity.User;
-import by.nyurush.music.service.Service;
 import by.nyurush.music.service.exception.ServiceException;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
 import java.util.Optional;
 
-public class AccountService {//extends Service {
-    //private final DaoHelper daoHelper;
+public class AccountService {
     private AccountDaoImpl accountDao;
     private final DaoHelperFactory daoHelperFactory = new DaoHelperFactory();
-
-    /*public AccountService(DaoHelperFactory factory) throws ServiceException {
-        super(factory);
-        accountDao = daoHelper.createAccountDao();
-    }*/
-
-/*
-    public AccountService (DaoHelperFactory factory) throws ServiceException {
-        try {
-            daoHelper = factory.create();
-            accountDao = daoHelper.createAccountDao();
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage());
-        }
-    }
-*/
 
     public List<Account> findAll() throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
@@ -53,7 +33,6 @@ public class AccountService {//extends Service {
     }
 
     public Account save(Account account) throws ServiceException {
-        //TODO: при регистрации должна быть проверка, существует ли данный логин!
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             accountDao = daoHelper.createAccountDao();
             account.setPassword(BCrypt.hashpw(account.getPassword(), BCrypt.gensalt()));
@@ -84,9 +63,8 @@ public class AccountService {//extends Service {
     public Optional<Account> isAccountExist(String login, String password) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             accountDao = daoHelper.createAccountDao();
-            //TODO зашифровать пароль
             Optional<Account> account = accountDao.findByLogin(login);
-            if(account.isPresent() && BCrypt.checkpw(password, account.get().getPassword())) {
+            if (account.isPresent() && BCrypt.checkpw(password, account.get().getPassword())) {
                 return account;
             } else {
                 return Optional.empty();

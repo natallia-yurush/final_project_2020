@@ -1,7 +1,6 @@
 package by.nyurush.music.dao;
 
 import by.nyurush.music.dao.exception.DaoException;
-import by.nyurush.music.dao.pool.ProxyConnection;
 import by.nyurush.music.entity.Entity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,12 +17,6 @@ public abstract class AbstractDao<T extends Entity> {
     public AbstractDao (Connection connection) {
         this.connection = connection;
     }
-
-    /*
-    public void setConnection(ProxyConnection connection) {
-        this.connection = connection;
-    }
-    */
 
     public abstract List<T> findAll() throws DaoException;
 

@@ -90,7 +90,6 @@
                                         <fmt:message key="label.genre" bundle="${loc}"/>
                                     </label>
                                     <div class="col-md-7">
-                                        <%--<select class="form-control chosen-select">--%>
                                         <select data-placeholder="<fmt:message key="label.chooseGenre" bundle="${loc}"/>" class="form-control chosen-select" required
                                                 name="genre">
                                             <c:forEach var="genre" items="${sessionScope.genres}">
@@ -107,7 +106,6 @@
                                     <div class="col-md-7">
                                         <div class=" custom-file">
                                             <input type="file" class="custom-file-input" id="songFile" name="songFile" required>
-                                            <%--todo--%>
                                             <label class="custom-file-label" for="songFile" id="file">
                                                 <fmt:message key="label.chooseFile" bundle="${loc}"/>
                                             </label>
@@ -138,7 +136,6 @@
                                     <div class="col-md-7">
                                         <select class="form-control chosen-select" name="album" required>
 
-                                            <%--TODO: разобраться, как вывести альбомы артиста--%>
                                             <option><fmt:message key="label.single" bundle="${loc}"/></option>
                                             <c:forEach var="item" items="${requestScope.albums}">
                                                 <option>${item.albumName}</option>
@@ -162,10 +159,6 @@
                                 </div>
                             </form>
 
-                            <%--<c:if test="${not empty requestScope.saveResult}">
-                                <div class="errorInfo"><c:out value="${requestScope.saveResult}"/></div>
-                            </c:if>--%>
-
                         </div>
 
                     </div>
@@ -174,15 +167,8 @@
         </div>
 
         <footer id="footer" class="bg-img"></footer>
-       <%-- <jsp:include page="../fragment/audio-player.jsp"/>--%>
 
     </main>
-    <!-- End | Page Wrapper -->
-
-    <!-- Back Drop -->
-    <%--    <div class="backdrop header-backdrop"></div>
-        <div class="backdrop sidebar-backdrop"></div>--%>
-
     <!-- Scripts -->
 
     <script src="${pageContext.request.contextPath}/assets/js/vendors.bundle.js"></script>
@@ -200,10 +186,6 @@
             $('#file').text(this.value.replace(/C:\\fakepath\\/i, ''))
             $('.customform-control').hide();
         })
-
-        /*$(document).ready(function () {
-            $(".chosen-select").chosen();
-        });*/
 
     </script>
 

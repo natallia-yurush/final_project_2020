@@ -14,9 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 public class PlaylistsPageCommandImpl implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        Account account = (Account) req.getSession().getAttribute(ConstantAttributes.USER);
         PlaylistService playlistService = new PlaylistService();
-        req.setAttribute(ConstantAttributes.PLAYLIST_LIST, playlistService.findByUserId(account.getId()));
+        if (req.getParameter("all") == null) {
+            Account account = (Account) req.getSession().getAttribute(ConstantAttributes.USER);
+            req.setAttribute(ConstantAttributes.PLAYLIST_LIST, playlistService.findByUserId(account.getId()));
+        } else {
+            req.setAttribute(ConstantAttributes.PLAYLIST_LIST, playlistService.findByUserId(1));
+        }
         return CommandResult.forward(ConstantPathPages.PATH_PAGE_PLAYLISTS);
     }
 }
