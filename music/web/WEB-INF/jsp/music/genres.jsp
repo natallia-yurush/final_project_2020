@@ -60,9 +60,7 @@
     <!-- Begin | Page Wrapper  -->
     <main id="pageWrapper">
 
-        <jsp:include page="../fragment/header.jsp">
-            <jsp:param name="page" value="genres"/>
-        </jsp:include>
+        <jsp:include page="../fragment/header.jsp"/>
 
         <div class="banner bg-song"></div>
 

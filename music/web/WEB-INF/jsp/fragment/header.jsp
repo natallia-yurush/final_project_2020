@@ -5,7 +5,8 @@
   Time: 13:57
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" isELIgnored="false" %>
+
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -45,12 +46,12 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
                     <a class="dropdown-item"
 
-                       href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=en_EN&page=${param.page}">
+                       href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=en_EN&page=${pageContext.request.requestURL}">
                         <span><fmt:message bundle="${loc}" key="label.languageEn"/></span>
                     </a>
 
                     <a class="dropdown-item"
-                       href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=ru_RU&page=${param.page}">
+                       href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=ru_RU&page=${pageContext.request.requestURL}">
                         <span><fmt:message bundle="${loc}" key="label.languageRu"/></span>
                     </a>
                 </div>

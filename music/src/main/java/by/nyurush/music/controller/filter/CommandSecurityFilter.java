@@ -57,13 +57,12 @@ public class CommandSecurityFilter implements Filter {
         List<AccountRole> all = new ArrayList<>(Arrays.asList(AccountRole.CLIENT, AccountRole.ADMIN, AccountRole.GUEST));
         Map<String, List<AccountRole>> map = new HashMap<>();
 
-
         map.put("login", all);
+        map.put("changeLanguage", all);
         map.put("signup", guest);
         map.put("register", guest);
 
         map.put("logout", clientAndAdmin);
-        map.put("changeLanguage", clientAndAdmin);
         map.put("home", clientAndAdmin);
         map.put("genres", clientAndAdmin);
         map.put("artists", clientAndAdmin);

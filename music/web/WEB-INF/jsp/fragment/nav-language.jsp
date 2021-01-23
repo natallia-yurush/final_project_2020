@@ -20,12 +20,12 @@
 
     <ul>
         <li>
-            <a href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=en_EN&page=${param.page}">
+            <a href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=en_EN&page=${pageContext.request.requestURL}">
                 <fmt:message bundle="${loc}" key="label.languageEn"/>
             </a>
         </li>
         <li>
-            <a href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=ru_RU&page=${param.page}">
+            <a href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=ru_RU&page=${pageContext.request.requestURL}">
                 <fmt:message bundle="${loc}" key="label.languageRu"/>
             </a>
         </li>

@@ -10,8 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommandFactory {
-    private static Logger LOGGER = LogManager.getLogger(CommandFactory.class);
-
+    private static final Logger LOGGER = LogManager.getLogger(CommandFactory.class);
 
     private static final Map<String, Command> commands = new HashMap<>();
 
@@ -54,24 +53,4 @@ public class CommandFactory {
         return command;
     }
 
-
-    /*
-    public static Command create(String command) {
-        switch (command) {
-            case "login":
-                return new LoginCommandImpl();
-            case "signup":
-                return new SignUpCommandImpl();
-            case "register":
-                return new RegisterCommandImpl();
-            case "changeLanguage":
-                return new ChangeLanguageCommandImpl();
-
-
-
-            default:
-                LOGGER.error("Unknown command: " + command);
-                throw new UnsupportedOperationException("Unknown command: " + command);
-        }
-    }*/
 }

@@ -17,7 +17,8 @@
 <c:if test="${not empty requestScope.infoMessage}">
     <div class="alert alert-info">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <strong><fmt:message key="label.info" bundle="${loc}"/></strong> ${requestScope.infoMessage}
+        <strong><fmt:message key="label.info" bundle="${loc}"/></strong>
+        <fmt:message key="${requestScope.infoMessage}" bundle="${loc}"/>
 
     </div>
 </c:if>
@@ -26,12 +27,14 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true" style="font-size:20px">&times;</span>
         </button>
-        <strong><fmt:message key="label.error" bundle="${loc}"/></strong> ${requestScope.errorMessage}
+        <strong><fmt:message key="label.error" bundle="${loc}"/></strong>
+        <fmt:message key="${requestScope.errorMessage}" bundle="${loc}"/>
     </div>
 </c:if>
 <c:if test="${not empty requestScope.successMessage}">
     <div class="alert alert-success alert-dismissible">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong><fmt:message key="label.success" bundle="${loc}"/></strong> ${requestScope.successMessage}
+        <strong><fmt:message key="label.success" bundle="${loc}"/></strong>
+        <fmt:message key="${requestScope.successMessage}" bundle="${loc}"/>
     </div>
 </c:if>

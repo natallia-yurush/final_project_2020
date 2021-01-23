@@ -12,13 +12,17 @@ import by.nyurush.music.util.constant.ConstantPathPages;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class SearchCommandImpl implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-
         String input = req.getParameter(ConstantAttributes.SEARCH_INPUT);
+        byte[] bytes = input.getBytes(StandardCharsets.ISO_8859_1);
+        input = new String(bytes, StandardCharsets.UTF_8);
+
         ArtistService artistService = new ArtistService();
         req.setAttribute(ConstantAttributes.ARTISTS_LIST, artistService.findByName(input));
 

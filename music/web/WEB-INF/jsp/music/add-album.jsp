@@ -74,7 +74,7 @@
                                         <fmt:message key="label.albumName" bundle="${loc}"/>
                                     </label>
                                     <div class="col-md-7">
-                                        <input type="text" id="albumName" name="albumName" class="form-control" required>
+                                        <input type="text" id="albumName" name="albumName" class="form-control" required autocomplete="off">
                                     </div>
                                 </div>
 
@@ -135,6 +135,10 @@
         $(document).ready(function () {
             $(".chosen-select").chosen();
         });
+
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
     </script>
 
 </div>

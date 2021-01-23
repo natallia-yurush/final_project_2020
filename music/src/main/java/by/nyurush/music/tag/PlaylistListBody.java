@@ -58,7 +58,7 @@ public class PlaylistListBody extends TagSupport {
 
             out.write("<a href='" + pageContext.getServletContext().getContextPath() +
                     "/controller?command=playlists&playlistName=" + playlist.getPlaylistName() + "'>" +
-                    "<img src='/music/resource/img/playlist.jpg'" +
+                    "<img src='resource/img/playlist.jpg'" +
                     "alt='playlist'" +
                     "class='card-img--radius-lg'></a>");
             out.write("</div>");

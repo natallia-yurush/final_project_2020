@@ -182,6 +182,12 @@
 <div class="backdrop header-backdrop"></div>
 <div class="backdrop sidebar-backdrop"></div>
 
+<script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
+
 </body>
 </html>
 
