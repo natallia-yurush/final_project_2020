@@ -12,7 +12,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <fmt:setLocale value="${cookie.language.value}"/>
-<fmt:setBundle basename="pagecontent" var="loc"/>
+<fmt:setBundle basename="resourcebundle.pagecontent" var="loc"/>
 
 <html>
 <head>
@@ -60,7 +60,9 @@
     <!-- Begin | Page Wrapper  -->
     <main id="pageWrapper">
 
-        <jsp:include page="../fragment/header.jsp"/>
+        <jsp:include page="../fragment/header.jsp">
+            <jsp:param name="page" value="genres"/>
+        </jsp:include>
 
         <div class="banner bg-song"></div>
 

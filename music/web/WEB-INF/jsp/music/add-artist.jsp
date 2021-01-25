@@ -11,7 +11,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <fmt:setLocale value="${cookie.language.value}"/>
-<fmt:setBundle basename="pagecontent" var="loc"/>
+<fmt:setBundle basename="resourcebundle.pagecontent" var="loc"/>
 
 <html>
 <head>
@@ -47,7 +47,7 @@
 
     <jsp:include page="../fragment/left-aside-admin.jsp"/>
 
-    <!-- Begin | Page Wrapper [[ Find at scss/framework/base/wrapper/wrapper.scss ]] -->
+    <!-- Begin | Page Wrapper -->
     <main id="pageWrapper">
 
         <jsp:include page="../fragment/header.jsp">
@@ -55,7 +55,7 @@
         </jsp:include>
 
 
-        <!-- Begin | Main Container [[ Find at scss/base/core.scss ]] -->
+        <!-- Begin | Main Container -->
         <div class="main-container under-banner-content" id="appRoute">
 
             <%-- ALERTS!!!--%>
@@ -78,7 +78,8 @@
                                         <fmt:message key="label.artistName" bundle="${loc}"/>
                                     </label>
                                     <div class="col-md-7">
-                                        <input type="text" id="artistName" name="artistName" class="form-control" required autocomplete="off">
+                                        <input type="text" id="artistName" name="artistName" class="form-control"
+                                               required autocomplete="off" maxlength="40">
                                     </div>
                                 </div>
                                 <div class="form-row form-group">
@@ -87,7 +88,7 @@
                                     </label>
                                     <div class="col-md-7">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="artistImage"
+                                            <input type="file" accept="image/*" class="custom-file-input" id="artistImage"
                                                    name="artistImage" required>
                                             <label class="custom-file-label" for="artistImage" id="file">
                                                 <fmt:message key="label.chooseFile" bundle="${loc}"/>
@@ -103,7 +104,7 @@
                                             <button type="submit" class="btn btn-brand btn-air">
                                                 <fmt:message key="label.saveArtist" bundle="${loc}"/>
                                             </button>
-                                            <button type="button" class="btn btn-outline-secondary">
+                                            <button type="reset"  class="btn btn-outline-secondary">
                                                 <fmt:message key="label.clearForm" bundle="${loc}"/>
                                             </button>
                                         </div>
@@ -115,7 +116,6 @@
                 </div>
             </div>
         </div>
-
 
         <footer id="footer" class="bg-img"></footer>
 
@@ -138,8 +138,8 @@
             $('.customform-control').hide();
         })
 
-        if ( window.history.replaceState ) {
-            window.history.replaceState( null, null, window.location.href );
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
         }
 
     </script>

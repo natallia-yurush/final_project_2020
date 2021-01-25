@@ -12,6 +12,8 @@ import by.nyurush.music.util.constant.ConstantAttributes;
 import by.nyurush.music.util.constant.ConstantMessages;
 import by.nyurush.music.util.constant.ConstantPathPages;
 import by.nyurush.music.util.language.ResourceBundleUtil;
+import by.nyurush.music.util.validation.DataValidator;
+import by.nyurush.music.util.validation.StringUtil;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -39,7 +41,10 @@ public class AddSongCommandImpl implements Command {
         String songFile = null;
         List<String> artistsName = new ArrayList<>();
         String albumName = null;
-        Integer id = Integer.parseInt(req.getParameter(ConstantAttributes.SONG_ID));
+        String idStr = req.getParameter(ConstantAttributes.SONG_ID);
+        Integer id = null;
+        if(!StringUtil.isNullOrEmpty(idStr))
+            id = Integer.parseInt(idStr);
         ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
 
         try {
@@ -72,6 +77,13 @@ public class AddSongCommandImpl implements Command {
             }
         } catch (Exception e) {
             req.setAttribute(ERROR_MESSAGE, rb.getString(ConstantMessages.INVALID_SONG_SAVE_RESULT));
+            return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_SONG);
+        }
+
+        if(!StringUtil.areNotNullAndNotEmpty(songFile, songName, genre, albumName, artistsName.get(0)) &&
+                !DataValidator.areCorrectInputs(songName, songFile, genre, albumName)) {
+            req.setAttribute(INFO_MESSAGE, rb.getString(ConstantMessages.FILL_WITH_CORRECT_DATA));
+            return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_SONG);
         }
 
         AlbumService albumService = new AlbumService();
@@ -91,7 +103,6 @@ public class AddSongCommandImpl implements Command {
 
         ArtistService artistService = new ArtistService();
         req.setAttribute(ConstantAttributes.ARTISTS_NAME, artistService.findAll());
-        //TODO: not all albums
         req.setAttribute(ConstantAttributes.ALBUMS, albumService.findAll());
 
         return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_SONG);

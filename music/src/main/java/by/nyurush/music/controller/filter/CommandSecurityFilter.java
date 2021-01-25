@@ -52,15 +52,14 @@ public class CommandSecurityFilter implements Filter {
     private Map<String, List<AccountRole>> initializeCommandRoleMap(){
         List<AccountRole> client = new ArrayList<>(Collections.singletonList(AccountRole.CLIENT));
         List<AccountRole> admin = new ArrayList<>(Collections.singletonList(AccountRole.ADMIN));
-        List<AccountRole> guest = new ArrayList<>(Collections.singletonList(AccountRole.GUEST));
         List<AccountRole> clientAndAdmin = new ArrayList<>(Arrays.asList(AccountRole.CLIENT, AccountRole.ADMIN));
         List<AccountRole> all = new ArrayList<>(Arrays.asList(AccountRole.CLIENT, AccountRole.ADMIN, AccountRole.GUEST));
         Map<String, List<AccountRole>> map = new HashMap<>();
 
         map.put("login", all);
         map.put("changeLanguage", all);
-        map.put("signup", guest);
-        map.put("register", guest);
+        map.put("signup", all);
+        map.put("register", all);
 
         map.put("logout", clientAndAdmin);
         map.put("home", clientAndAdmin);
@@ -85,6 +84,7 @@ public class CommandSecurityFilter implements Filter {
         map.put("addAlbumPage", admin);
         map.put("addAlbum", admin);
         map.put("deleteSong", admin);
+        map.put("editSong", admin);
 
         return map;
     }

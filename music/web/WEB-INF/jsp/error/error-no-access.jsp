@@ -9,7 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${cookie.language.value}"/>
-<fmt:setBundle basename="pagecontent" var="loc"/>
+<fmt:setBundle basename="resourcebundle.pagecontent" var="loc"/>
 
 <html>
 <head>

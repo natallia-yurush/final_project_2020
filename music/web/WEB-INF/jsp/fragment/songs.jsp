@@ -11,7 +11,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <fmt:setLocale value="${cookie.language.value}"/>
-<fmt:setBundle basename="pagecontent" var="loc"/>
+<fmt:setBundle basename="resourcebundle.pagecontent" var="loc"/>
 
 
 <div class="section">
@@ -65,8 +65,7 @@
                                             </c:if>
 
                                             <li class="dropdown-item">
-                                                <a href="${pageContext.servletContext.contextPath}/controller?command=addToPlaylistPage&songId=${song.id}"
-                                                >
+                                                <a href="${pageContext.servletContext.contextPath}/controller?command=addToPlaylistPage&songId=${song.id}">
                                                     <i class="la la-plus"></i>
                                                     <span><fmt:message key="label.addToPlaylist"
                                                                        bundle="${loc}"/></span>
@@ -75,15 +74,13 @@
 
                                             <c:if test="${sessionScope.user.role.accountRole == 'ADMIN'}">
                                                 <li class="dropdown-item">
-                                                    <a href="${pageContext.servletContext.contextPath}/controller?command=deleteSong&songId=${song.id}"
-                                                    >
+                                                    <a href="${pageContext.servletContext.contextPath}/controller?command=deleteSong&songId=${song.id}">
                                                         <i class="la la-trash"></i>
                                                         <span><fmt:message key="label.delete" bundle="${loc}"/></span>
                                                     </a>
                                                 </li>
                                                 <li class="dropdown-item">
-                                                    <a href="${pageContext.servletContext.contextPath}/controller?command=editSong&songId=${song.id}"
-                                                    >
+                                                    <a href="${pageContext.servletContext.contextPath}/controller?command=editSong&songId=${song.id}">
                                                         <i class="la la-edit"></i>
                                                         <span><fmt:message key="label.edit" bundle="${loc}"/></span>
                                                     </a>

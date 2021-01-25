@@ -11,7 +11,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <fmt:setLocale value="${cookie.language.value}"/>
-<fmt:setBundle basename="pagecontent" var="loc"/>
+<fmt:setBundle basename="resourcebundle.pagecontent" var="loc"/>
 
 <!-- Begin | Header [[ Find at scss/framework/base/header/header.scss ]] -->
 <header id="header" class="bg-primary">
@@ -25,7 +25,7 @@
             <input type="text" placeholder="<fmt:message key="label.search" bundle="${loc}"/>" id="searchInput"
                    name="searchInput"
                    class="form-control"
-                   autocomplete="off">
+                   autocomplete="off" maxlength="40">
         </form>
 
         <!-- Begin | Header Options -->
@@ -46,12 +46,12 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
                     <a class="dropdown-item"
 
-                       href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=en_EN&page=${pageContext.request.requestURL}">
+                       href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=en_EN&page=${param.page}">
                         <span><fmt:message bundle="${loc}" key="label.languageEn"/></span>
                     </a>
 
                     <a class="dropdown-item"
-                       href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=ru_RU&page=${pageContext.request.requestURL}">
+                       href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=ru_RU&page=${param.page}">
                         <span><fmt:message bundle="${loc}" key="label.languageRu"/></span>
                     </a>
                 </div>

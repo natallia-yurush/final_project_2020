@@ -11,9 +11,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <fmt:setLocale value="${cookie.language.value}"/>
-<fmt:setBundle basename="pagecontent" var="loc"/>
-<jsp:useBean id="date" class="java.util.Date" />
-<fmt:formatDate value="${date}" pattern="yyyy" var="currentYear" />
+<fmt:setBundle basename="resourcebundle.pagecontent" var="loc"/>
+<jsp:useBean id="date" class="java.util.Date"/>
+<fmt:formatDate value="${date}" pattern="yyyy" var="currentYear"/>
 
 <html>
 <head>
@@ -58,7 +58,9 @@
         <div class="main-container under-banner-content" id="appRoute">
 
             <%-- ALERTS!!!--%>
-            <jsp:include page="../fragment/alerts.jsp"/>
+            <jsp:include page="../fragment/alerts.jsp">
+                <jsp:param name="page" value="addAlbumPage"/>
+            </jsp:include>
 
             <div class="row section">
                 <div class="col-xl-8 col-md-10 mx-auto">
@@ -74,7 +76,8 @@
                                         <fmt:message key="label.albumName" bundle="${loc}"/>
                                     </label>
                                     <div class="col-md-7">
-                                        <input type="text" id="albumName" name="albumName" class="form-control" required autocomplete="off">
+                                        <input type="text" id="albumName" name="albumName" class="form-control" required
+                                               autocomplete="off" maxlength="40">
                                     </div>
                                 </div>
 
@@ -83,7 +86,8 @@
                                         <fmt:message key="label.year" bundle="${loc}"/>
                                     </label>
                                     <div class="col-md-7">
-                                        <input type="number" id="year" name="year" value="2020" min="1900" max="${currentYear}" step="1" required>
+                                        <input type="number" id="year" name="year" value="2020" min="1900"
+                                               max="${currentYear}" step="1" required>
                                     </div>
                                 </div>
 
@@ -92,7 +96,8 @@
                                         <fmt:message key="label.artistName" bundle="${loc}"/>
                                     </label>
                                     <div class="col-md-7">
-                                        <select data-placeholder="<fmt:message key="label.chooseArtist" bundle="${loc}"/>" class="form-control chosen-select"
+                                        <select data-placeholder="<fmt:message key="label.chooseArtist" bundle="${loc}"/>"
+                                                class="form-control chosen-select"
                                                 name="artistsName" required>
                                             <c:forEach var="item" items="${requestScope.artistsName}">
                                                 <option>${item.artistName}</option>
@@ -108,7 +113,7 @@
                                             <button type="submit" class="btn btn-brand btn-air">
                                                 <fmt:message key="label.saveAlbum" bundle="${loc}"/>
                                             </button>
-                                            <button type="button" class="btn btn-outline-secondary">
+                                            <button type="reset" class="btn btn-outline-secondary">
                                                 <fmt:message key="label.clearForm" bundle="${loc}"/>
                                             </button>
                                         </div>
@@ -136,8 +141,8 @@
             $(".chosen-select").chosen();
         });
 
-        if ( window.history.replaceState ) {
-            window.history.replaceState( null, null, window.location.href );
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
         }
     </script>
 

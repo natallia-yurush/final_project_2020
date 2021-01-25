@@ -11,7 +11,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <fmt:setLocale value="${cookie.language.value}"/>
-<fmt:setBundle basename="pagecontent" var="loc"/>
+<fmt:setBundle basename="resourcebundle.pagecontent" var="loc"/>
 
 <html>
 <head>
@@ -59,7 +59,7 @@
     <main id="pageWrapper">
 
         <jsp:include page="../fragment/header.jsp">
-            <jsp:param name="page" value="profile"/>
+            <jsp:param name="page" value="profilePage"/>
         </jsp:include>
 
         <div class="main-container under-banner-content" id="appRoute">
@@ -80,7 +80,7 @@
                                             <fmt:message key="label.firstName" bundle="${loc}"/>
                                         </label>
                                         <input type="text" id="firstName" name="firstName" class="form-control"
-                                               value="${user.firstName}" required>
+                                               value="${user.firstName}" required maxlength="20">
                                     </div>
                                     <c:if test="${not empty requestScope.invalidFirstName}">
                                         <div class="errorInfo"><c:out value="${requestScope.invalidFirstName}"/></div>
@@ -91,7 +91,7 @@
                                             <fmt:message key="label.lastName" bundle="${loc}"/>
                                         </label>
                                         <input type="text" id="lastName" name="lastName" class="form-control" required
-                                               value="${user.lastName}">
+                                               value="${user.lastName}" maxlength="20">
                                     </div>
                                     <c:if test="${not empty requestScope.invalidLastName}">
                                         <div class="errorInfo"><c:out value="${requestScope.invalidLastName}"/></div>
@@ -100,7 +100,7 @@
                                     <div class="col-12 form-group">
                                         <label for="email" class="form-label">Email</label>
                                         <input type="email" id="email" name="email" class="form-control" required
-                                               value="${user.email}">
+                                               value="${user.email}" maxlength="65">
                                     </div>
                                     <c:if test="${not empty requestScope.invalidEmail}">
                                         <div class="errorInfo"><c:out value="${requestScope.invalidEmail}"/></div>
@@ -162,6 +162,12 @@
 
 <div class="backdrop header-backdrop"></div>
 <div class="backdrop sidebar-backdrop"></div>
+
+<script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
 
 </body>
 </html>

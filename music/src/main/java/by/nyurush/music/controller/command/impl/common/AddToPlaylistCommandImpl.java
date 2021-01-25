@@ -12,6 +12,8 @@ import by.nyurush.music.service.impl.TrackService;
 import by.nyurush.music.util.constant.ConstantAttributes;
 import by.nyurush.music.util.constant.ConstantMessages;
 import by.nyurush.music.util.constant.ConstantPathPages;
+import by.nyurush.music.util.validation.DataValidator;
+import by.nyurush.music.util.validation.StringUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,6 +27,10 @@ public class AddToPlaylistCommandImpl implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         String playlistName = req.getParameter(ConstantAttributes.PLAYLIST_NAME);
+        if(StringUtil.isNullOrEmpty(playlistName) || DataValidator.isCorrectInput(playlistName)) {
+            req.setAttribute(ConstantAttributes.INFO_MESSAGE, ConstantMessages.FILL_WITH_CORRECT_DATA);
+            return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_TO_PLAYLIST);
+        }
         Integer songId = Integer.parseInt(req.getParameter(ConstantAttributes.SONG_ID));
         Account account = (Account) req.getSession().getAttribute(ConstantAttributes.USER);
         PlaylistService playlistService = new PlaylistService();

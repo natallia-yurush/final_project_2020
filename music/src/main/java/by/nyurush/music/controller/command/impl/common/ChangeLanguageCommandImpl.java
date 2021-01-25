@@ -46,48 +46,7 @@ public class ChangeLanguageCommandImpl implements Command {
         ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
         TrackService trackService = new TrackService();
         session.setAttribute(ConstantAttributes.GENRES, GenreUtil.getGenres(trackService.findAllGenres(), rb));
-        new HomeCommandImpl().execute(req, resp);
 
-        //TODO: redirect
-
-        String url = req.getRequestURL().toString();
-        String path = req.getPathInfo();
-        String a = req.getPathTranslated();
-
-        StringBuffer s = new StringBuffer(req.getServletPath());
-       // Enumeration parameterNames = ;
-        List<String> headerValuesList= Collections.list(req.getParameterNames());
-        s.append("?");
-        /*for(Object headerValueObj: headerValuesList) {
-
-        }*/
-
-
-        Iterator<String> itr = headerValuesList.iterator();
-        while(true) {
-            String param = itr.next();
-            if(itr.hasNext()) {
-                s.append(param).append("=").append(req.getParameter(param)).append("&");
-            } else {
-                s.append(param).append("=").append(req.getParameter(param));
-                break;
-            }
-        }
-       /* Object lastElement = itr.next();
-        while(itr.hasNext()) {
-            lastElement = itr.next();
-        }*/
-
-
-
-
-        
-        String f = req.getRequestURI();
-
-        return CommandResult.redirect(req.getServletPath());
-
-
-        //return CommandResult.redirect(req.getRequestURI());
-       // return CommandResult.forward(page.split(req.getContextPath(), 2)[1]);
+        return CommandResult.redirect(req.getServletPath() + "?command=" + page);
     }
 }

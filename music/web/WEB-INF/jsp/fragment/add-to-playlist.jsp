@@ -11,7 +11,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <fmt:setLocale value="${cookie.language.value}"/>
-<fmt:setBundle basename="pagecontent" var="loc"/>
+<fmt:setBundle basename="resourcebundle.pagecontent" var="loc"/>
 
 <html>
 <head>
@@ -89,7 +89,7 @@
                                 <div class="form-row form-group">
                                     <input type="text" class="form-control" placeholder="<fmt:message key="label.createNewPlaylist" bundle="${loc}"/>"
                                            id="playlistName" name="playlistName" style="width: 300px"
-                                           autocomplete="off">
+                                           autocomplete="off" maxlength="40">
                                 </div>
                                 <button type="submit" class="btn btn-brand btn-air btn-center"><fmt:message key="label.createAndAdd" bundle="${loc}"/></button>
                             </form>

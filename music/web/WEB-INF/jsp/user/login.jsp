@@ -11,7 +11,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <fmt:setLocale value="${cookie.language.value}"/>
-<fmt:setBundle basename="pagecontent" var="loc"/>
+<fmt:setBundle basename="resourcebundle.pagecontent" var="loc"/>
 
 <html>
 <head>
@@ -29,10 +29,6 @@
     <main id="pageWrapper">
 
         <div class="main-container under-banner-content" id="appRoute">
-
-
-
-
 
 <div id="head">
     <nav>
@@ -55,10 +51,10 @@
 
     <h1><fmt:message key="label.signIn" bundle="${loc}"/></h1>
     <div class="input-form">
-        <input type="text" name="login" placeholder=<fmt:message key="label.login" bundle="${loc}"/> required>
+        <input type="text" name="login" placeholder=<fmt:message key="label.login" bundle="${loc}"/> required maxlength="20">
     </div>
     <div class="input-form">
-        <input type="password" name="password" placeholder=<fmt:message key="label.password" bundle="${loc}"/> required>
+        <input type="password" name="password" placeholder=<fmt:message key="label.password" bundle="${loc}"/> required maxlength="30">
     </div>
 
     <c:if test="${not empty requestScope.errorAuthorisation}">

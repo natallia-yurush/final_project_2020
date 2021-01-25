@@ -34,14 +34,13 @@ public class EditSongCommandImpl implements Command {
         TrackService trackService = new TrackService();
         Optional<Track> track = trackService.findById(Integer.parseInt(req.getParameter(ConstantAttributes.SONG_ID)));
         if (track.isPresent()) {
-            req.setAttribute(ConstantAttributes.SONG, track);
+            req.setAttribute(ConstantAttributes.SONG, track.get());
         } else {
             LOGGER.warn("There is no such track");
             req.setAttribute(ERROR_MESSAGE, ConstantMessages.INVALID_FIND_SONG);
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME);
         }
 
-        req.setAttribute(SUCCESS_MESSAGE, ConstantMessages.INVALID_FIND_SONG);
         return CommandResult.forward(ConstantPathPages.PATH_PAGE_EDIT_SONG);
 
     }

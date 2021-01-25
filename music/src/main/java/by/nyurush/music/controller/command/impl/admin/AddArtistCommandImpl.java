@@ -9,6 +9,8 @@ import by.nyurush.music.util.constant.ConstantAttributes;
 import by.nyurush.music.util.constant.ConstantMessages;
 import by.nyurush.music.util.constant.ConstantPathPages;
 import by.nyurush.music.util.language.ResourceBundleUtil;
+import by.nyurush.music.util.validation.DataValidator;
+import by.nyurush.music.util.validation.StringUtil;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -21,6 +23,7 @@ import java.io.File;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static by.nyurush.music.util.constant.ConstantAttributes.INFO_MESSAGE;
 import static by.nyurush.music.util.constant.ConstantAttributes.UTF_8;
 
 public class AddArtistCommandImpl implements Command {
@@ -52,6 +55,12 @@ public class AddArtistCommandImpl implements Command {
             LOGGER.error(e);
             req.setAttribute(ConstantAttributes.ERROR_MESSAGE, rb.getString(ConstantMessages.INVALID_ARTIST_SAVE_RESULT));
         }
+
+        if(!StringUtil.areNotNullAndNotEmpty(artistImg, artistName) && DataValidator.areCorrectInputs(artistImg, artistName)) {
+            req.setAttribute(INFO_MESSAGE, rb.getString(ConstantMessages.FILL_WITH_CORRECT_DATA));
+            return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_ARTIST);
+        }
+
         Artist artist = new Artist(null, artistName, artistImg);
         ArtistService artistService = new ArtistService();
         if (artistService.save(artist) != null) {

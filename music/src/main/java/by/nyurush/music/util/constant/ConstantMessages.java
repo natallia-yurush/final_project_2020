@@ -25,6 +25,7 @@ public class ConstantMessages {
     public static final String INVALID_FIND_SONG = "answer.invalidFindSong";
     public static final String INVALID_FIND_PLAYLIST = "answer.invalidFindPlaylist";
     public static final String SUCCESSFUL_DELETE_PLAYLIST = "answer.successfulDeletePlaylist";
+    public static final String FILL_WITH_CORRECT_DATA = "answer.enterCorrectData";
 
     public static final String EMPTY_FIELDS = "answer.emptyFields";
 

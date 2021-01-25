@@ -28,8 +28,6 @@ public class LoginCommandImpl implements Command {
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
 
         HttpSession session = req.getSession();
-        req.setAttribute(ConstantAttributes.ERROR_AUTH, false);
-
         String login = req.getParameter(ConstantAttributes.LOGIN);
         String password = req.getParameter(ConstantAttributes.PASSWORD);
 

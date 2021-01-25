@@ -11,7 +11,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <fmt:setLocale value="${cookie.language.value}"/>
-<fmt:setBundle basename="pagecontent" var="loc"/>
+<fmt:setBundle basename="resourcebundle.pagecontent" var="loc"/>
 
 <html>
 <head>
@@ -79,7 +79,7 @@
                                         <fmt:message key="label.songName" bundle="${loc}"/>
                                     </label>
                                     <div class="col-md-7">
-                                        <input type="text" id="songName" name="songName" class="form-control" required>
+                                        <input type="text" id="songName" name="songName" class="form-control" required maxlength="40">
                                     </div>
                                 </div>
 
@@ -103,7 +103,7 @@
                                     </label>
                                     <div class="col-md-7">
                                         <div class=" custom-file">
-                                            <input type="file" class="custom-file-input" id="songFile" name="songFile" required>
+                                            <input type="file" accept="audio/*" class="custom-file-input" id="songFile" name="songFile" required>
                                             <label class="custom-file-label" for="songFile" id="file">
                                                 <fmt:message key="label.chooseFile" bundle="${loc}"/>
                                             </label>
