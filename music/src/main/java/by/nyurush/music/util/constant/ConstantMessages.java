@@ -31,4 +31,5 @@ public class ConstantMessages {
     public static final String EMPTY_FIELDS = "answer.emptyFields";
 
     public static final String ERROR_MESSAGE = "answer.errorMessage";
+    public static final String FAILED_TO_SUBSCRIBE = "answer.failedToSubscribe";
 }

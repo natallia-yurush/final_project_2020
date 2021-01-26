@@ -33,7 +33,7 @@ public class UserDaoImpl extends AbstractDao<User> {
             "WHERE login = ? AND password = ?";
     private static final String CREATE_USERS_ACCOUNT = "INSERT INTO account (login, password, role) VALUES (?, ?, ?)";
     private static final String CREATE_USER = "INSERT INTO user (account_id, first_name, last_name, email, subscription) VALUES (?, ?, ?, ?, ?)";
-    private static final String CREATE_FAVORITE_PLAYLIST = "INSERT INTO playlist (name, visible, user_id) VALUES ('favorite', 0, ?)";
+    private static final String CREATE_FAVORITE_PLAYLIST = "INSERT INTO playlist (name, visible, account_id) VALUES ('favorite', 0, ?)";
     private static final String UPDATE = "UPDATE account A, user U SET A.login=?, A.password=?, A.role = ?, U.first_name = ?, U.last_name = ?, " +
             "U.email=?, U.subscription=? WHERE A.id = ? AND U.account_id = ?";
     private static final String DELETE = "DELETE FROM user WHERE account_id=?";
@@ -76,8 +76,8 @@ public class UserDaoImpl extends AbstractDao<User> {
 
     @Override
     public User save(User user) throws DaoException {
-        PreparedStatement preparedStatement;
-        Integer generatedId = null;
+        PreparedStatement preparedStatement = null;
+        int generatedId;
         try {
             try {
                 connection.setAutoCommit(false);
@@ -123,6 +123,7 @@ public class UserDaoImpl extends AbstractDao<User> {
                 throw new SQLException(e);
             } finally {
                 connection.setAutoCommit(true);
+                preparedStatement.close();
             }
         } catch (SQLException e) {
             throw new DaoException();

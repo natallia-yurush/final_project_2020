@@ -1,13 +1,6 @@
 USE music;
 
 -- -----------------------------------------------------
--- Table `music`.`country`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `music`.`country` (
-  `country_code` CHAR(2) NOT NULL,
-  PRIMARY KEY (`country_code`) );
-
--- -----------------------------------------------------
 -- Table `music`.`account`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `music`.`account` (
@@ -28,15 +21,8 @@ CREATE TABLE IF NOT EXISTS `music`.`user` (
   `birth_date` DATE NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `subscription` TINYINT NOT NULL DEFAULT 0,
-  `country_code` CHAR(2),
   PRIMARY KEY (`account_id`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
-  INDEX `fk_country_code_idx` (`country_code` ASC) VISIBLE,
-  CONSTRAINT `fk_country_code`
-    FOREIGN KEY (`country_code`)
-    REFERENCES `music`.`country` (`country_code`)
-    ON DELETE SET NULL
-    ON UPDATE CASCADE);
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE;
 
 -- -----------------------------------------------------
 -- Table `music`.`genre`
@@ -113,8 +99,8 @@ CREATE TABLE IF NOT EXISTS `music`.`artist_track` (
   CONSTRAINT `fk_track_id`
     FOREIGN KEY (`track_id`)
     REFERENCES `music`.`track` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
 
 -- -----------------------------------------------------
 -- Table `music`.`playlist`
@@ -130,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `music`.`playlist` (
   CONSTRAINT `fk_playlist_user_id`
     FOREIGN KEY (`user_id`)
     REFERENCES `music`.`user` (`account_id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE CASCADE);
 
 -- -----------------------------------------------------
@@ -144,8 +130,8 @@ CREATE TABLE IF NOT EXISTS `music`.`playlist_track` (
   CONSTRAINT `fk_playlist_id`
     FOREIGN KEY (`playlist_id`)
     REFERENCES `music`.`playlist` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_track_playlist_id`
     FOREIGN KEY (`track_id`)
     REFERENCES `music`.`track` (`id`)

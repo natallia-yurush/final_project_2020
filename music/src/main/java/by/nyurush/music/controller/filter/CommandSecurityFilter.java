@@ -76,6 +76,7 @@ public class CommandSecurityFilter implements Filter {
         map.put("profilePage", client);
         map.put("profile", client);
         map.put("favorites", client);
+        map.put("subscription", client);
 
         map.put("addArtistPage", admin);
         map.put("addArtist", admin);

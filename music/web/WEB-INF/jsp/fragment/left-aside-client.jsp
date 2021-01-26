@@ -6,7 +6,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <fmt:setLocale value="${cookie.language.value}"/>
 <fmt:setBundle basename="resourcebundle.pagecontent" var="loc"/>
 
@@ -49,6 +52,9 @@
                     <fmt:message key="label.artists" bundle="${loc}"/>
                 </span></a>
             </li>
+
+<c:if test="${sessionScope.user.subscription}">
+
             <li class="nav-item">
                 <a href="${pageContext.servletContext.contextPath}/controller?command=playlistsPage&all=1" class="nav-link"><i class="la la-headphones"></i><span>
                     <fmt:message key="label.playlists" bundle="${loc}"/>
@@ -69,6 +75,7 @@
                 </span></a>
             </li>
         </ul>
+</c:if>
     </nav>
     <!-- End | Navbar -->
 

@@ -136,15 +136,25 @@
                                 </form>
                             </div>
                         </div>
+
                         <%--TODO: подписка--%>
-                        <%--
-                        <div class="plan-info-card text-center px-sm-5 py-sm-4 p-3">
-                            <h6>No plan selected yet</h6>
-                            <p>Your 30 days free subscription is going to expired within 2 days please select you
-                                plan.</p>
-                            <a href="plan.html" class="btn btn-pill btn-air btn-success">Select Plan</a>
-                        </div>
-                        --%>
+                        <c:if test="${!sessionScope.user.subscription}">
+                            <div class="plan-info-card text-center px-sm-5 py-sm-4 p-3">
+                                <h6><fmt:message key="label.notSubscribed" bundle="${loc}"/></h6>
+                                <p><fmt:message key="label.subscriptionOptions" bundle="${loc}"/></p>
+                                <a href="${pageContext.servletContext.contextPath}/controller?command=subscription" class="btn btn-pill btn-air btn-success"><fmt:message key="label.subscribe" bundle="${loc}"/></a>
+                            </div>
+                        </c:if>
+
+                        <c:if test="${sessionScope.user.subscription}">
+                            <div class="plan-info-card text-center px-sm-5 py-sm-4 p-3">
+                                <h6><fmt:message key="label.subscribed" bundle="${loc}"/></h6>
+                                <%--<p><fmt:message key="label.subscriptionOptions" bundle="${loc}"/></p>--%>
+                                <a href="${pageContext.servletContext.contextPath}/controller?command=subscription" class="btn btn-pill btn-air btn-success"><fmt:message key="label.unsubscribe" bundle="${loc}"/></a>
+                            </div>
+                        </c:if>
+
+
                     </div>
 
                 </div>
@@ -152,7 +162,7 @@
         </div>
         <!-- End | Main Container -->
 
-        <footer id="footer" class="bg-img"> </footer>
+        <footer id="footer" class="bg-img"></footer>
 
     </main>
     <!-- End | Page Wrapper -->
@@ -164,8 +174,8 @@
 <div class="backdrop sidebar-backdrop"></div>
 
 <script>
-    if ( window.history.replaceState ) {
-        window.history.replaceState( null, null, window.location.href );
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
     }
 </script>
 

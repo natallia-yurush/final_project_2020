@@ -2,13 +2,15 @@ package by.nyurush.music.controller.command.impl.user;
 
 import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandResult;
-import by.nyurush.music.dao.DaoHelperFactory;
 import by.nyurush.music.entity.AccountRole;
 import by.nyurush.music.entity.User;
 import by.nyurush.music.service.exception.ServiceException;
+import by.nyurush.music.service.impl.TrackService;
 import by.nyurush.music.service.impl.UserService;
+import by.nyurush.music.util.constant.ConstantAttributes;
 import by.nyurush.music.util.constant.ConstantMessages;
 import by.nyurush.music.util.constant.ConstantPathPages;
+import by.nyurush.music.util.language.GenreUtil;
 import by.nyurush.music.util.language.ResourceBundleUtil;
 import by.nyurush.music.util.validation.DataValidator;
 import by.nyurush.music.util.validation.StringUtil;
@@ -73,21 +75,24 @@ public class RegisterCommandImpl implements Command {
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
         }
 
-
         User user = buildUser(request);
         UserService userService = new UserService();
 
-        if(!userService.isFreeLogin(user.getLogin())) {
+        if (!userService.isFreeLogin(user.getLogin())) {
             request.setAttribute(INVALID_LOGIN, ConstantMessages.TAKEN_LOGIN);
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
-        } else if(!userService.isFreeEmail(user.getEmail())) {
+        } else if (!userService.isFreeEmail(user.getEmail())) {
             request.setAttribute(INVALID_EMAIL, ConstantMessages.TAKEN_EMAIL);
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
         } else {
             session.setAttribute(USER, userService.save(user));
             LOGGER.info("User with login = " + login + " was registered.");
         }
-        return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME);
+
+        TrackService trackService = new TrackService();
+        session.setAttribute(ConstantAttributes.GENRES, GenreUtil.getGenres(trackService.findAllGenres(), rb));
+
+        return CommandResult.redirect("/controller?command=home");
     }
 
     private User buildUser(HttpServletRequest request) {
