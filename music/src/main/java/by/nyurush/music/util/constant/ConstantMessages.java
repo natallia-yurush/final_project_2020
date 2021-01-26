@@ -9,6 +9,7 @@ public class ConstantMessages {
     public static final String INVALID_PASSWORD = "answer.invalidPassword";
     public static final String INVALID_PASSWORDS_MATCH = "answer.invalidPasswordsMatch";
     public static final String TAKEN_LOGIN = "answer.takenLogin";
+    public static final String TAKEN_EMAIL = "answer.takenEmail";
 
     public static final String SUCCESSFUL_CHANGES = "answer.successfulChanges";
     public static final String SUCCESSFUL_ARTIST_SAVE_RESULT = "answer.successfulArtistSaveResult";

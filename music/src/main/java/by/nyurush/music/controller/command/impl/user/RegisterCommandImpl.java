@@ -73,16 +73,21 @@ public class RegisterCommandImpl implements Command {
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
         }
 
+
         User user = buildUser(request);
         UserService userService = new UserService();
-        if (userService.isFreeLogin(user.getLogin())) {
-            session.setAttribute(USER, userService.save(user));
-            LOGGER.info("User with login = " + login + " was registered.");
-        } else {
+
+        if(!userService.isFreeLogin(user.getLogin())) {
             request.setAttribute(INVALID_LOGIN, ConstantMessages.TAKEN_LOGIN);
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
+        } else if(!userService.isFreeEmail(user.getEmail())) {
+            request.setAttribute(INVALID_EMAIL, ConstantMessages.TAKEN_EMAIL);
+            return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
+        } else {
+            session.setAttribute(USER, userService.save(user));
+            LOGGER.info("User with login = " + login + " was registered.");
         }
-        return CommandResult.redirect(ConstantPathPages.PATH_PAGE_HOME);
+        return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME);
     }
 
     private User buildUser(HttpServletRequest request) {

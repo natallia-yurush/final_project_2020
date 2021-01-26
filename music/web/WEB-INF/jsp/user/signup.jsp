@@ -37,34 +37,34 @@
     <h1><fmt:message key="title.signUp" bundle="${loc}"/></h1>
     <div class="input-form">
         <input type="text" name="firstName" placeholder="<fmt:message key="label.firstName" bundle="${loc}"/>" required
-               maxlength="20">
+               maxlength="20" value="${param.get('firstName')}">
     </div>
     <c:if test="${not empty requestScope.invalidFirstName}">
         <div class="errorInfo"><c:out value="${requestScope.invalidFirstName}"/></div>
     </c:if>
     <div class="input-form">
         <input type="text" name="lastName" placeholder="<fmt:message key="label.lastName" bundle="${loc}"/>" required
-               maxlength="20">
+               maxlength="20" value="${param.get('lastName')}">
     </div>
     <c:if test="${not empty requestScope.invalidLastName}">
         <div class="errorInfo"><c:out value="${requestScope.invalidLastName}"/></div>
     </c:if>
     <div class="input-form">
-        <input type="email" name="email" placeholder="Email" required maxlength="45">
+        <input type="email" name="email" placeholder="Email" required maxlength="45" value="${param.get('email')}">
     </div>
     <c:if test="${not empty requestScope.invalidEmail}">
         <div class="errorInfo"><c:out value="${requestScope.invalidEmail}"/></div>
     </c:if>
     <div class="input-form">
         <input type="text" name="login" placeholder="<fmt:message key="label.login" bundle="${loc}"/>" required
-               maxlength="20">
+               maxlength="20" value="${param.get('login')}">
     </div>
     <c:if test="${not empty requestScope.invalidLogin}">
         <div class="errorInfo"><c:out value="${requestScope.invalidLogin}"/></div>
     </c:if>
     <div class="input-form">
         <input type="password" name="password" placeholder="<fmt:message key="label.password" bundle="${loc}"/>"
-               required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}">
+               required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}" value="${param.get('password')}">
     </div>
     <c:if test="${not empty requestScope.invalidPassword}">
         <div class="errorInfo"><c:out value="${requestScope.invalidPassword}"/></div>
@@ -72,7 +72,7 @@
     <div class="input-form">
         <input type="password" name="confirmPassword"
                placeholder="<fmt:message key="label.confirmPassword" bundle="${loc}"/>" required
-               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}">
+               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}" value="${param.get('confirmPassword')}">
     </div>
     <c:if test="${not empty requestScope.invalidConfirmPassword}">
         <div class="errorInfo"><c:out value="${requestScope.invalidConfirmPassword}"/></div>

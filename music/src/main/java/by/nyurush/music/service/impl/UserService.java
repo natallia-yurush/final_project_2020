@@ -2,6 +2,7 @@ package by.nyurush.music.service.impl;
 
 import by.nyurush.music.dao.DaoHelper;
 import by.nyurush.music.dao.DaoHelperFactory;
+import by.nyurush.music.dao.impl.AccountDaoImpl;
 import by.nyurush.music.dao.impl.UserDaoImpl;
 import by.nyurush.music.entity.User;
 import by.nyurush.music.service.exception.ServiceException;
@@ -87,8 +88,18 @@ public class UserService {
 
     public boolean isFreeLogin(String login) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            AccountDaoImpl accountDao = daoHelper.createAccountDao();
+            //userDao = daoHelper.createUserDao();
+            return accountDao.findByLogin(login).isEmpty();
+        } catch (Exception e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    public boolean isFreeEmail(String email) throws ServiceException {
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
             userDao = daoHelper.createUserDao();
-            return userDao.findByLogin(login).isEmpty();
+            return userDao.findByEmail(email).isEmpty();
         } catch (Exception e) {
             throw new ServiceException(e.getMessage());
         }

@@ -79,7 +79,7 @@
                                         <fmt:message key="label.songName" bundle="${loc}"/>
                                     </label>
                                     <div class="col-md-7">
-                                        <input type="text" id="songName" name="songName" class="form-control" required maxlength="40">
+                                        <input type="text" id="songName" name="songName" class="form-control" required maxlength="40" autocomplete="off">
                                     </div>
                                 </div>
 
