@@ -67,7 +67,7 @@ public class AddArtistCommandImpl implements Command {
             req.setAttribute(ConstantAttributes.SUCCESS_MESSAGE, rb.getString(ConstantMessages.SUCCESSFUL_ARTIST_SAVE_RESULT));
         } else {
             req.setAttribute(ConstantAttributes.ERROR_MESSAGE, rb.getString(ConstantMessages.INVALID_ARTIST_SAVE_RESULT));
-            LOGGER.warn(ConstantMessages.INVALID_ARTIST_SAVE_RESULT);
+            LOGGER.warn(rb.getString(ConstantMessages.INVALID_ARTIST_SAVE_RESULT));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_ARTIST);
         }
         return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_ARTIST);

@@ -61,6 +61,11 @@
         <!-- Begin | Main Container [[ Find at scss/base/core.scss ]] -->
         <div class="main-container under-banner-content" id="appRoute">
 
+            <%-- ALERTS!!!--%>
+            <jsp:include page="../fragment/alerts.jsp">
+                <jsp:param name="page" value="addAlbumPage"/>
+            </jsp:include>
+
             <div class="popup-fade">
                 <div class="popup">
                     <div class="card">

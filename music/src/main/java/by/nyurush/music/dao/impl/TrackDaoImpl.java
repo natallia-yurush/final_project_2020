@@ -12,14 +12,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class TrackDaoImpl extends AbstractDao<Track> {
-    //TODO: add insert into artist_track AND + playlist_track
     private static final String FIND_ALL =
             "SELECT track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path " +
             "FROM track " +
             "JOIN genre ON track.genre_name = genre.name " +
             "JOIN album ON track.album_id = album.id " +
             "JOIN artist ON album.artist_id = artist.id";
-
     private static final String FIND_FOR_PAGE =
             "SELECT track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path " +
                     "FROM track " +
@@ -27,7 +25,6 @@ public class TrackDaoImpl extends AbstractDao<Track> {
                     "JOIN album ON track.album_id = album.id " +
                     "JOIN artist ON album.artist_id = artist.id " +
                     "LIMIT ?, ?";
-
     private static final String FIND_BY_ID =
             "SELECT  track.id, track.name, track.audio_path, track.number_of_likes, genre.name, album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path " +
             "FROM track " +
@@ -83,7 +80,6 @@ public class TrackDaoImpl extends AbstractDao<Track> {
             "WHERE playlist.name LIKE ? AND playlist.visible = 1";
     private static final String CREATE = "INSERT INTO track (name, audio_path, number_of_likes, genre_name, album_id) VALUES (?, ?, ?, ?, ?)";
     private static final String ADD_ARTIST_TRACK = "INSERT INTO artist_track (artist_id, track_id) VALUES (?, ?)";
-
     private static final String UPDATE = "UPDATE track SET name = ?, audio_path = ?, number_of_likes = ?, genre_name = ?, album_id = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM track WHERE id=?";
     private static final String FIND_ALL_GENRES = "SELECT name FROM genre";

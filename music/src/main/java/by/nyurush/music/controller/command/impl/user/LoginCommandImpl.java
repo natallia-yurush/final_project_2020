@@ -33,7 +33,7 @@ public class LoginCommandImpl implements Command {
 
         ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
 
-        if (!StringUtil.areNotNull(login, password)) {
+        if (!StringUtil.areNotNullAndNotEmpty(login, password)) {
             req.setAttribute(ConstantAttributes.PARAM_INFO, rb.getString(ConstantMessages.WRONG_OPERATION_KEY));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_LOGIN);
         }

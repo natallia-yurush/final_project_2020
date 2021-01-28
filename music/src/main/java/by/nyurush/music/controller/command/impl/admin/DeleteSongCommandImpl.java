@@ -8,6 +8,7 @@ import by.nyurush.music.service.impl.TrackService;
 import by.nyurush.music.util.constant.ConstantAttributes;
 import by.nyurush.music.util.constant.ConstantMessages;
 import by.nyurush.music.util.constant.ConstantPathPages;
+import by.nyurush.music.util.language.ResourceBundleUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 import static by.nyurush.music.util.constant.ConstantAttributes.ERROR_MESSAGE;
 import static by.nyurush.music.util.constant.ConstantAttributes.SUCCESS_MESSAGE;
@@ -29,19 +31,20 @@ public class DeleteSongCommandImpl implements Command {
         TrackService trackService = new TrackService();
         Integer id = Integer.parseInt(req.getParameter(ConstantAttributes.SONG_ID));
         Optional<Track> track = trackService.findById(id);
+        ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
         if (track.isPresent()) {
             trackService.delete(track.get());
             try {
                 Files.delete(Path.of(ConstantAttributes.PATH_TO_SONGS + track.get().getTrackPath()));
             } catch (IOException e) {
                 LOGGER.error(e);
-                req.setAttribute(ERROR_MESSAGE, ConstantMessages.INVALID_DELETE_SONG);
+                req.setAttribute(ERROR_MESSAGE, rb.getString(ConstantMessages.INVALID_DELETE_SONG));
             }
         } else {
-            req.setAttribute(ERROR_MESSAGE, ConstantMessages.INVALID_DELETE_SONG);
+            req.setAttribute(ERROR_MESSAGE, rb.getString(ConstantMessages.INVALID_DELETE_SONG));
             LOGGER.warn("Track was not found");
         }
-        req.setAttribute(SUCCESS_MESSAGE, ConstantMessages.INVALID_DELETE_SONG);
+        req.setAttribute(SUCCESS_MESSAGE, rb.getString(ConstantMessages.INVALID_DELETE_SONG));
         return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME);
     }
 }

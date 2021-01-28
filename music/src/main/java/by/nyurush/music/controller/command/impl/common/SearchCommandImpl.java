@@ -8,16 +8,26 @@ import by.nyurush.music.service.impl.AlbumService;
 import by.nyurush.music.service.impl.ArtistService;
 import by.nyurush.music.service.impl.TrackService;
 import by.nyurush.music.util.constant.ConstantAttributes;
+import by.nyurush.music.util.constant.ConstantMessages;
 import by.nyurush.music.util.constant.ConstantPathPages;
+import by.nyurush.music.util.language.ResourceBundleUtil;
+import by.nyurush.music.util.validation.DataValidator;
+import by.nyurush.music.util.validation.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class SearchCommandImpl implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         String input = req.getParameter(ConstantAttributes.SEARCH_INPUT);
+        ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
+        if(StringUtil.isNullOrEmpty(input) || !DataValidator.isCorrectInput(input)) {
+            req.setAttribute(ConstantAttributes.INFO_MESSAGE, rb.getString(ConstantMessages.FILL_WITH_CORRECT_DATA));
+            return CommandResult.forward(ConstantPathPages.PATH_PAGE_SEARCH);
+        }
 
         ArtistService artistService = new ArtistService();
         req.setAttribute(ConstantAttributes.ARTISTS_LIST, artistService.findByName(input));

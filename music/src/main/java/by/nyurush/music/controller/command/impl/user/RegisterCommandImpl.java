@@ -79,10 +79,10 @@ public class RegisterCommandImpl implements Command {
         UserService userService = new UserService();
 
         if (!userService.isFreeLogin(user.getLogin())) {
-            request.setAttribute(INVALID_LOGIN, ConstantMessages.TAKEN_LOGIN);
+            request.setAttribute(INVALID_LOGIN, rb.getString(ConstantMessages.TAKEN_LOGIN));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
         } else if (!userService.isFreeEmail(user.getEmail())) {
-            request.setAttribute(INVALID_EMAIL, ConstantMessages.TAKEN_EMAIL);
+            request.setAttribute(INVALID_EMAIL, rb.getString(ConstantMessages.TAKEN_EMAIL));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
         } else {
             session.setAttribute(USER, userService.save(user));

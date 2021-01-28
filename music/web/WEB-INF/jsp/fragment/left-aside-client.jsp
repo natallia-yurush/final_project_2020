@@ -17,7 +17,7 @@
 
     <!-- Begin | Sidebar Header -->
     <div class="sidebar-header d-flex align-items-center">
-        <a href="home.jsp" class="brand">
+        <a href="${pageContext.servletContext.contextPath}/controller?command=home" class="brand">
             <img src="${pageContext.request.contextPath}/resource/img/purple-img.png" alt="listen-app">
         </a>
 

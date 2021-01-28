@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `music`.`user` (
   `email` VARCHAR(45) NOT NULL,
   `subscription` TINYINT NOT NULL DEFAULT 0,
   PRIMARY KEY (`account_id`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE;
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE);
 
 -- -----------------------------------------------------
 -- Table `music`.`genre`
