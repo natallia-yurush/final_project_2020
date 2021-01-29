@@ -34,6 +34,7 @@ public class AddArtistCommandImpl implements Command {
 
         String artistName = null;
         String artistImg = null;
+        String realPath = null;
         ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
 
         try {
@@ -46,14 +47,22 @@ public class AddArtistCommandImpl implements Command {
                     // Process form file field (input type="file").
                     String fileName = new File(item.getName()).getName();
                     artistImg = fileName;
+                    //getClass().getResource("music/").getPath();
+                    //String base = servletContext.getRealPath("/WEB-INF/classes/myFile");
+                    //String str = getClass().getResource("/web/").getPath() ;
+                   // String path = new File("").getPath() ;
+
+                   // String path = "./web/resource/img/artists/";
                     String filePath = ConstantAttributes.PATH_TO_ARTISTS_IMAGES + fileName;
-                    File storeFile = new File(filePath);
-                    item.write(storeFile);
+                    item.write(new File(filePath));
+                    //storeFile.mkdirs();
+                    //item.write(new File(path + "/" + fileName));
                 }
             }
         } catch (Exception e) {
             LOGGER.error(e);
             req.setAttribute(ConstantAttributes.ERROR_MESSAGE, rb.getString(ConstantMessages.INVALID_ARTIST_SAVE_RESULT));
+            return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_ARTIST);
         }
 
         if(!StringUtil.areNotNullAndNotEmpty(artistImg, artistName) && DataValidator.areCorrectInputs(artistImg, artistName)) {

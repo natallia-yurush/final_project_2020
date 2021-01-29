@@ -43,7 +43,7 @@ public class AddSongCommandImpl implements Command {
         String albumName = null;
         String idStr = req.getParameter(ConstantAttributes.SONG_ID);
         Integer id = null;
-        if(!StringUtil.isNullOrEmpty(idStr))
+        if (!StringUtil.isNullOrEmpty(idStr))
             id = Integer.parseInt(idStr);
         ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
 
@@ -80,25 +80,35 @@ public class AddSongCommandImpl implements Command {
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_SONG);
         }
 
-        if(!StringUtil.areNotNullAndNotEmpty(songFile, songName, genre, albumName, artistsName.get(0)) &&
+        if (!StringUtil.areNotNullAndNotEmpty(songFile, songName, genre, albumName, artistsName.get(0)) &&
                 !DataValidator.areCorrectInputs(songName, songFile, genre, albumName)) {
             req.setAttribute(INFO_MESSAGE, rb.getString(ConstantMessages.FILL_WITH_CORRECT_DATA));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_SONG);
         }
 
         AlbumService albumService = new AlbumService();
-        Optional<Album> album = albumService.findByArtistAndAlbumName(artistsName.get(0), albumName);
-        if (album.isPresent()) {
-            Track track = new Track(id, songName, songFile, 0, genre, album.get());
-            TrackService trackService = new TrackService();
-            if (trackService.save(track) != null) {
-                req.setAttribute(SUCCESS_MESSAGE, rb.getString(ConstantMessages.SUCCESSFUL_SONG_SAVE_RESULT));
-            } else {
+        Album album;
+        if (albumName.equalsIgnoreCase(SINGLE)) {
+            ArtistService artistService = new ArtistService();
+            album = new Album(null, albumName, null, null, artistService.findByName(artistsName.get(0)).get(0));
+        } else {
+            Optional<Album> optionalAlbum = albumService.findByArtistAndAlbumName(artistsName.get(0), albumName);
+            if (optionalAlbum.isPresent())
+                album = optionalAlbum.get();
+            else {
                 req.setAttribute(ERROR_MESSAGE, rb.getString(ConstantMessages.INVALID_SONG_SAVE_RESULT));
                 LOGGER.warn(rb.getString(ConstantMessages.INVALID_SONG_SAVE_RESULT));
+                return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_SONG);
             }
+        }
+
+        Track track = new Track(id, songName, songFile, 0, genre, album);
+        TrackService trackService = new TrackService();
+        if (trackService.save(track) != null) {
+            req.setAttribute(SUCCESS_MESSAGE, rb.getString(ConstantMessages.SUCCESSFUL_SONG_SAVE_RESULT));
         } else {
             req.setAttribute(ERROR_MESSAGE, rb.getString(ConstantMessages.INVALID_SONG_SAVE_RESULT));
+            LOGGER.warn(rb.getString(ConstantMessages.INVALID_SONG_SAVE_RESULT));
         }
 
         ArtistService artistService = new ArtistService();

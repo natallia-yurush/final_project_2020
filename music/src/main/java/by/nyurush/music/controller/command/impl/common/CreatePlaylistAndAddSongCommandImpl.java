@@ -35,14 +35,14 @@ public class CreatePlaylistAndAddSongCommandImpl implements Command {
 
         String playlistName = req.getParameter(ConstantAttributes.PLAYLIST_NAME);
         String songIdStr = req.getParameter(ConstantAttributes.SONG_ID);
-        if(!StringUtil.areNotNullAndNotEmpty(playlistName, songIdStr) || !DataValidator.isCorrectInput(playlistName)) {
+        if (!StringUtil.areNotNullAndNotEmpty(playlistName, songIdStr) || !DataValidator.isCorrectInput(playlistName)) {
             req.setAttribute(ConstantAttributes.INFO_MESSAGE, rb.getString(ConstantMessages.FILL_WITH_CORRECT_DATA));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_TO_PLAYLIST);
         }
         Integer songId = Integer.parseInt(songIdStr);
         Account account = (Account) req.getSession().getAttribute(ConstantAttributes.USER);
         PlaylistService playlistService = new PlaylistService();
-        if(playlistService.findByNameAndUserId(playlistName, account.getId()).isPresent()) {
+        if (playlistService.findByNameAndUserId(playlistName, account.getId()).isPresent()) {
             req.setAttribute(ConstantAttributes.INFO_MESSAGE, rb.getString(ConstantMessages.EXISTING_PLAYLIST));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_TO_PLAYLIST);
         }

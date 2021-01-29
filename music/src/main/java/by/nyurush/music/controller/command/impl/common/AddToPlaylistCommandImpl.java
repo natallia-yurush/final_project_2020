@@ -48,6 +48,7 @@ public class AddToPlaylistCommandImpl implements Command {
             if(tracksList.contains(track.get())) {
                 req.setAttribute(ConstantAttributes.INFO_MESSAGE, rb.getString(ConstantMessages.ADDED_TRACK));
                 if(playlist.get().getPlaylistName().equals(ConstantAttributes.FAVORITE)) {
+                    new HomeCommandImpl().execute(req, resp);
                     return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME);
                 } else {
                     new AddToPlaylistPageCommandImpl().execute(req, resp);

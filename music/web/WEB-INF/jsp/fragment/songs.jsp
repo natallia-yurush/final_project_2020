@@ -55,7 +55,7 @@
                                             <i class="la la-ellipsis-h"></i>
                                         </a>
                                         <ul class="dropdown-menu">
-                                            <c:if test="${sessionScope.user.role.accountRole == 'CLIENT'}">
+                                            <c:if test="${sessionScope.user.role.accountRole == 'CLIENT' && sessionScope.user.subscription}">
                                                 <li class="dropdown-item">
                                                     <a href="${pageContext.servletContext.contextPath}/controller?command=addToPlaylist&songId=${song.id}&playlistName=favorite">
                                                         <i class="la la-heart-o"></i>
@@ -64,13 +64,15 @@
                                                 </li>
                                             </c:if>
 
-                                            <li class="dropdown-item">
-                                                <a href="${pageContext.servletContext.contextPath}/controller?command=addToPlaylistPage&songId=${song.id}">
-                                                    <i class="la la-plus"></i>
-                                                    <span><fmt:message key="label.addToPlaylist"
-                                                                       bundle="${loc}"/></span>
-                                                </a>
-                                            </li>
+                                            <c:if test="${sessionScope.user.role.accountRole == 'ADMIN' || sessionScope.user.subscription}">
+                                                <li class="dropdown-item">
+                                                    <a href="${pageContext.servletContext.contextPath}/controller?command=addToPlaylistPage&songId=${song.id}">
+                                                        <i class="la la-plus"></i>
+                                                        <span><fmt:message key="label.addToPlaylist"
+                                                                           bundle="${loc}"/></span>
+                                                    </a>
+                                                </li>
+                                            </c:if>
 
                                             <c:if test="${sessionScope.user.role.accountRole == 'ADMIN'}">
                                                 <li class="dropdown-item">

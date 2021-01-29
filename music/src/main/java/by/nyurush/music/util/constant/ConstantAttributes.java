@@ -71,8 +71,12 @@ public class ConstantAttributes {
     public static final String PLAYLIST_NAME = "playlistName";
     public static final String PLAYLIST_ID = "playlistId";
     public static final String FAVORITE = "favorite";
+    public static final String SINGLE = "Single";
 
 
-    public static final String PATH_TO_ARTISTS_IMAGES = "D:\\JAVA_ST_2020\\final_project\\music\\web\\resource\\img\\artists\\";
-    public static final String PATH_TO_SONGS = "D:\\JAVA_ST_2020\\final_project\\music\\web\\resource\\songs\\";
+    public static final String PATH = "/music/web/resource/img/artists/";
+    public static final String PATH_TO_ARTISTS_IMAGES = "D:\\JAVA_ST_2020\\final_project\\music\\target\\music\\resource\\img\\artists\\";
+    //public static final String PATH_TO_ARTISTS_IMAGES = "D:\\JAVA_ST_2020\\final_project\\music\\web\\resource\\img\\artists\\";
+    //public static final String PATH_TO_SONGS = "D:\\JAVA_ST_2020\\final_project\\music\\web\\resource\\songs\\";
+    public static final String PATH_TO_SONGS = "D:\\JAVA_ST_2020\\final_project\\music\\target\\music\\resource\\songs\\";
 }
