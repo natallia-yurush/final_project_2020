@@ -72,6 +72,10 @@ public class ConstantAttributes {
     public static final String PLAYLIST_ID = "playlistId";
     public static final String FAVORITE = "favorite";
     public static final String SINGLE = "Single";
+    public static final String ALL = "all";
+
+    public static final Integer FIRST_PAGE = 1;
+    public static final Integer RECORDS_PER_PAGE = 10;
 
 
     public static final String PATH = "/music/web/resource/img/artists/";

@@ -8,8 +8,8 @@ import by.nyurush.music.service.impl.UserService;
 import by.nyurush.music.util.constant.ConstantMessages;
 import by.nyurush.music.util.constant.ConstantPathPages;
 import by.nyurush.music.util.language.ResourceBundleUtil;
-import by.nyurush.music.util.validation.DataValidator;
 import by.nyurush.music.util.validation.StringUtil;
+import by.nyurush.music.util.validation.UserDataValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,24 +31,12 @@ public class ProfileCommandImpl implements Command {
         String login = req.getParameter(LOGIN);
         String password = req.getParameter(PASSWORD);
 
-        if (!StringUtil.areNotNullAndNotEmpty(firstName) || !DataValidator.isCorrectNameSurname(firstName)) {
-            req.setAttribute(INVALID_FIRST_NAME, rb.getString(ConstantMessages.INVALID_NAME));
-            return CommandResult.forward(ConstantPathPages.PATH_PAGE_PROFILE);
-        }
-        if (!StringUtil.areNotNullAndNotEmpty(lastName) || !DataValidator.isCorrectNameSurname(lastName)) {
-            req.setAttribute(INVALID_LAST_NAME, rb.getString(ConstantMessages.INVALID_NAME));
-            return CommandResult.forward(ConstantPathPages.PATH_PAGE_PROFILE);
-        }
-        if (!StringUtil.areNotNullAndNotEmpty(login) || !DataValidator.isCorrectLogin(login)) {
-            req.setAttribute(INVALID_LOGIN, rb.getString(ConstantMessages.INVALID_LOGIN));
-            return CommandResult.forward(ConstantPathPages.PATH_PAGE_PROFILE);
-        }
-        if (!StringUtil.areNotNullAndNotEmpty(email) || !DataValidator.isCorrectEmail(email)) {
-            req.setAttribute(INVALID_EMAIL, rb.getString(ConstantMessages.INVALID_EMAIL));
-            return CommandResult.forward(ConstantPathPages.PATH_PAGE_PROFILE);
-        }
-        if (!StringUtil.areNotNullAndNotEmpty(password) || !DataValidator.isCorrectPassword(password)) {
-            req.setAttribute(INVALID_PASS, rb.getString(ConstantMessages.INVALID_PASSWORD));
+        UserDataValidator validator = new UserDataValidator();
+
+        if (!validator.isValid(req)) {
+            if (StringUtil.isNullOrEmpty(password)) {
+                req.setAttribute(INVALID_PASS, "");
+            }
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_PROFILE);
         }
 

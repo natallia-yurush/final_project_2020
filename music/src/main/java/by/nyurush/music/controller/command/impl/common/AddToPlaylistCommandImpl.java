@@ -2,7 +2,6 @@ package by.nyurush.music.controller.command.impl.common;
 
 import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandResult;
-import by.nyurush.music.controller.command.impl.user.HomeCommandImpl;
 import by.nyurush.music.entity.Account;
 import by.nyurush.music.entity.Playlist;
 import by.nyurush.music.entity.Track;
@@ -31,7 +30,7 @@ public class AddToPlaylistCommandImpl implements Command {
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         String playlistName = req.getParameter(ConstantAttributes.PLAYLIST_NAME);
         ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
-        if(StringUtil.isNullOrEmpty(playlistName) || !DataValidator.isCorrectInput(playlistName)) {
+        if(StringUtil.isNullOrEmpty(playlistName) || DataValidator.isIncorrectInput(playlistName)) {
             req.setAttribute(ConstantAttributes.INFO_MESSAGE, rb.getString(ConstantMessages.FILL_WITH_CORRECT_DATA));
             new AddToPlaylistPageCommandImpl().execute(req, resp);
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_TO_PLAYLIST);

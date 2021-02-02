@@ -179,7 +179,6 @@ public class UserDaoImpl extends AbstractDao<User> {
         return Optional.ofNullable(user);
     }
 
-    //TODO: может не делать, а испольховать в сервисе аккаунт
     public Optional<User> findByLoginAndPassword(String login, String password) throws DaoException {
         User user = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_LOGIN_AND_PASSWORD)) {

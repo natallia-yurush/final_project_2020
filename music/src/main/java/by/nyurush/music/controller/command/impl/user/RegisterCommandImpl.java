@@ -12,8 +12,7 @@ import by.nyurush.music.util.constant.ConstantMessages;
 import by.nyurush.music.util.constant.ConstantPathPages;
 import by.nyurush.music.util.language.GenreUtil;
 import by.nyurush.music.util.language.ResourceBundleUtil;
-import by.nyurush.music.util.validation.DataValidator;
-import by.nyurush.music.util.validation.StringUtil;
+import by.nyurush.music.util.validation.UserDataValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,45 +32,8 @@ public class RegisterCommandImpl implements Command {
         HttpSession session = request.getSession();
         ResourceBundle rb = ResourceBundleUtil.getResourceBundle(request);
 
-        String name = request.getParameter(FIRST_NAME);
-        if (!StringUtil.areNotNullAndNotEmpty(name) || !DataValidator.isCorrectNameSurname(name)) {
-            LOGGER.info("Invalid first name format was received:" + name);
-            request.setAttribute(INVALID_FIRST_NAME, rb.getString(ConstantMessages.INVALID_NAME));
-            return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
-        }
-        String lastName = request.getParameter(LAST_NAME);
-        if (!StringUtil.areNotNullAndNotEmpty(lastName) || !DataValidator.isCorrectNameSurname(lastName)) {
-            LOGGER.info("Invalid name format was received:" + lastName);
-            request.setAttribute(INVALID_LAST_NAME, rb.getString(ConstantMessages.INVALID_NAME));
-            return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
-        }
-        String login = request.getParameter(LOGIN);
-        if (!StringUtil.areNotNullAndNotEmpty(login) || !DataValidator.isCorrectLogin(login)) {
-            LOGGER.info("Invalid login format was received:" + login);
-            request.setAttribute(INVALID_LOGIN, rb.getString(ConstantMessages.INVALID_LOGIN));
-            return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
-        }
-        String email = request.getParameter(EMAIL);
-        if (!StringUtil.areNotNullAndNotEmpty(email) || !DataValidator.isCorrectEmail(email)) {
-            LOGGER.info("Invalid email format was received:" + email);
-            request.setAttribute(INVALID_EMAIL, rb.getString(ConstantMessages.INVALID_EMAIL));
-            return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
-        }
-        String password = request.getParameter(PASSWORD);
-        if (!StringUtil.areNotNullAndNotEmpty(password) || !DataValidator.isCorrectPassword(password)) {
-            LOGGER.info("Invalid password format was received");
-            request.setAttribute(INVALID_PASS, rb.getString(ConstantMessages.INVALID_PASSWORD));
-            return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
-        }
-        String confPassword = request.getParameter(CONFIRM_PASSWORD);
-        if (!StringUtil.areNotNullAndNotEmpty(confPassword) || !DataValidator.isCorrectPassword(confPassword)) {
-            LOGGER.info("Invalid confirm password format was received");
-            request.setAttribute(INVALID_CONFIRM_PASS, rb.getString(ConstantMessages.INVALID_PASSWORD));
-            return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
-        }
-        if (!password.equals(confPassword)) {
-            LOGGER.info("Passwords do not match");
-            request.setAttribute(INVALID_PASS_MATCH, rb.getString(ConstantMessages.INVALID_PASSWORDS_MATCH));
+        UserDataValidator validator = new UserDataValidator();
+        if (!validator.isValid(request)) {
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
         }
 
@@ -86,7 +48,7 @@ public class RegisterCommandImpl implements Command {
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
         } else {
             session.setAttribute(USER, userService.save(user));
-            LOGGER.info("User with login = " + login + " was registered.");
+            LOGGER.info("User with login = " + user.getLogin() + " was registered.");
         }
 
         TrackService trackService = new TrackService();

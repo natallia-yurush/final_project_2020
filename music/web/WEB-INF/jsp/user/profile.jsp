@@ -137,7 +137,7 @@
                             </div>
                         </div>
 
-                        <%--TODO: подписка--%>
+                        <%--подписка--%>
                         <c:if test="${!sessionScope.user.subscription}">
                             <div class="plan-info-card text-center px-sm-5 py-sm-4 p-3">
                                 <h6><fmt:message key="label.notSubscribed" bundle="${loc}"/></h6>

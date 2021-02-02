@@ -24,7 +24,7 @@ public class SearchCommandImpl implements Command {
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         String input = req.getParameter(ConstantAttributes.SEARCH_INPUT);
         ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
-        if(StringUtil.isNullOrEmpty(input) || !DataValidator.isCorrectInput(input)) {
+        if(StringUtil.isNullOrEmpty(input) || DataValidator.isIncorrectInput(input)) {
             req.setAttribute(ConstantAttributes.INFO_MESSAGE, rb.getString(ConstantMessages.FILL_WITH_CORRECT_DATA));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_SEARCH);
         }

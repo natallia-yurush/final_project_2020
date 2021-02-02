@@ -2,7 +2,6 @@ package by.nyurush.music.controller.command.impl.common;
 
 import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandResult;
-import by.nyurush.music.controller.command.impl.user.HomeCommandImpl;
 import by.nyurush.music.entity.Account;
 import by.nyurush.music.entity.Playlist;
 import by.nyurush.music.entity.Track;
@@ -35,7 +34,7 @@ public class CreatePlaylistAndAddSongCommandImpl implements Command {
 
         String playlistName = req.getParameter(ConstantAttributes.PLAYLIST_NAME);
         String songIdStr = req.getParameter(ConstantAttributes.SONG_ID);
-        if (!StringUtil.areNotNullAndNotEmpty(playlistName, songIdStr) || !DataValidator.isCorrectInput(playlistName)) {
+        if (!StringUtil.areNotNullAndNotEmpty(playlistName, songIdStr) || DataValidator.isIncorrectInput(playlistName)) {
             req.setAttribute(ConstantAttributes.INFO_MESSAGE, rb.getString(ConstantMessages.FILL_WITH_CORRECT_DATA));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_TO_PLAYLIST);
         }

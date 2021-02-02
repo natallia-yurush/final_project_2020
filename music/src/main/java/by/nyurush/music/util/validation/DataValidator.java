@@ -20,12 +20,12 @@ public class DataValidator {
         return login.matches(CHECK_LOGIN);
     }
 
-    public static boolean isCorrectNameSurname(String name) {
-        return name.matches(CHECK_NAME_SURNAME);
+    public static boolean isIncorrectNameSurname(String name) {
+        return !name.matches(CHECK_NAME_SURNAME);
     }
 
-    public static boolean isCorrectInput(String input) {
-        return input.length() <= MAX_INPUT_LENGTH;
+    public static boolean isIncorrectInput(String input) {
+        return input.length() > MAX_INPUT_LENGTH;
     }
 
     public static boolean areCorrectInputs(String... inputs) {

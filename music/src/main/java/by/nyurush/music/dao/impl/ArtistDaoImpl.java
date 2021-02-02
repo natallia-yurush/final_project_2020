@@ -13,7 +13,6 @@ import java.util.Optional;
 
 public class ArtistDaoImpl extends AbstractDao<Artist> {
     private static final String FIND_ALL = "SELECT id, name, image_path FROM artist";
-    //TODO: add image_path !!!!!!!!!!
     private static final String FIND_BY_ID = "SELECT id, name, image_path FROM artist WHERE id = ?";
     private static final String FIND_BY_NAME = "SELECT id, name, image_path FROM artist WHERE name LIKE ?";
     private static final String CREATE = "INSERT INTO artist (name, image_path) VALUES (?, ?)";

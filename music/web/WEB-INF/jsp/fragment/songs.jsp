@@ -102,14 +102,12 @@
                 The when condition does not display a link for the current page--%>
                 <table class="page-table">
                     <tr>
-
                         <%--For displaying Previous link except for the 1st page --%>
                         <c:if test="${requestScope.currentPage != 1}">
                             <td>
                                 <a href="${pageContext.servletContext.contextPath}/controller?command=${param.page}&pageNo=${requestScope.currentPage - 1}"
                                    class="for-page"><fmt:message key="label.prev" bundle="${loc}"/></a></td>
                         </c:if>
-
 
                         <c:forEach begin="1" end="${requestScope.noOfPages}" var="i">
                             <c:choose>

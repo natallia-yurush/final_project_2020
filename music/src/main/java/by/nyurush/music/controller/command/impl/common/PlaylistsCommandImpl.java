@@ -1,4 +1,4 @@
-package by.nyurush.music.controller.command.impl.user;
+package by.nyurush.music.controller.command.impl.common;
 
 import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandResult;
@@ -24,11 +24,12 @@ import static by.nyurush.music.util.constant.ConstantAttributes.ERROR_MESSAGE;
 public class PlaylistsCommandImpl implements Command {
     private static final Logger LOGGER = LogManager.getLogger(PlaylistsCommandImpl.class);
 
+
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         String playlistName = req.getParameter(ConstantAttributes.PLAYLIST_NAME);
         Account account;
-        if (req.getParameter("all") == null) {
+        if (req.getParameter(ConstantAttributes.ALL) == null) {
             account = (Account) req.getSession().getAttribute(ConstantAttributes.USER);
         } else {
             account = new Account(1);
@@ -36,14 +37,13 @@ public class PlaylistsCommandImpl implements Command {
         PlaylistService playlistService = new PlaylistService();
         Optional<Playlist> playlist = playlistService.findByNameAndUserId(playlistName, account.getId());
         if (playlist.isPresent()) {
-            int page = 1;
-            int recordsPerPage = 10;
+            int page = ConstantAttributes.FIRST_PAGE;
             if (req.getParameter(ConstantAttributes.PAGE_NO) != null)
                 page = Integer.parseInt(req.getParameter(ConstantAttributes.PAGE_NO));
             TrackService trackService = new TrackService();
-            List<Track> list = trackService.findByPlaylistId(playlist.get().getId(), (page - 1) * recordsPerPage, recordsPerPage);
+            List<Track> list = trackService.findByPlaylistId(playlist.get().getId(), (page - 1) * ConstantAttributes.RECORDS_PER_PAGE, ConstantAttributes.RECORDS_PER_PAGE);
             int noOfRecords = trackService.getNoOfRecordsByPlaylistId(playlist.get().getId());
-            int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+            int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / ConstantAttributes.RECORDS_PER_PAGE);
 
             req.setAttribute(ConstantAttributes.SONGS, list);
             req.setAttribute(ConstantAttributes.NO_OF_PAGES, noOfPages);

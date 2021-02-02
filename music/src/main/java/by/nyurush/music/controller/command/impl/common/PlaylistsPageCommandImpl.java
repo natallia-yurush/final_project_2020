@@ -1,4 +1,4 @@
-package by.nyurush.music.controller.command.impl.user;
+package by.nyurush.music.controller.command.impl.common;
 
 import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandResult;
@@ -15,7 +15,7 @@ public class PlaylistsPageCommandImpl implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         PlaylistService playlistService = new PlaylistService();
-        if (req.getParameter("all") == null) {
+        if (req.getParameter(ConstantAttributes.ALL) == null) {
             Account account = (Account) req.getSession().getAttribute(ConstantAttributes.USER);
             req.setAttribute(ConstantAttributes.PLAYLIST_LIST, playlistService.findByUserId(account.getId()));
         } else {

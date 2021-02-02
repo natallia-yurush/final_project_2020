@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ResourceBundle;
 
-@SuppressWarnings("serial")
+
 public class PlaylistListBody extends TagSupport {
 
     private List<Object> objects;
@@ -63,11 +63,7 @@ public class PlaylistListBody extends TagSupport {
                     "class='card-img--radius-lg'></a>");
             out.write("</div>");
 
-            out.write("<a href='" + pageContext.getServletContext().getContextPath()); /*+
-                    "/controller?command=playlists&playlistName=" + playlist.getPlaylistName() + "'" +
-                    " class='custom-card--link mt-2'>" +
-                    "<h6 class='mb-0'>" + playlist.getPlaylistName() + "</h6>" +
-                    "</a>");*/
+            out.write("<a href='" + pageContext.getServletContext().getContextPath());
 
             if (pageContext.getRequest().getParameter("all") == null) {
                 out.write("/controller?command=playlists&playlistName=" + playlist.getPlaylistName() + "'");

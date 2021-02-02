@@ -177,7 +177,6 @@
                                     <a href="${pageContext.servletContext.contextPath}/controller?command=artists&artistName=${artist.artistName}">
                                         <img src="${pageContext.request.contextPath}/resource/img/artists/${artist.imagePath}"
 
-                                       <%-- <img src="${artist.imagePath}"--%>
                                              class="card-img--radius-lg" alt="${artist.imagePath}" style="width: 260px; height: 170px">
                                     </a>
                                 </div>
