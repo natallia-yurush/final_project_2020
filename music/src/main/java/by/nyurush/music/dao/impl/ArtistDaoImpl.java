@@ -59,7 +59,6 @@ public class ArtistDaoImpl extends AbstractDao<Artist> {
         PreparedStatement preparedStatement = null;
         try {
             try {
-                connection.setAutoCommit(false);
                 if (artist.getId() != null) {
                     preparedStatement = connection.prepareStatement(UPDATE, Statement.RETURN_GENERATED_KEYS);
                     preparedStatement.setInt(2, artist.getId());
@@ -78,7 +77,9 @@ public class ArtistDaoImpl extends AbstractDao<Artist> {
                 connection.rollback();
                 throw new SQLException(e);
             } finally {
-                connection.setAutoCommit(true);
+                if(preparedStatement != null) {
+                    preparedStatement.close();
+                }
             }
         } catch (SQLException e) {
             throw new DaoException();
@@ -88,22 +89,7 @@ public class ArtistDaoImpl extends AbstractDao<Artist> {
 
     @Override
     public boolean delete(Artist artist) throws DaoException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE)) {
-            try {
-                connection.setAutoCommit(false);
-                preparedStatement.setLong(1, artist.getId());
-                preparedStatement.executeUpdate();
-                connection.commit();
-            } catch (SQLException e) {
-                connection.rollback();
-                throw new SQLException(e);
-            } finally {
-                connection.setAutoCommit(true);
-            }
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-        return true;
+        return deleteObject(artist, DELETE);
     }
 
     public List<Artist> findByName(String name) throws DaoException {

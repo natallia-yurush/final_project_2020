@@ -14,18 +14,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class ArtistsCommandImpl implements Command {
+    private final  ArtistService artistService = new ArtistService();
+    private final TrackService trackService = new TrackService();
+    private final AlbumService albumService = new AlbumService();
+
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         String albumName = req.getParameter(ConstantAttributes.ALBUM_NAME);
-        ArtistService artistService = new ArtistService();
         req.setAttribute(ConstantAttributes.ARTISTS_LIST, artistService.findAll());
-        TrackService trackService = new TrackService();
         if (StringUtil.isNullOrEmpty(albumName)) {
             req.setAttribute(ConstantAttributes.SONGS_LIST, trackService.findByArtist(req.getParameter(ConstantAttributes.ARTIST_NAME)));
         } else {
             req.setAttribute(ConstantAttributes.SONGS_LIST, trackService.findByAlbumName(albumName));
         }
-        AlbumService albumService = new AlbumService();
         req.setAttribute(ConstantAttributes.ALBUMS, albumService.findByArtistName(req.getParameter(ConstantAttributes.ARTIST_NAME)));
         return CommandResult.forward(ConstantPathPages.PATH_PAGE_ARTISTS);
     }

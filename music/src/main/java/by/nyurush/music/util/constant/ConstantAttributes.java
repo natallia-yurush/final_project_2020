@@ -1,17 +1,19 @@
 package by.nyurush.music.util.constant;
 
-public class ConstantAttributes {
+public final class ConstantAttributes {
+    private ConstantAttributes() {}
+
     public static final String ERROR_MESSAGE = "errorMessage";
     public static final String INFO_MESSAGE = "infoMessage";
     public static final String SUCCESS_MESSAGE = "successMessage";
     public static final String ERROR_AUTH = "errorAuthorisation";
-
 
     public static final String PARAM_INFO = "parametersInfo";
     public static final String PARAMETER_COMMAND = "command";
 
     public static final String SUCCESSFUL_CHANGES = "successfulChanges";
 
+    public static final String PAGE = "page";
     public static final String PAGE_NO = "pageNo";
     public static final String NO_OF_PAGES = "noOfPages";
     public static final String CURRENT_PAGE = "currentPage";
@@ -24,7 +26,6 @@ public class ConstantAttributes {
     public static final String INVALID_CONFIRM_PASS = "invalidConfirmPassword";
     public static final String INVALID_PASS_MATCH = "invalidPasswordsMatch";
 
-
     //user
     public static final String USER = "user";
     public static final String LOGIN = "login";
@@ -34,15 +35,16 @@ public class ConstantAttributes {
     public static final String FIRST_NAME = "firstName";
     public static final String LAST_NAME = "lastName";
 
-
+    //ResourceBundle
     public static final String RESOURCE = "resourcebundle.pagecontent";
     public static final String RES_GENRE = "resourcebundle.genre";
+    public static final String RES_ADDITIONAL = "additionalConfiguration";
     public static final String LANGUAGE = "language";
     public static final String DEFAULT_LANG = "";
     public static final String EN_LANG = "en_EN";
     public static final String RU_LANG = "ru_RU";
     public static final String UTF_8 = "UTF-8";
-
+    public static final String LANG = "lang";
 
     //artist
     public static final String ARTIST_NAME = "artistName";
@@ -77,10 +79,7 @@ public class ConstantAttributes {
     public static final Integer FIRST_PAGE = 1;
     public static final Integer RECORDS_PER_PAGE = 10;
 
+    public static final String PATH_TO_ARTISTS_IMAGES = "pathToArtistsImages";
+    public static final String PATH_TO_SONGS = "pathToSongs";
 
-    public static final String PATH = "/music/web/resource/img/artists/";
-    public static final String PATH_TO_ARTISTS_IMAGES = "D:\\JAVA_ST_2020\\final_project\\music\\target\\music\\resource\\img\\artists\\";
-    //public static final String PATH_TO_ARTISTS_IMAGES = "D:\\JAVA_ST_2020\\final_project\\music\\web\\resource\\img\\artists\\";
-    //public static final String PATH_TO_SONGS = "D:\\JAVA_ST_2020\\final_project\\music\\web\\resource\\songs\\";
-    public static final String PATH_TO_SONGS = "D:\\JAVA_ST_2020\\final_project\\music\\target\\music\\resource\\songs\\";
 }

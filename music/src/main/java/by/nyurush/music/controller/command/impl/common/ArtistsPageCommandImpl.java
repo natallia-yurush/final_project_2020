@@ -11,9 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class ArtistsPageCommandImpl implements Command {
+    private final ArtistService artistService = new ArtistService();
+
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        ArtistService artistService = new ArtistService();
         req.setAttribute(ConstantAttributes.ARTISTS_LIST, artistService.findAll());
         return CommandResult.forward(ConstantPathPages.PATH_PAGE_ARTISTS);
     }

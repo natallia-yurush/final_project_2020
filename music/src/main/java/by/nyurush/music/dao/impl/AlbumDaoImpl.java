@@ -68,7 +68,6 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
         PreparedStatement preparedStatement = null;
         try {
             try {
-                connection.setAutoCommit(false);
                 if (album.getId() != null) {
                     preparedStatement = connection.prepareStatement(UPDATE, Statement.RETURN_GENERATED_KEYS);
                     preparedStatement.setInt(5, album.getId());
@@ -76,7 +75,10 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
                     preparedStatement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
                 }
                 preparedStatement.setString(1, album.getAlbumName());
-                preparedStatement.setInt(2, album.getYear());
+                if (album.getYear() != null)
+                    preparedStatement.setInt(2, album.getYear());
+                else
+                    preparedStatement.setNull(2, Types.INTEGER);
                 preparedStatement.setInt(3, album.getNumberOfLikes());
                 preparedStatement.setInt(4, album.getArtist().getId());
                 preparedStatement.execute();
@@ -89,7 +91,9 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
                 connection.rollback();
                 throw new SQLException(e);
             } finally {
-                connection.setAutoCommit(true);
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
             }
         } catch (SQLException e) {
             throw new DaoException();
@@ -99,30 +103,14 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
 
     @Override
     public boolean delete(Album album) throws DaoException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE)) {
-            try {
-                connection.setAutoCommit(false);
-                preparedStatement.setLong(1, album.getId());
-                preparedStatement.executeUpdate();
-                connection.commit();
-            } catch (SQLException e) {
-                connection.rollback();
-                throw new SQLException(e);
-            } finally {
-                connection.setAutoCommit(true);
-            }
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-        return true;
+        return deleteObject(album, DELETE);
     }
 
     public List<Album> findByName(String name) throws DaoException {
         List<Album> albumsList = new ArrayList<>();
-        Album album = null;
+        Album album;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_NAME)) {
             preparedStatement.setString(1, "%" + name + "%");
-            //preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 album = new AlbumBuilder().build(resultSet);
@@ -136,7 +124,7 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
 
     public List<Album> findByYear(Integer year) throws DaoException {
         List<Album> albumsList = new ArrayList<>();
-        Album album = null;
+        Album album;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_YEAR)) {
             preparedStatement.setInt(1, year);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -167,7 +155,7 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
 
     public List<Album> findByArtistName(String artistName) throws DaoException {
         List<Album> albumsList = new ArrayList<>();
-        Album album = null;
+        Album album;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ARTIST_NAME)) {
             preparedStatement.setString(1, artistName);
             ResultSet resultSet = preparedStatement.executeQuery();

@@ -27,6 +27,8 @@ import static by.nyurush.music.util.constant.ConstantAttributes.SUCCESS_MESSAGE;
 
 public class CreatePlaylistAndAddSongCommandImpl implements Command {
     private static final Logger LOGGER = LogManager.getLogger(CreatePlaylistAndAddSongCommandImpl.class);
+    private final  PlaylistService playlistService = new PlaylistService();
+    private final  TrackService trackService = new TrackService();
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
@@ -40,13 +42,11 @@ public class CreatePlaylistAndAddSongCommandImpl implements Command {
         }
         Integer songId = Integer.parseInt(songIdStr);
         Account account = (Account) req.getSession().getAttribute(ConstantAttributes.USER);
-        PlaylistService playlistService = new PlaylistService();
         if (playlistService.findByNameAndUserId(playlistName, account.getId()).isPresent()) {
             req.setAttribute(ConstantAttributes.INFO_MESSAGE, rb.getString(ConstantMessages.EXISTING_PLAYLIST));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_TO_PLAYLIST);
         }
         Playlist playlist = playlistService.save(new Playlist(null, playlistName, false, account));
-        TrackService trackService = new TrackService();
         Optional<Track> track = trackService.findById(songId);
         if (track.isPresent()) {
             playlistService.addTrack(playlist, track.get());

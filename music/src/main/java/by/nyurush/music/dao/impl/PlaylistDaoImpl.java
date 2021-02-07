@@ -79,7 +79,6 @@ public class PlaylistDaoImpl extends AbstractDao<Playlist> {
         PreparedStatement preparedStatement = null;
         try {
             try {
-                connection.setAutoCommit(false);
                 if (playlist.getId() != null) {
                     preparedStatement = connection.prepareStatement(UPDATE, Statement.RETURN_GENERATED_KEYS);
                     preparedStatement.setInt(3, playlist.getId());
@@ -99,7 +98,9 @@ public class PlaylistDaoImpl extends AbstractDao<Playlist> {
                 connection.rollback();
                 throw new SQLException(e);
             } finally {
-                connection.setAutoCommit(true);
+                if(preparedStatement != null) {
+                    preparedStatement.close();
+                }
             }
         } catch (SQLException e) {
             throw new DaoException();
@@ -109,22 +110,7 @@ public class PlaylistDaoImpl extends AbstractDao<Playlist> {
 
     @Override
     public boolean delete(Playlist playlist) throws DaoException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE)) {
-            try {
-                connection.setAutoCommit(false);
-                preparedStatement.setInt(1, playlist.getId());
-                preparedStatement.executeUpdate();
-                connection.commit();
-            } catch (SQLException e) {
-                connection.rollback();
-                throw new SQLException(e);
-            } finally {
-                connection.setAutoCommit(true);
-            }
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-        return true;
+        return deleteObject(playlist, DELETE);
     }
 
     public List<Playlist> findByName(String name) throws DaoException {
@@ -144,9 +130,7 @@ public class PlaylistDaoImpl extends AbstractDao<Playlist> {
     }
 
     public boolean addTrack(Playlist playlist, Track track) throws DaoException {
-       // PreparedStatement preparedStatement = null;
         try {
-            connection.setAutoCommit(false);
             try (PreparedStatement preparedStatement = connection.prepareStatement(ADD_TRACK)) {
                 preparedStatement.setInt(1, playlist.getId());
                 preparedStatement.setInt(2, track.getId());
@@ -155,8 +139,6 @@ public class PlaylistDaoImpl extends AbstractDao<Playlist> {
             } catch (SQLException e) {
                 connection.rollback();
                 throw new SQLException(e);
-            } finally {
-                connection.setAutoCommit(true);
             }
         } catch (SQLException e) {
             throw new DaoException();
@@ -167,7 +149,6 @@ public class PlaylistDaoImpl extends AbstractDao<Playlist> {
     public boolean deleteTrack(Playlist playlist, Track  track) throws DaoException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_TRACK)) {
             try {
-                connection.setAutoCommit(false);
                 preparedStatement.setInt(1, track.getId());
                 preparedStatement.setInt(2, playlist.getId());
                 preparedStatement.executeUpdate();
@@ -175,8 +156,6 @@ public class PlaylistDaoImpl extends AbstractDao<Playlist> {
             } catch (SQLException e) {
                 connection.rollback();
                 throw new SQLException(e);
-            } finally {
-                connection.setAutoCommit(true);
             }
         } catch (SQLException e) {
             throw new DaoException(e);

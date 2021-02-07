@@ -23,11 +23,12 @@ import static by.nyurush.music.util.constant.ConstantAttributes.SUCCESS_MESSAGE;
 
 public class DeletePlaylistCommandImpl implements Command {
     private static final Logger LOGGER = LogManager.getLogger(DeletePlaylistCommandImpl.class);
+    private final PlaylistService playlistService = new PlaylistService();
+
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
-        PlaylistService playlistService = new PlaylistService();
         String idStr = req.getParameter(ConstantAttributes.PLAYLIST_ID);
         if(StringUtil.isNullOrEmpty(idStr)) {
             req.setAttribute(ERROR_MESSAGE, rb.getString(ConstantMessages.INVALID_FIND_SONG));

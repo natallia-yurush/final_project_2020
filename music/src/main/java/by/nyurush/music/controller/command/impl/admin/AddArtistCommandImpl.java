@@ -28,13 +28,13 @@ import static by.nyurush.music.util.constant.ConstantAttributes.UTF_8;
 
 public class AddArtistCommandImpl implements Command {
     private static final Logger LOGGER = LogManager.getLogger(AddArtistCommandImpl.class);
+    private final ArtistService artistService = new ArtistService();
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
 
         String artistName = null;
         String artistImg = null;
-        String realPath = null;
         ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
 
         try {
@@ -47,16 +47,9 @@ public class AddArtistCommandImpl implements Command {
                     // Process form file field (input type="file").
                     String fileName = new File(item.getName()).getName();
                     artistImg = fileName;
-                    //getClass().getResource("music/").getPath();
-                    //String base = servletContext.getRealPath("/WEB-INF/classes/myFile");
-                    //String str = getClass().getResource("/web/").getPath() ;
-                   // String path = new File("").getPath() ;
-
-                   // String path = "./web/resource/img/artists/";
-                    String filePath = ConstantAttributes.PATH_TO_ARTISTS_IMAGES + fileName;
+                    String filePath = ResourceBundle.getBundle(ConstantAttributes.RES_ADDITIONAL).getString(ConstantAttributes.PATH_TO_ARTISTS_IMAGES)
+                            + fileName;
                     item.write(new File(filePath));
-                    //storeFile.mkdirs();
-                    //item.write(new File(path + "/" + fileName));
                 }
             }
         } catch (Exception e) {
@@ -65,13 +58,12 @@ public class AddArtistCommandImpl implements Command {
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_ARTIST);
         }
 
-        if(!StringUtil.areNotNullAndNotEmpty(artistImg, artistName) && DataValidator.areCorrectInputs(artistImg, artistName)) {
+        if (!StringUtil.areNotNullAndNotEmpty(artistImg, artistName) && DataValidator.areCorrectInputs(artistImg, artistName)) {
             req.setAttribute(INFO_MESSAGE, rb.getString(ConstantMessages.FILL_WITH_CORRECT_DATA));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_ARTIST);
         }
 
         Artist artist = new Artist(null, artistName, artistImg);
-        ArtistService artistService = new ArtistService();
         if (artistService.save(artist) != null) {
             req.setAttribute(ConstantAttributes.SUCCESS_MESSAGE, rb.getString(ConstantMessages.SUCCESSFUL_ARTIST_SAVE_RESULT));
         } else {

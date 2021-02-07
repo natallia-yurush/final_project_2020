@@ -19,6 +19,8 @@ import java.util.ResourceBundle;
 import static by.nyurush.music.util.constant.ConstantAttributes.*;
 
 public class ProfileCommandImpl implements Command {
+    private final UserService userService = new UserService();
+
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         HttpSession session = req.getSession();
@@ -48,7 +50,6 @@ public class ProfileCommandImpl implements Command {
             currentUser.setPassword(password);
         }
 
-        UserService userService = new UserService();
         userService.save(currentUser);
         session.setAttribute(USER, currentUser);
 

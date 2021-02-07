@@ -12,16 +12,16 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.ResourceBundle;
 
 public class ChangeLanguageCommandImpl implements Command {
-
+    private final TrackService trackService = new TrackService();
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
 
-        String lang = req.getParameter("lang");
-        String page = req.getParameter("page");
+        String lang = req.getParameter(ConstantAttributes.LANG);
+        String page = req.getParameter(ConstantAttributes.PAGE);
 
         HttpSession session = req.getSession();
         Cookie langCookie = null;
@@ -43,7 +43,6 @@ public class ChangeLanguageCommandImpl implements Command {
         }
 
         ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
-        TrackService trackService = new TrackService();
         session.setAttribute(ConstantAttributes.GENRES, GenreUtil.getGenres(trackService.findAllGenres(), rb));
 
         return CommandResult.redirect(req.getServletPath() + "?command=" + page);

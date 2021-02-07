@@ -1,6 +1,8 @@
 package by.nyurush.music.util.constant;
 
-public class ConstantMessages {
+public final class ConstantMessages {
+    private ConstantMessages() {}
+
     public static final String WRONG_OPERATION_KEY = "answer.wrongOperation";
     public static final String AUTHORISATION_FAILED_KEY = "label.failedAuthorization";
     public static final String INVALID_NAME = "answer.invalidName";

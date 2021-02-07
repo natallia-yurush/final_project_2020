@@ -24,27 +24,22 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class LoginCommandImpl implements Command {
+    private final TrackService trackService = new TrackService();
+    private final AccountService accountService = new AccountService();
+    private final UserService userService = new UserService();
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-
         HttpSession session = req.getSession();
         String login = req.getParameter(ConstantAttributes.LOGIN);
         String password = req.getParameter(ConstantAttributes.PASSWORD);
-
         ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
 
         if (!StringUtil.areNotNullAndNotEmpty(login, password)) {
             req.setAttribute(ConstantAttributes.PARAM_INFO, rb.getString(ConstantMessages.WRONG_OPERATION_KEY));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_LOGIN);
         }
-        TrackService trackService = new TrackService();
         session.setAttribute(ConstantAttributes.GENRES, GenreUtil.getGenres(trackService.findAllGenres(), rb));
-
-
-        AccountService accountService = new AccountService();
-        UserService userService = new UserService();
-
         Optional<Account> account = accountService.isAccountExist(login, password);
         if (account.isPresent()) {
             Account acc = account.get();
@@ -60,6 +55,5 @@ public class LoginCommandImpl implements Command {
         req.setAttribute(ConstantAttributes.ERROR_AUTH, rb.getString(ConstantMessages.AUTHORISATION_FAILED_KEY));
         return CommandResult.forward(ConstantPathPages.PATH_PAGE_LOGIN);
     }
-
 
 }

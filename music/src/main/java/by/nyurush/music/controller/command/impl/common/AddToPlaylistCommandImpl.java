@@ -25,6 +25,9 @@ import java.util.ResourceBundle;
 
 public class AddToPlaylistCommandImpl implements Command {
     private static final Logger LOGGER = LogManager.getLogger(AddToPlaylistCommandImpl.class);
+    private final PlaylistService playlistService = new PlaylistService();
+    private final TrackService trackService = new TrackService();
+
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
@@ -37,13 +40,11 @@ public class AddToPlaylistCommandImpl implements Command {
         }
         Integer songId = Integer.parseInt(req.getParameter(ConstantAttributes.SONG_ID));
         Account account = (Account) req.getSession().getAttribute(ConstantAttributes.USER);
-        PlaylistService playlistService = new PlaylistService();
         Optional<Playlist> playlist = playlistService.findByNameAndUserId(playlistName, account.getId());
-        TrackService trackService = new TrackService();
         Optional<Track> track = trackService.findById(songId);
 
         if (playlist.isPresent() && track.isPresent()) {
-            List<Track> tracksList = trackService.findByPlaylistId(playlist.get().getId(), 0, 1000);
+            List<Track> tracksList = trackService.findByPlaylistId(playlist.get().getId());
             if(tracksList.contains(track.get())) {
                 req.setAttribute(ConstantAttributes.INFO_MESSAGE, rb.getString(ConstantMessages.ADDED_TRACK));
                 if(playlist.get().getPlaylistName().equals(ConstantAttributes.FAVORITE)) {

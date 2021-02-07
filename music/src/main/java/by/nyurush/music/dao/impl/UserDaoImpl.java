@@ -76,11 +76,10 @@ public class UserDaoImpl extends AbstractDao<User> {
 
     @Override
     public User save(User user) throws DaoException {
-        PreparedStatement preparedStatement = null;
         int generatedId;
         try {
-            try {
-                connection.setAutoCommit(false);
+            PreparedStatement preparedStatement = null;
+           try {
                 if (user.getId() != null) {
                     preparedStatement = connection.prepareStatement(UPDATE, Statement.RETURN_GENERATED_KEYS);
                     preparedStatement.setString(1, user.getLogin());
@@ -122,8 +121,9 @@ public class UserDaoImpl extends AbstractDao<User> {
                 connection.rollback();
                 throw new SQLException(e);
             } finally {
-                connection.setAutoCommit(true);
-                preparedStatement.close();
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
             }
         } catch (SQLException e) {
             throw new DaoException();
@@ -133,50 +133,15 @@ public class UserDaoImpl extends AbstractDao<User> {
 
     @Override
     public boolean delete(User user) throws DaoException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE)) {
-            try {
-                connection.setAutoCommit(false);
-                preparedStatement.setLong(1, user.getId());
-                preparedStatement.executeUpdate();
-                connection.commit();
-            } catch (SQLException e) {
-                connection.rollback();
-                throw new SQLException(e);
-            } finally {
-                connection.setAutoCommit(true);
-            }
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-        return true;
+        return deleteObject(user, DELETE);
     }
 
     public Optional<User> findByLogin(String login) throws DaoException {
-        User user = null;
-        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_LOGIN)) {
-            preparedStatement.setString(1, login);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                user = new UserBuilder().build(resultSet);
-            }
-        } catch (SQLException | ServiceException e) {
-            throw new DaoException(e);
-        }
-        return Optional.ofNullable(user);
+        return findByParam(FIND_BY_LOGIN, login);
     }
 
     public Optional<User> findByEmail(String email) throws DaoException {
-        User user = null;
-        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_EMAIL)) {
-            preparedStatement.setString(1, email);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                user = new UserBuilder().build(resultSet);
-            }
-        } catch (SQLException | ServiceException e) {
-            throw new DaoException(e);
-        }
-        return Optional.ofNullable(user);
+        return findByParam(FIND_BY_EMAIL, email);
     }
 
     public Optional<User> findByLoginAndPassword(String login, String password) throws DaoException {
@@ -193,4 +158,19 @@ public class UserDaoImpl extends AbstractDao<User> {
         }
         return Optional.ofNullable(user);
     }
+
+    private Optional<User> findByParam(String sqlQuery, String param) throws DaoException {
+        User user = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
+            preparedStatement.setString(1, param);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                user = new UserBuilder().build(resultSet);
+            }
+        } catch (SQLException | ServiceException e) {
+            throw new DaoException(e);
+        }
+        return Optional.ofNullable(user);
+    }
+
 }

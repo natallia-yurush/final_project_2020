@@ -1,15 +1,11 @@
 package by.nyurush.music.dao.pool;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ConnectionFactory {
-    private static final Logger LOGGER = LogManager.getLogger(ConnectionFactory.class);
     private static final String DATABASE_PROPERTY = "database";
     private static final String DATABASE_URL = "db.url";
     private static final String DATABASE_USER = "db.user";

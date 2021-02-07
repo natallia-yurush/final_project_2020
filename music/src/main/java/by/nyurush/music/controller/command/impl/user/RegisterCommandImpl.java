@@ -24,22 +24,21 @@ import java.util.ResourceBundle;
 import static by.nyurush.music.util.constant.ConstantAttributes.*;
 
 public class RegisterCommandImpl implements Command {
-    private static Logger LOGGER = LogManager.getLogger(RegisterCommandImpl.class);
+    private static final Logger LOGGER = LogManager.getLogger(RegisterCommandImpl.class);
+    private final UserService userService = new UserService();
+    private final TrackService trackService = new TrackService();
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
 
         HttpSession session = request.getSession();
         ResourceBundle rb = ResourceBundleUtil.getResourceBundle(request);
-
         UserDataValidator validator = new UserDataValidator();
         if (!validator.isValid(request)) {
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
         }
 
         User user = buildUser(request);
-        UserService userService = new UserService();
-
         if (!userService.isFreeLogin(user.getLogin())) {
             request.setAttribute(INVALID_LOGIN, rb.getString(ConstantMessages.TAKEN_LOGIN));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_SIGN_UP);
@@ -50,8 +49,6 @@ public class RegisterCommandImpl implements Command {
             session.setAttribute(USER, userService.save(user));
             LOGGER.info("User with login = " + user.getLogin() + " was registered.");
         }
-
-        TrackService trackService = new TrackService();
         session.setAttribute(ConstantAttributes.GENRES, GenreUtil.getGenres(trackService.findAllGenres(), rb));
 
         return CommandResult.redirect("/controller?command=home");

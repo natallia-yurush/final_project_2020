@@ -13,16 +13,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class GenresCommandImpl implements Command {
+    private final TrackService trackService = new TrackService();
+
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
 
         int page = ConstantAttributes.FIRST_PAGE;
         if (req.getParameter(ConstantAttributes.PAGE_NO) != null)
             page = Integer.parseInt(req.getParameter(ConstantAttributes.PAGE_NO));
-        TrackService trackService = new TrackService();
         List<Track> list = trackService.findByGenre(req.getParameter(ConstantAttributes.GENRE), (page - 1) * ConstantAttributes.RECORDS_PER_PAGE, ConstantAttributes.RECORDS_PER_PAGE);
         int noOfRecords = trackService.getNoOfRecordsByGenre(req.getParameter(ConstantAttributes.GENRE));
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / ConstantAttributes.RECORDS_PER_PAGE);
+        int noOfPages = (int) Math.ceil((float) noOfRecords / ConstantAttributes.RECORDS_PER_PAGE);
 
         req.setAttribute(ConstantAttributes.SONGS, list);
         req.setAttribute(ConstantAttributes.NO_OF_PAGES, noOfPages);

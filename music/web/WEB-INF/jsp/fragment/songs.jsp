@@ -100,6 +100,7 @@
 
                 <%--For displaying Page numbers.
                 The when condition does not display a link for the current page--%>
+                <br>
                 <table class="page-table">
                     <tr>
                         <%--For displaying Previous link except for the 1st page --%>

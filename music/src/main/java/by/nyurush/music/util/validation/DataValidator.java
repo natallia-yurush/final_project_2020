@@ -1,6 +1,9 @@
 package by.nyurush.music.util.validation;
 
-public class DataValidator {
+public final class DataValidator {
+    private DataValidator() {
+    }
+
     private static final String CHECK_LOGIN = "^[a-zA-Z][\\w-_.]{2,20}$";
     private static final String CHECK_EMAIL = "[-a-z0-9!#$%&'*+/=?^_`{|}~]+(\\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@" +
             "([a-z0-9]([-a-z0-9]{0,40}[a-z0-9])?\\.)*([a-z]{2,4})";

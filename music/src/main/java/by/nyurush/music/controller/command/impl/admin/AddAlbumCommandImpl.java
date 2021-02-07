@@ -19,6 +19,9 @@ import java.util.Calendar;
 import java.util.ResourceBundle;
 
 public class AddAlbumCommandImpl implements Command {
+    private final AlbumService albumService = new AlbumService();
+    private final ArtistService artistService = new ArtistService();
+
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         String albumName = req.getParameter(ConstantAttributes.ALBUM_NAME);
@@ -34,8 +37,6 @@ public class AddAlbumCommandImpl implements Command {
             req.setAttribute(ConstantAttributes.INFO_MESSAGE, rb.getString(ConstantMessages.FILL_WITH_CORRECT_DATA));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_CREATE_ALBUM);
         }
-        AlbumService albumService = new AlbumService();
-        ArtistService artistService = new ArtistService();
         if (albumService.save(new Album(null, albumName, year, 0, artistService.findByName(artistsName).get(0))) != null) {
             req.setAttribute(ConstantAttributes.SUCCESS_MESSAGE, rb.getString(ConstantMessages.SUCCESSFUL_ALBUM_SAVE_RESULT));
         } else {

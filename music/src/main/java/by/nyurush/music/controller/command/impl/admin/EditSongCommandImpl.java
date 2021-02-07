@@ -23,18 +23,16 @@ import static by.nyurush.music.util.constant.ConstantAttributes.ERROR_MESSAGE;
 
 public class EditSongCommandImpl implements Command {
     private static final Logger LOGGER = LogManager.getLogger(EditSongCommandImpl.class);
+    private final ArtistService artistService = new ArtistService();
+    private final AlbumService albumService = new AlbumService();
+    private final TrackService trackService = new TrackService();
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        ArtistService artistService = new ArtistService();
         req.setAttribute(ConstantAttributes.ARTISTS_NAME, artistService.findAll());
-
-        AlbumService albumService = new AlbumService();
         req.setAttribute(ConstantAttributes.ALBUMS, albumService.findAll());
 
         ResourceBundle rb = ResourceBundleUtil.getResourceBundle(req);
-
-        TrackService trackService = new TrackService();
         Optional<Track> track = trackService.findById(Integer.parseInt(req.getParameter(ConstantAttributes.SONG_ID)));
         if (track.isPresent()) {
             req.setAttribute(ConstantAttributes.SONG, track.get());
@@ -43,8 +41,6 @@ public class EditSongCommandImpl implements Command {
             req.setAttribute(ERROR_MESSAGE, rb.getString(ConstantMessages.INVALID_FIND_SONG));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME);
         }
-
         return CommandResult.forward(ConstantPathPages.PATH_PAGE_EDIT_SONG);
-
     }
 }

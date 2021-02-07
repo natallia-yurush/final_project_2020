@@ -16,6 +16,7 @@ public class AccountDaoImpl extends AbstractDao<Account> {
     private static final String FIND_BY_ID = "SELECT id, login, password, role FROM account WHERE id=?";
     private static final String FIND_BY_LOGIN = "SELECT id, login, password, role FROM account WHERE login=?";
     private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT id, login, password, role FROM account WHERE login=? AND password=?";
+    private static final String FIND_ADMIN = "SELECT id, login, password, role FROM account WHERE role='ADMIN'";
     private static final String CREATE = "INSERT INTO account (login, password, role) VALUES (?, ?, ?)";
     private static final String UPDATE = "UPDATE account SET login=?, password=?, role=? WHERE id=?";
     private static final String DELETE = "DELETE FROM account WHERE id=?";
@@ -57,10 +58,9 @@ public class AccountDaoImpl extends AbstractDao<Account> {
 
     @Override
     public Account save(Account account) throws DaoException {
-        PreparedStatement preparedStatement;
+        PreparedStatement preparedStatement = null;
         try {
             try {
-                connection.setAutoCommit(false);
                 if (account.getId() != null) {
                     preparedStatement = connection.prepareStatement(UPDATE, Statement.RETURN_GENERATED_KEYS);
                     preparedStatement.setInt(4, account.getId());
@@ -80,7 +80,9 @@ public class AccountDaoImpl extends AbstractDao<Account> {
                 connection.rollback();
                 throw new SQLException(e);
             } finally {
-                connection.setAutoCommit(true);
+                if(preparedStatement != null) {
+                    preparedStatement.close();
+                }
             }
         } catch (SQLException e) {
             throw new DaoException();
@@ -90,22 +92,7 @@ public class AccountDaoImpl extends AbstractDao<Account> {
 
     @Override
     public boolean delete(Account account) throws DaoException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE)) {
-            try {
-                connection.setAutoCommit(false);
-                preparedStatement.setLong(1, account.getId());
-                preparedStatement.executeUpdate();
-                connection.commit();
-            } catch (SQLException e) {
-                connection.rollback();
-                throw new SQLException(e);
-            } finally {
-                connection.setAutoCommit(true);
-            }
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-        return true;
+        return deleteObject(account, DELETE);
     }
 
     public Optional<Account> findByLogin(String login) throws DaoException {
@@ -135,5 +122,18 @@ public class AccountDaoImpl extends AbstractDao<Account> {
             throw new DaoException(e);
         }
         return Optional.ofNullable(account);
+    }
+
+    public Account findAdmin() throws DaoException {
+        Account account = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_ADMIN)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                account = new AccountBuilder().build(resultSet);
+            }
+        } catch (SQLException | ServiceException e) {
+            throw new DaoException(e);
+        }
+        return account;
     }
 }

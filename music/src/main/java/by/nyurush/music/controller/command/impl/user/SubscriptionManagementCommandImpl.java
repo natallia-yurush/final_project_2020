@@ -8,20 +8,20 @@ import by.nyurush.music.service.impl.UserService;
 import by.nyurush.music.util.constant.ConstantAttributes;
 import by.nyurush.music.util.constant.ConstantMessages;
 import by.nyurush.music.util.constant.ConstantPathPages;
-import com.mysql.cj.Session;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class SubscriptionManagementCommandImpl implements Command {
+    private final UserService userService = new UserService();
+
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute(ConstantAttributes.USER);
         user.setSubscription(!user.getSubscription());
-        UserService userService = new UserService();
-        if(userService.save(user) != null) {
+        if (userService.save(user) != null) {
             session.setAttribute(ConstantAttributes.USER, user);
         } else {
             req.setAttribute(ConstantAttributes.ERROR_MESSAGE, ConstantMessages.FAILED_TO_SUBSCRIBE);

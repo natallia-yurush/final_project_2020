@@ -32,6 +32,9 @@ import static by.nyurush.music.util.constant.ConstantAttributes.*;
 
 public class AddSongCommandImpl implements Command {
     private static final Logger LOGGER = LogManager.getLogger(AddSongCommandImpl.class);
+    private final AlbumService albumService = new AlbumService();
+    private final TrackService trackService = new TrackService();
+    private final ArtistService artistService = new ArtistService();
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
@@ -70,7 +73,8 @@ public class AddSongCommandImpl implements Command {
                     }
                 } else {
                     songFile = new File(item.getName()).getName();
-                    String filePath = ConstantAttributes.PATH_TO_SONGS + songFile;
+                    String filePath = ResourceBundle.getBundle(ConstantAttributes.RES_ADDITIONAL).getString(ConstantAttributes.PATH_TO_SONGS)
+                            + songFile;
                     File storeFile = new File(filePath);
                     item.write(storeFile);
                 }
@@ -86,11 +90,10 @@ public class AddSongCommandImpl implements Command {
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_ADD_SONG);
         }
 
-        AlbumService albumService = new AlbumService();
         Album album;
         if (albumName.equalsIgnoreCase(SINGLE)) {
-            ArtistService artistService = new ArtistService();
-            album = new Album(null, albumName, null, null, artistService.findByName(artistsName.get(0)).get(0));
+            album = new Album(null, songName, null, 0, artistService.findByName(artistsName.get(0)).get(0));
+            album = albumService.save(album);
         } else {
             Optional<Album> optionalAlbum = albumService.findByArtistAndAlbumName(artistsName.get(0), albumName);
             if (optionalAlbum.isPresent())
@@ -103,7 +106,6 @@ public class AddSongCommandImpl implements Command {
         }
 
         Track track = new Track(id, songName, songFile, 0, genre, album);
-        TrackService trackService = new TrackService();
         if (trackService.save(track) != null) {
             req.setAttribute(SUCCESS_MESSAGE, rb.getString(ConstantMessages.SUCCESSFUL_SONG_SAVE_RESULT));
         } else {
@@ -111,7 +113,6 @@ public class AddSongCommandImpl implements Command {
             LOGGER.warn(rb.getString(ConstantMessages.INVALID_SONG_SAVE_RESULT));
         }
 
-        ArtistService artistService = new ArtistService();
         req.setAttribute(ConstantAttributes.ARTISTS_NAME, artistService.findAll());
         req.setAttribute(ConstantAttributes.ALBUMS, albumService.findAll());
 

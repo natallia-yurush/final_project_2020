@@ -4,7 +4,8 @@ import by.nyurush.music.util.constant.ConstantAttributes;
 
 import java.util.*;
 
-public class GenreUtil {
+public final class GenreUtil {
+    private GenreUtil() {}
 
     public static Map<String, String> getGenres(List<String> genres, ResourceBundle rb) {
         Map<String, String> result = new LinkedHashMap<>();

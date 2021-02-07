@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class HomeCommandImpl implements Command {
+    private final TrackService trackService = new TrackService();
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
@@ -20,10 +21,10 @@ public class HomeCommandImpl implements Command {
         int page = ConstantAttributes.FIRST_PAGE;
         if (req.getParameter(ConstantAttributes.PAGE_NO) != null)
             page = Integer.parseInt(req.getParameter(ConstantAttributes.PAGE_NO));
-        TrackService trackService = new TrackService();
+
         List<Track> list = trackService.findForPage((page - 1) * ConstantAttributes.RECORDS_PER_PAGE, ConstantAttributes.RECORDS_PER_PAGE);
         int noOfRecords = trackService.getNoOfRecords();
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / ConstantAttributes.RECORDS_PER_PAGE);
+        int noOfPages = (int) Math.ceil((float) noOfRecords / ConstantAttributes.RECORDS_PER_PAGE);
 
         req.setAttribute(ConstantAttributes.SONGS, list);
         req.setAttribute(ConstantAttributes.NO_OF_PAGES, noOfPages);

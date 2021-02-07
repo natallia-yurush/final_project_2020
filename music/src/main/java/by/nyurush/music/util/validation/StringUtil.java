@@ -1,6 +1,7 @@
 package by.nyurush.music.util.validation;
 
-public class StringUtil {
+public final class StringUtil {
+    private StringUtil() {}
 
     public static boolean areNotNullAndNotEmpty(String... strings) {
         if (strings == null || strings.length == 0) {

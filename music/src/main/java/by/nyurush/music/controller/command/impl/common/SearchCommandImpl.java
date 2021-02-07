@@ -20,6 +20,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class SearchCommandImpl implements Command {
+    private final ArtistService artistService = new ArtistService();
+    private final TrackService trackService = new TrackService();
+    private final AlbumService albumService = new AlbumService();
+
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         String input = req.getParameter(ConstantAttributes.SEARCH_INPUT);
@@ -28,24 +32,18 @@ public class SearchCommandImpl implements Command {
             req.setAttribute(ConstantAttributes.INFO_MESSAGE, rb.getString(ConstantMessages.FILL_WITH_CORRECT_DATA));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_SEARCH);
         }
-
-        ArtistService artistService = new ArtistService();
         req.setAttribute(ConstantAttributes.ARTISTS_LIST, artistService.findByName(input));
 
-        int page = 1;
-        int recordsPerPage = 10;
+        int page = ConstantAttributes.FIRST_PAGE;
         if (req.getParameter(ConstantAttributes.PAGE_NO) != null)
             page = Integer.parseInt(req.getParameter(ConstantAttributes.PAGE_NO));
-        TrackService trackService = new TrackService();
-        List<Track> list = trackService.findByName(input, (page - 1) * recordsPerPage, recordsPerPage);
+        List<Track> list = trackService.findByName(input, (page - 1) * ConstantAttributes.RECORDS_PER_PAGE, ConstantAttributes.RECORDS_PER_PAGE);
         int noOfRecords = trackService.getNoOfRecordsByName(input);
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+        int noOfPages = (int) Math.ceil((float) noOfRecords / ConstantAttributes.RECORDS_PER_PAGE);
 
         req.setAttribute(ConstantAttributes.SONGS, list);
         req.setAttribute(ConstantAttributes.NO_OF_PAGES, noOfPages);
         req.setAttribute(ConstantAttributes.CURRENT_PAGE, page);
-
-        AlbumService albumService = new AlbumService();
         req.setAttribute(ConstantAttributes.ALBUMS, albumService.findByName(input));
 
         return CommandResult.forward(ConstantPathPages.PATH_PAGE_SEARCH);

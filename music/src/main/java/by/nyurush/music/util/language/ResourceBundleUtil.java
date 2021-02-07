@@ -9,7 +9,8 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ResourceBundleUtil {
+public final class ResourceBundleUtil {
+    private ResourceBundleUtil() {}
 
     public static ResourceBundle getResourceBundle(HttpServletRequest request) {
         Optional<String> language = Arrays.stream(request.getCookies())

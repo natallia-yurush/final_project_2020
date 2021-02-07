@@ -16,15 +16,15 @@ public class DaoHelper implements AutoCloseable {
 
     public DaoHelper(ConnectionPool connectionPool) throws DaoException {
         try {
-            this.connection = connectionPool.getConnection();
-        } catch (ConnectionPoolException e) {
-
+            connection = connectionPool.getConnection();
+            connection.setAutoCommit(false);
+        } catch (ConnectionPoolException | SQLException e) {
             throw new DaoException(e.getMessage());
         }
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         connection.close();
     }
 
