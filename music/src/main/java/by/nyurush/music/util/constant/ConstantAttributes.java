@@ -45,6 +45,7 @@ public final class ConstantAttributes {
     public static final String RU_LANG = "ru_RU";
     public static final String UTF_8 = "UTF-8";
     public static final String LANG = "lang";
+    public static final String REGEX = "_";
 
     //artist
     public static final String ARTIST_NAME = "artistName";
@@ -78,6 +79,7 @@ public final class ConstantAttributes {
 
     public static final Integer FIRST_PAGE = 1;
     public static final Integer RECORDS_PER_PAGE = 10;
+    public static final Integer YEAR_OF_FIRST_MUSICIAN = 1150;
 
     public static final String PATH_TO_ARTISTS_IMAGES = "pathToArtistsImages";
     public static final String PATH_TO_SONGS = "pathToSongs";

@@ -86,7 +86,7 @@
                                         <fmt:message key="label.year" bundle="${loc}"/>
                                     </label>
                                     <div class="col-md-7">
-                                        <input type="number" id="year" name="year" value="2020" min="1900"
+                                        <input type="number" id="year" name="year" value="2020" min="1150"
                                                max="${currentYear}" step="1" required>
                                     </div>
                                 </div>

@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 
-//"/controller?command=*"
 @WebFilter(filterName = "commandSecurityFilter", urlPatterns = {"/controller/*"})
 public class CommandSecurityFilter implements Filter {
     @Override

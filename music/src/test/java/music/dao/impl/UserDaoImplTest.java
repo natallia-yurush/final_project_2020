@@ -7,19 +7,38 @@ import by.nyurush.music.dao.impl.AccountDaoImpl;
 import by.nyurush.music.dao.impl.UserDaoImpl;
 import by.nyurush.music.entity.AccountRole;
 import by.nyurush.music.entity.User;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.testng.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class UserDaoImplTest {
     private final DaoHelperFactory daoHelperFactory = new DaoHelperFactory();
+    private final User testUser = new User(null, "test", "test", AccountRole.CLIENT, "test", "test", "test", true);
+
+
+    @Before
+    @After
+    public void deleteData() {
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            UserDaoImpl userDao = daoHelper.createUserDao();
+            AccountDaoImpl accountDao = daoHelper.createAccountDao();
+            userDao.deleteAll();
+            accountDao.deleteAll();
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     public void findAllPositiveTest() throws DaoException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             UserDaoImpl userDao = daoHelper.createUserDao();
-            assertTrue(userDao.findAll().size() > 0);
+            User user = userDao.save(testUser);
+            assertEquals(1, userDao.findAll().size());
         }
     }
 
@@ -27,7 +46,8 @@ public class UserDaoImplTest {
     public void findByIdPositiveTest() throws DaoException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             UserDaoImpl userDao = daoHelper.createUserDao();
-            assertTrue(userDao.findById(2).isPresent());
+            User user = userDao.save(testUser);
+            assertTrue(userDao.findById(user.getId()).isPresent());
         }
     }
 
@@ -36,12 +56,11 @@ public class UserDaoImplTest {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             UserDaoImpl userDao = daoHelper.createUserDao();
             AccountDaoImpl accountDao = daoHelper.createAccountDao();
-            User user = new User(null, "krop", "krop", AccountRole.CLIENT, "krop", "krop", "krop@gmail.com", false);
-            User result = userDao.save(user);
+            User result = userDao.save(testUser);
             boolean actual = result.getId() != null;
-            Assert.assertTrue(actual);
-            Assert.assertTrue(userDao.delete(user));
-            Assert.assertTrue(accountDao.delete(user));
+            assertTrue(actual);
+            assertTrue(userDao.delete(result));
+            assertTrue(accountDao.delete(result));
         }
     }
 
@@ -49,8 +68,7 @@ public class UserDaoImplTest {
     public void updatePositiveTest() throws DaoException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             UserDaoImpl userDao = daoHelper.createUserDao();
-            User user = new User(2, "user", "user", AccountRole.CLIENT, "Наталья", "Юруш", "natallia.yurush@gmail.com", true);
-            Assert.assertNotNull(userDao.save(user));
+            assertNotNull(userDao.save(testUser));
         }
     }
 
@@ -58,7 +76,8 @@ public class UserDaoImplTest {
     public void findByLoginPositiveTest() throws DaoException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             UserDaoImpl userDao = daoHelper.createUserDao();
-            assertTrue(userDao.findByLogin("user").isPresent());
+            userDao.save(testUser);
+            assertTrue(userDao.findByLogin("test").isPresent());
         }
     }
 
@@ -66,7 +85,8 @@ public class UserDaoImplTest {
     public void findByEmailPositiveTest() throws DaoException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             UserDaoImpl userDao = daoHelper.createUserDao();
-            assertTrue(userDao.findByEmail("natallia.yurush@gmail.com").isPresent());
+            userDao.save(testUser);
+            assertTrue(userDao.findByEmail("test").isPresent());
         }
     }
 }

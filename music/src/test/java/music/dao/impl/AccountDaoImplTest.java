@@ -6,19 +6,35 @@ import by.nyurush.music.dao.exception.DaoException;
 import by.nyurush.music.dao.impl.AccountDaoImpl;
 import by.nyurush.music.entity.Account;
 import by.nyurush.music.entity.AccountRole;
-import org.testng.annotations.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class AccountDaoImplTest {
     private final DaoHelperFactory daoHelperFactory = new DaoHelperFactory();
+    private final Account testAccount = new Account(null, "test", "test", AccountRole.CLIENT);
+
+    @Before
+    @After
+    public void deleteData() {
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            AccountDaoImpl accountDao = daoHelper.createAccountDao();
+            accountDao.deleteAll();
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     public void findAllPositiveTest() throws DaoException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDaoImpl accountDao = daoHelper.createAccountDao();
-            boolean actual = accountDao.findAll().size() > 0;
+            accountDao.save(testAccount);
+            boolean actual = accountDao.findAll().size() == 1;
             assertTrue(actual);
         }
     }
@@ -27,8 +43,8 @@ public class AccountDaoImplTest {
     public void findByIdPositiveTest() throws DaoException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDaoImpl accountDao = daoHelper.createAccountDao();
-            boolean actual = accountDao.findById(1).isPresent();
-            assertTrue(actual);
+            Account account = accountDao.save(testAccount);
+            assertEquals(accountDao.findById(account.getId()).get(), account);
         }
     }
 
@@ -45,11 +61,10 @@ public class AccountDaoImplTest {
     public void saveAndDeletePositiveTest() throws DaoException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDaoImpl accountDao = daoHelper.createAccountDao();
-            Account account = new Account(null, "krop", "krop", AccountRole.CLIENT);
-            Account result = saveAccount(account, accountDao);
+            Account result = saveAccount(testAccount, accountDao);
             boolean actual = result.getId() != null;
             assertTrue(actual);
-            assertTrue(deleteAccount(account, accountDao));
+            assertTrue(deleteAccount(testAccount, accountDao));
         }
     }
 
@@ -65,7 +80,8 @@ public class AccountDaoImplTest {
     public void findByLoginPositiveTest() throws DaoException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             AccountDaoImpl accountDao = daoHelper.createAccountDao();
-            boolean actual = accountDao.findByLogin("admin").isPresent();
+            accountDao.save(testAccount);
+            boolean actual = accountDao.findByLogin("test").isPresent();
             assertTrue(actual);
         }
     }

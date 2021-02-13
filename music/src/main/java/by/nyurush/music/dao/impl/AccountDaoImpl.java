@@ -20,6 +20,7 @@ public class AccountDaoImpl extends AbstractDao<Account> {
     private static final String CREATE = "INSERT INTO account (login, password, role) VALUES (?, ?, ?)";
     private static final String UPDATE = "UPDATE account SET login=?, password=?, role=? WHERE id=?";
     private static final String DELETE = "DELETE FROM account WHERE id=?";
+    private static final String DELETE_ALL = "DELETE FROM account";
 
     public AccountDaoImpl(Connection connection) {
         super(connection);
@@ -93,6 +94,10 @@ public class AccountDaoImpl extends AbstractDao<Account> {
     @Override
     public boolean delete(Account account) throws DaoException {
         return deleteObject(account, DELETE);
+    }
+
+    public void deleteAll() throws DaoException {
+        deleteAll(DELETE_ALL);
     }
 
     public Optional<Account> findByLogin(String login) throws DaoException {

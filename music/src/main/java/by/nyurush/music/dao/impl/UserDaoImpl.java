@@ -37,6 +37,7 @@ public class UserDaoImpl extends AbstractDao<User> {
     private static final String UPDATE = "UPDATE account A, user U SET A.login=?, A.password=?, A.role = ?, U.first_name = ?, U.last_name = ?, " +
             "U.email=?, U.subscription=? WHERE A.id = ? AND U.account_id = ?";
     private static final String DELETE = "DELETE FROM user WHERE account_id=?";
+    private static final String DELETE_ALL = "DELETE FROM user";
 
 
     public UserDaoImpl(Connection connection) {
@@ -134,6 +135,10 @@ public class UserDaoImpl extends AbstractDao<User> {
     @Override
     public boolean delete(User user) throws DaoException {
         return deleteObject(user, DELETE);
+    }
+
+    public void deleteAll() throws DaoException {
+        deleteAll(DELETE_ALL);
     }
 
     public Optional<User> findByLogin(String login) throws DaoException {

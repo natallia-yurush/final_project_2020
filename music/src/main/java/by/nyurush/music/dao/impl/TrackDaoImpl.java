@@ -87,11 +87,12 @@ public class TrackDaoImpl extends AbstractDao<Track> {
             "JOIN album ON track.album_id = album.id " +
             "JOIN artist ON album.artist_id = artist.id " +
             "WHERE playlist.name LIKE ? AND playlist.visible = 1";
+    private static final String FIND_ALL_GENRES = "SELECT name FROM genre";
     private static final String CREATE = "INSERT INTO track (name, audio_path, number_of_likes, genre_name, album_id) VALUES (?, ?, ?, ?, ?)";
     private static final String ADD_ARTIST_TRACK = "INSERT INTO artist_track (artist_id, track_id) VALUES (?, ?)";
     private static final String UPDATE = "UPDATE track SET name = ?, audio_path = ?, number_of_likes = ?, genre_name = ?, album_id = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM track WHERE id=?";
-    private static final String FIND_ALL_GENRES = "SELECT name FROM genre";
+    private static final String DELETE_ALL = "DELETE FROM track";
     private static final String GET_NUMBER_OF_RECORDS = "SELECT COUNT(*) FROM track";
     private static final String GET_NUMBER_OF_RECORDS_BY_GENRE = "SELECT COUNT(*) FROM track WHERE genre_name = ?";
     private static final String GET_NUMBER_OF_RECORDS_BY_NAME = "SELECT COUNT(*) FROM track WHERE name = ?";
@@ -178,6 +179,10 @@ public class TrackDaoImpl extends AbstractDao<Track> {
     @Override
     public boolean delete(Track track) throws DaoException {
         return deleteObject(track, DELETE);
+    }
+
+    public void deleteAll() throws DaoException {
+        deleteAll(DELETE_ALL);
     }
 
     public List<Track> findByName(String name, Integer offset, Integer recordsPerPage) throws DaoException {

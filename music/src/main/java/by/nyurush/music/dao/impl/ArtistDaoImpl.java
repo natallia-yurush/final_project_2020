@@ -18,6 +18,7 @@ public class ArtistDaoImpl extends AbstractDao<Artist> {
     private static final String CREATE = "INSERT INTO artist (name, image_path) VALUES (?, ?)";
     private static final String UPDATE = "UPDATE artist SET name = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM artist WHERE id = ?";
+    private static final String DELETE_ALL = "DELETE FROM artist";
 
     public ArtistDaoImpl(Connection connection) {
         super(connection);
@@ -90,6 +91,10 @@ public class ArtistDaoImpl extends AbstractDao<Artist> {
     @Override
     public boolean delete(Artist artist) throws DaoException {
         return deleteObject(artist, DELETE);
+    }
+
+    public void deleteAll() throws DaoException {
+        deleteAll(DELETE_ALL);
     }
 
     public List<Artist> findByName(String name) throws DaoException {

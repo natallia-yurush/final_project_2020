@@ -1,16 +1,20 @@
 package music.util.validation;
 
 import by.nyurush.music.util.validation.DataValidator;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import com.tngtech.java.junit.dataprovider.DataProvider;
+import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import com.tngtech.java.junit.dataprovider.UseDataProvider;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
+@RunWith(DataProviderRunner.class)
 public class DataValidationTest {
 
-    @DataProvider(name = "positiveEmails")
-    public Object[] createPositiveEmails() {
+    @DataProvider
+    public static Object[] createPositiveEmails() {
         return new Object[]{
                 "natallia.yurush@gmail.com",
                 "nika.koko@yandex.ru",
@@ -18,8 +22,8 @@ public class DataValidationTest {
         };
     }
 
-    @DataProvider(name = "negativeEmails")
-    public Object[] createNegativeEmails() {
+    @DataProvider
+    public static Object[] createNegativeEmails() {
         return new Object[]{
                 "",
                 "olga.com",
@@ -29,8 +33,8 @@ public class DataValidationTest {
         };
     }
 
-    @DataProvider(name = "positivePassword")
-    public Object[] createPositivePasswords() {
+    @DataProvider
+    public static Object[] createPositivePasswords() {
         return new Object[]{
                 "QQww1122",
                 "FFhowh67hjF",
@@ -39,8 +43,8 @@ public class DataValidationTest {
         };
     }
 
-    @DataProvider(name = "negativePassword")
-    public Object[] createNegativePasswords() {
+    @DataProvider
+    public static Object[] createNegativePasswords() {
         return new Object[]{
                 "",
                 "QQww112",
@@ -52,8 +56,8 @@ public class DataValidationTest {
         };
     }
 
-    @DataProvider(name = "positiveLogin")
-    public Object[] createPositiveLogins() {
+    @DataProvider
+    public static Object[] createPositiveLogins() {
         return new Object[]{
                 "natasha",
                 "natallia-yurush",
@@ -62,8 +66,8 @@ public class DataValidationTest {
         };
     }
 
-    @DataProvider(name = "negativeLogin")
-    public Object[] createNegativeLogins() {
+    @DataProvider
+    public static Object[] createNegativeLogins() {
         return new Object[]{
                 "",
                 "a",
@@ -73,8 +77,8 @@ public class DataValidationTest {
         };
     }
 
-    @DataProvider(name = "positiveName")
-    public Object[] createPositiveNames() {
+    @DataProvider
+    public static Object[] createPositiveNames() {
         return new Object[]{
                 "natasha",
                 "Natallia",
@@ -82,8 +86,8 @@ public class DataValidationTest {
         };
     }
 
-    @DataProvider(name = "negativeName")
-    public Object[] createNegativeNames() {
+    @DataProvider
+    public static Object[] createNegativeNames() {
         return new Object[]{
                 "",
                 "A",
@@ -94,42 +98,50 @@ public class DataValidationTest {
         };
     }
 
-    @Test(dataProvider = "positiveEmails")
+    @Test
+    @UseDataProvider("createPositiveEmails")
     public void isCorrectEmailTest(String email) {
         assertTrue(DataValidator.isCorrectEmail(email));
     }
 
-    @Test(dataProvider = "negativeEmails")
+    @Test
+    @UseDataProvider("createNegativeEmails")
     public void isNotCorrectEmailTest(String email) {
         assertFalse(DataValidator.isCorrectEmail(email));
     }
 
-    @Test(dataProvider = "positivePassword")
+    @Test
+    @UseDataProvider("createPositivePasswords")
     public void isCorrectPasswordTest(String password) {
         assertTrue(DataValidator.isCorrectPassword(password));
     }
 
-    @Test(dataProvider = "negativePassword")
+    @Test
+    @UseDataProvider("createNegativePasswords")
     public void isNotCorrectPasswordTest(String password) {
         assertFalse(DataValidator.isCorrectPassword(password));
     }
 
-    @Test(dataProvider = "positiveLogin")
+    @Test
+    @UseDataProvider("createPositiveLogins")
     public void isCorrectLoginTest(String login) {
         assertTrue(DataValidator.isCorrectLogin(login));
     }
 
-    @Test(dataProvider = "negativeLogin")
+    @Test
+    @UseDataProvider("createNegativeLogins")
     public void isNotCorrectLoginTest(String login) {
         assertFalse(DataValidator.isCorrectLogin(login));
     }
 
-    @Test(dataProvider = "positiveName")
+    @Test
+    @UseDataProvider("createPositiveNames")
     public void isCorrectNameTest(String name) {
         assertFalse(DataValidator.isIncorrectNameSurname(name));
     }
 
-    @Test(dataProvider = "negativeName")
+    @Test
+    @UseDataProvider("createNegativeNames")
     public void isNotCorrectNameTest(String name) {
         assertTrue(DataValidator.isIncorrectNameSurname(name));
     }

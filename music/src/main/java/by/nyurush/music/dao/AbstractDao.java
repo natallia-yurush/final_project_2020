@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,5 +45,13 @@ public abstract class AbstractDao<T extends Entity> {
             throw new DaoException(e);
         }
         return true;
+    }
+
+    protected void deleteAll(String query) throws DaoException {
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 }

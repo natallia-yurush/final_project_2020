@@ -27,6 +27,7 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
     private static final String UPDATE = "UPDATE album SET name=?, year=?, number_of_likes=?, artist_id=? WHERE id=?";
     private static final String CREATE = "INSERT INTO album (name, year, number_of_likes, artist_id) VALUES (?, ?, ?, ?)";
     private static final String DELETE = "DELETE FROM album WHERE id=?";
+    private static final String DELETE_ALL = "DELETE FROM album";
 
     public AlbumDaoImpl(Connection connection) {
         super(connection);
@@ -104,6 +105,10 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
     @Override
     public boolean delete(Album album) throws DaoException {
         return deleteObject(album, DELETE);
+    }
+
+    public void deleteAll() throws DaoException {
+        deleteAll(DELETE_ALL);
     }
 
     public List<Album> findByName(String name) throws DaoException {

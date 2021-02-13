@@ -1,16 +1,20 @@
 package music.util.validation;
 
 import by.nyurush.music.util.validation.StringUtil;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import com.tngtech.java.junit.dataprovider.DataProvider;
+import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import com.tngtech.java.junit.dataprovider.UseDataProvider;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
+@RunWith(DataProviderRunner.class)
 public class StringUtilTest {
 
-    @DataProvider(name = "positiveStrings")
-    public Object[] createPositiveStrings() {
+    @DataProvider
+    public static Object[] createPositiveStrings() {
         return new Object[]{
                 "kokosik",
                 "   kokosik   ",
@@ -18,8 +22,8 @@ public class StringUtilTest {
         };
     }
 
-    @DataProvider(name = "negativeStrings")
-    public Object[] createNegativeStrings() {
+    @DataProvider
+    public static Object[] createNegativeStrings() {
         return new Object[]{
                 " ",
                 "         ",
@@ -28,12 +32,14 @@ public class StringUtilTest {
         };
     }
 
-    @Test(dataProvider = "positiveStrings")
+    @Test
+    @UseDataProvider("createPositiveStrings")
     public void isNullOrEmptyPositiveTest(String str) {
         assertFalse(StringUtil.isNullOrEmpty(str));
     }
 
-    @Test(dataProvider = "negativeStrings")
+    @Test
+    @UseDataProvider("createNegativeStrings")
     public void isNullOrEmptyNegativeTest(String str) {
         assertTrue(StringUtil.isNullOrEmpty(str));
     }

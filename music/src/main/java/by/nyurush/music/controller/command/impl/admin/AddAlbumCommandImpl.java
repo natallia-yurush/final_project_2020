@@ -32,7 +32,7 @@ public class AddAlbumCommandImpl implements Command {
             req.setAttribute(ConstantAttributes.INFO_MESSAGE, rb.getString(ConstantMessages.EMPTY_FIELDS));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_CREATE_ALBUM);
         }
-        if (year < 1900 || year > Calendar.getInstance().get(Calendar.YEAR) ||
+        if (year < ConstantAttributes.YEAR_OF_FIRST_MUSICIAN || year > Calendar.getInstance().get(Calendar.YEAR) ||
                 !DataValidator.areCorrectInputs(albumName, artistsName)) {
             req.setAttribute(ConstantAttributes.INFO_MESSAGE, rb.getString(ConstantMessages.FILL_WITH_CORRECT_DATA));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_CREATE_ALBUM);

@@ -4,22 +4,39 @@ import by.nyurush.music.dao.DaoHelper;
 import by.nyurush.music.dao.DaoHelperFactory;
 import by.nyurush.music.dao.exception.DaoException;
 import by.nyurush.music.dao.impl.AlbumDaoImpl;
+import by.nyurush.music.dao.impl.ArtistDaoImpl;
 import by.nyurush.music.dao.impl.TrackDaoImpl;
 import by.nyurush.music.entity.Album;
+import by.nyurush.music.entity.Artist;
 import by.nyurush.music.entity.Track;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TrackDaoImplTest {
     private final DaoHelperFactory daoHelperFactory = new DaoHelperFactory();
+
+    @Before
+    @After
+    public void deleteData() {
+        try (DaoHelper daoHelper = daoHelperFactory.create()) {
+            ArtistDaoImpl artistDao = daoHelper.createArtistDao();
+            AlbumDaoImpl albumDao = daoHelper.createAlbumDao();
+            albumDao.deleteAll();
+            artistDao.deleteAll();
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     public void findAllPositiveTest() throws DaoException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             TrackDaoImpl trackDao = daoHelper.createTrackDao();
+            trackDao.save(createTestTrack(daoHelper));
             assertTrue(trackDao.findAll().size() > 0);
         }
     }
@@ -28,7 +45,8 @@ public class TrackDaoImplTest {
     public void findByIdPositiveTest() throws DaoException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             TrackDaoImpl trackDao = daoHelper.createTrackDao();
-            assertTrue(trackDao.findById(1).isPresent());
+            Track track = trackDao.save(createTestTrack(daoHelper));
+            assertTrue(trackDao.findById(track.getId()).isPresent());
         }
     }
 
@@ -36,13 +54,10 @@ public class TrackDaoImplTest {
     public void saveAndDeletePositiveTest() throws DaoException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             TrackDaoImpl trackDao = daoHelper.createTrackDao();
-            AlbumDaoImpl albumDao = daoHelper.createAlbumDao();
-            Album album = albumDao.findById(1).get();
-            Track track = new Track(null, "krop", "krop", 265, "ROCK", album);
-            Track result = trackDao.save(track);
-            boolean actual = result.getId() != null;
-            Assert.assertTrue(actual);
-            Assert.assertTrue(trackDao.delete(track));
+            Track track = trackDao.save(createTestTrack(daoHelper));
+            boolean actual = track.getId() != null;
+            assertTrue(actual);
+            assertTrue(trackDao.delete(track));
         }
     }
 
@@ -50,7 +65,8 @@ public class TrackDaoImplTest {
     public void findByNamePositiveTest() throws DaoException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             TrackDaoImpl trackDao = daoHelper.createTrackDao();
-            assertTrue(trackDao.findByName("никому", 0, 1000).size() > 0);
+            Track track = trackDao.save(createTestTrack(daoHelper));
+            assertTrue(trackDao.findByName("test", 0, 1000).size() > 0);
         }
     }
 
@@ -58,7 +74,8 @@ public class TrackDaoImplTest {
     public void findByAlbumName() throws DaoException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             TrackDaoImpl trackDao = daoHelper.createTrackDao();
-            assertTrue(trackDao.findByAlbumName("синоптик").size() > 0);
+            Track track = trackDao.save(createTestTrack(daoHelper));
+            assertEquals(trackDao.findByAlbumName("test").get(0), track);
         }
     }
 
@@ -66,6 +83,7 @@ public class TrackDaoImplTest {
     public void findByGenre() throws DaoException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             TrackDaoImpl trackDao = daoHelper.createTrackDao();
+            Track track = trackDao.save(createTestTrack(daoHelper));
             assertTrue(trackDao.findByGenre("ROCK", 0, 1000).size() > 0);
         }
     }
@@ -74,24 +92,17 @@ public class TrackDaoImplTest {
     public void findByArtist() throws DaoException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             TrackDaoImpl trackDao = daoHelper.createTrackDao();
-            assertTrue(trackDao.findByArtist("nizkiz").size() > 0);
+            Track track = trackDao.save(createTestTrack(daoHelper));
+            assertEquals(trackDao.findByArtist("test").get(0), track);
         }
     }
 
-    @Test
-    public void findByPlaylistId() throws DaoException {
-        try (DaoHelper daoHelper = daoHelperFactory.create()) {
-            TrackDaoImpl trackDao = daoHelper.createTrackDao();
-            assertTrue(trackDao.findByPlaylistId(1, 0, 1000).size() > 0);
-        }
+    private Track createTestTrack(DaoHelper daoHelper) throws DaoException {
+        AlbumDaoImpl albumDao = daoHelper.createAlbumDao();
+        ArtistDaoImpl artistDao = daoHelper.createArtistDao();
+        Artist testArtist = new Artist(null, "test", "test");
+        Artist artist = artistDao.save(testArtist);
+        Album album = albumDao.save(new Album(null, "test", 2020, 100, artist));
+        return new Track(null, "test", "test", 100, "ROCK", album);
     }
-
-    @Test
-    public void findByPlaylistName() throws DaoException {
-        try (DaoHelper daoHelper = daoHelperFactory.create()) {
-            TrackDaoImpl trackDao = daoHelper.createTrackDao();
-            assertEquals(0, trackDao.findByPlaylistName("воля").size());
-        }
-    }
-
 }

@@ -24,27 +24,28 @@
 
                 <table>
                     <c:forEach items="${requestScope.songs}" var="song">
-                        <tr>
-                            <td>
-                                <div class="custom-card--inline-img">
-                                    <img src="${pageContext.request.contextPath}/resource/img/artists/${song.album.artist.imagePath}"
-                                         alt="${song.album.artist.imagePath}"
-                                         class="card-img--radius-sm">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="custom-card--inline-desc">
-                                    <p class="text-truncate mb-0"><c:out value="${ song.trackName }"/></p>
-                                    <p class="text-truncate text-muted font-sm"><c:out
-                                            value="${ song.album.artist.artistName }"/></p>
-                                </div>
-                            </td>
-                            <td>
-                                <audio preload="auto" controls>
-                                    <source src='${pageContext.request.contextPath}/resource/songs/${song.trackPath}'/>
-                                </audio>
-                            </td>
 
+                        <td>
+                            <div class="custom-card--inline-img">
+                                <img src="${pageContext.request.contextPath}/resource/img/artists/${song.album.artist.imagePath}"
+                                     alt="${song.album.artist.imagePath}"
+                                     class="card-img--radius-sm">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="custom-card--inline-desc">
+                                <p class="text-truncate mb-0"><c:out value="${ song.trackName }"/></p>
+                                <p class="text-truncate text-muted font-sm"><c:out
+                                        value="${ song.album.artist.artistName }"/></p>
+                            </div>
+                        </td>
+                        <td>
+                            <audio preload="auto" controls>
+                                <source src='${pageContext.request.contextPath}/resource/songs/${song.trackPath}'/>
+                            </audio>
+                        </td>
+
+                        <c:if test="${sessionScope.user.role.accountRole == 'ADMIN' || sessionScope.user.role.accountRole == 'CLIENT' && sessionScope.user.subscription}">
                             <td>
                                 <ul class="custom-card--labels d-flex ml-auto">
                                     <li class="dropleft">
@@ -92,6 +93,7 @@
                                     </li>
                                 </ul>
                             </td>
+                        </c:if>
 
                         </tr>
 
@@ -147,14 +149,14 @@
     audio.forEach(t => {
         let index = audio.indexOf(t);
 
-        t.addEventListener('play', ()=> {
+        t.addEventListener('play', () => {
             audio.forEach(subT => {
                 subT !== audio[index] ?
                     (subT.pause(), subT.currentTime = 0) :
                     subT.play()
             })
         })
-        t.addEventListener('ended', ()=> {
+        t.addEventListener('ended', () => {
             t.currentTime = 0;
             index !== audio.length - 1 ?
                 audio[index + 1].play() :

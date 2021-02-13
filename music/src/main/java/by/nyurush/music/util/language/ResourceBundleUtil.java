@@ -10,7 +10,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public final class ResourceBundleUtil {
-    private ResourceBundleUtil() {}
+    private ResourceBundleUtil() {
+    }
 
     public static ResourceBundle getResourceBundle(HttpServletRequest request) {
         Optional<String> language = Arrays.stream(request.getCookies())
@@ -18,7 +19,7 @@ public final class ResourceBundleUtil {
                 .map(Cookie::getValue)
                 .findAny();
         if (language.isPresent()) {
-            String[] langParameters = language.get().split("_");
+            String[] langParameters = language.get().split(ConstantAttributes.REGEX);
             Locale currentLang = new Locale(langParameters[0], langParameters[1]);
             return ResourceBundle.getBundle(ConstantAttributes.RESOURCE, currentLang);
         } else {

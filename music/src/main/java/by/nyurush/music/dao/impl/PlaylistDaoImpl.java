@@ -38,6 +38,7 @@ public class PlaylistDaoImpl extends AbstractDao<Playlist> {
     private static final String DELETE_TRACK = "DELETE FROM playlist_track WHERE track_id = ? AND playlist_id = ?";
     private static final String UPDATE = "UPDATE playlist SET name = ?, visible = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM playlist WHERE id = ?";
+    private static final String DELETE_ALL = "DELETE FROM playlist";
 
     public PlaylistDaoImpl(Connection connection) {
         super(connection);
@@ -111,6 +112,10 @@ public class PlaylistDaoImpl extends AbstractDao<Playlist> {
     @Override
     public boolean delete(Playlist playlist) throws DaoException {
         return deleteObject(playlist, DELETE);
+    }
+
+    public void deleteAll() throws DaoException {
+        deleteAll(DELETE_ALL);
     }
 
     public List<Playlist> findByName(String name) throws DaoException {
