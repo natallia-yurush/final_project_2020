@@ -120,7 +120,8 @@
                                 <c:otherwise>
                                     <td>
                                         <a href="${pageContext.servletContext.contextPath}/controller?command=${param.page}&pageNo=${i}"
-                                           class="for-page">${i}</a></td>
+                                           class="for-page">${i}</a>
+                                    </td>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>

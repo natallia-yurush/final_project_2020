@@ -8,13 +8,14 @@ import java.sql.SQLException;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
     private static final int POOL_SIZE = Integer.parseInt(ResourceBundle.getBundle("additionalConfiguration").getString("poolSize"));
-    private ArrayBlockingQueue<ProxyConnection> freeConnections;
-    private ArrayBlockingQueue<ProxyConnection> usedConnections;
+    private BlockingQueue<ProxyConnection> freeConnections;
+    private BlockingQueue<ProxyConnection> usedConnections;
     private static final ReentrantLock lock = new ReentrantLock();
     private static ConnectionPool instance;
 
@@ -57,17 +58,13 @@ public class ConnectionPool {
             } catch (ClassNotFoundException e) {
                 throw new IllegalArgumentException("Driver is not found" + e.getMessage(), e);
             } catch (SQLException e) {
-                try {
-                    throw new ConnectionPoolException("Exception with create connection", e);
-                } catch (ConnectionPoolException e1) {
-                    e1.printStackTrace();
-                }
+                LOGGER.error("InterruptedException, creating constructor");
             }
         }
     }
 
     public ProxyConnection getConnection() throws ConnectionPoolException {
-        ProxyConnection connection = null;
+        ProxyConnection connection;
         try {
             connection = freeConnections.take();
             usedConnections.offer(connection);
@@ -77,7 +74,6 @@ public class ConnectionPool {
         }
         return connection;
     }
-
 
     public void closeConnection(ProxyConnection proxyConnection) {
         usedConnections.remove(proxyConnection);

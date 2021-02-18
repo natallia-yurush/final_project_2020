@@ -43,7 +43,7 @@ public class DeletePlaylistCommandImpl implements Command {
             req.setAttribute(ERROR_MESSAGE, rb.getString(ConstantMessages.INVALID_FIND_SONG));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_PLAYLISTS);
         }
-        req.setAttribute(SUCCESS_MESSAGE, rb.getString(ConstantMessages.SUCCESSFUL_DELETE_PLAYLIST));
+        req.setAttribute(SUCCESS_MESSAGE, rb.getString(ConstantMessages.SUCCESSFUL_DELETE_SONG));
         return CommandResult.forward(ConstantPathPages.PATH_PAGE_PLAYLISTS);
     }
 }

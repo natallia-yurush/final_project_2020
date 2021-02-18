@@ -22,7 +22,6 @@ import java.io.IOException;
 public class MusicController extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger(MusicController.class);
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         process(req, resp);
