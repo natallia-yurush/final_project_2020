@@ -2,7 +2,6 @@ package by.nyurush.music.service.builder;
 
 import by.nyurush.music.entity.Account;
 import by.nyurush.music.entity.Playlist;
-import by.nyurush.music.entity.User;
 import by.nyurush.music.service.exception.ServiceException;
 
 import java.sql.ResultSet;

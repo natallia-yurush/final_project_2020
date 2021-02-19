@@ -5,6 +5,7 @@ import by.nyurush.music.dao.exception.DaoException;
 import by.nyurush.music.entity.Track;
 import by.nyurush.music.service.builder.TrackBuilder;
 import by.nyurush.music.service.exception.ServiceException;
+import by.nyurush.music.util.constant.ConstantAttributes;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -189,7 +190,7 @@ public class TrackDaoImpl extends AbstractDao<Track> {
         List<Track> tracksList = new ArrayList<>();
         Track track;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_NAME)) {
-            preparedStatement.setString(1, "%" + name + "%");
+            preparedStatement.setString(1, ConstantAttributes.PERCENT + name + ConstantAttributes.PERCENT);
             preparedStatement.setInt(2, offset);
             preparedStatement.setInt(3, recordsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();

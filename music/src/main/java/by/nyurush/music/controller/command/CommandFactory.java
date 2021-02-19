@@ -42,6 +42,9 @@ public class CommandFactory {
         commands.put("playlists", new PlaylistsCommandImpl());
         commands.put("deletePlaylist", new DeletePlaylistCommandImpl());
         commands.put("subscription", new SubscriptionManagementCommandImpl());
+        commands.put("comments", new CommentsPageCommandImpl());
+        commands.put("addComment", new AddCommentCommandImpl());
+        commands.put("deleteComment", new DeleteCommentCommandImpl());
     }
 
     public static Command getCommand(String commandName) {

@@ -52,6 +52,10 @@ public class DaoHelper implements AutoCloseable {
         return new UserDaoImpl(connection);
     }
 
+    public CommentDaoImpl createCommentDao() {
+        return new CommentDaoImpl(connection);
+    }
+
     public void commit() throws DaoException {
         try {
             try {

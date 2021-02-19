@@ -21,8 +21,11 @@ public final class ConstantPathPages {
     public static final String PATH_PAGE_ADD_TO_PLAYLIST = "/WEB-INF/jsp/fragment/add-to-playlist.jsp";
 
     public static final String PATH_PAGE_SEARCH = "/WEB-INF/jsp/music/search.jsp";
+    public static final String PATH_PAGE_COMMENTS = "/WEB-INF/jsp/music/comments.jsp";
 
     public static final String PATH_PAGE_ERROR = "/WEB-INF/jsp/error/error-404.jsp";
     public static final String PATH_PAGE_ERROR_WENT_WRONG = "/WEB-INF/jsp/error/error-went-wrong.jsp";
     public static final String PATH_PAGE_ERROR_NO_ACCESS = "/WEB-INF/jsp/error/error-no-access.jsp";
+
+    public static final String PATH_PAGE_REDIRECT_COMMENTS = "?command=comments&songId=";
 }

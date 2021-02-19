@@ -31,6 +31,9 @@ public final class ConstantMessages {
     public static final String FILL_WITH_CORRECT_DATA = "answer.enterCorrectData";
     public static final String EXISTING_PLAYLIST = "answer.existingPlaylist";
     public static final String ADDED_TRACK = "answer.addedTrack";
+    public static final String FILL_COMMENT_INPUT = "answer.fillCommentInput";
+    public static final String INVALID_FIND_COMMENT = "answer.invalidFindComment";
+    public static final String SUCCESSFUL_DELETE_COMMENT = "answer.successfulDeleteComment";
 
     public static final String EMPTY_FIELDS = "answer.emptyFields";
 

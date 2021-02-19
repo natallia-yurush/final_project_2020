@@ -76,6 +76,10 @@ public final class ConstantAttributes {
     public static final String FAVORITE = "favorite";
     public static final String SINGLE = "Single";
     public static final String ALL = "all";
+    public static final String COMMENTS = "comments";
+    public static final String PARENT_ID = "parentId";
+    public static final String TEXT_COMMENT = "textComment";
+    public static final String COMMENT_ID = "commentId";
 
     public static final Integer FIRST_PAGE = 1;
     public static final Integer RECORDS_PER_PAGE = 10;
@@ -83,5 +87,6 @@ public final class ConstantAttributes {
 
     public static final String PATH_TO_ARTISTS_IMAGES = "pathToArtistsImages";
     public static final String PATH_TO_SONGS = "pathToSongs";
-
+    public static final String PATH_DELIMITER = "/";
+    public static final String PERCENT = "%";
 }
