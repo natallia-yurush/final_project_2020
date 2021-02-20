@@ -1,5 +1,6 @@
 package by.nyurush.music.dao.impl;
 
+import by.nyurush.music.comparator.CommentByPathComparator;
 import by.nyurush.music.dao.AbstractDao;
 import by.nyurush.music.dao.exception.DaoException;
 import by.nyurush.music.entity.Comment;
@@ -18,19 +19,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class CommentDaoImpl extends AbstractDao<Comment> {
-    private static final String FIND_ALL = "SELECT comment.id, comment.text, comment.date, comment.path, comment.track_id, comment.account_id, " +
-            "user.account_id, first_name, last_name, email, subscription, account.id, login, password, role " +
-            "FROM comment " +
-            "JOIN account ON comment.account_id = account.id " +
-            "JOIN user ON user.account_id = account.id " +
-            "ORDER BY comment.path, comment.date";
     private static final String FIND_ALL_BY_TRACK = "SELECT comment.id, comment.text, comment.date, comment.path, comment.track_id, comment.account_id, " +
             "user.account_id, first_name, last_name, email, subscription, account.id, login, password, role " +
             "FROM comment " +
             "JOIN account ON comment.account_id = account.id " +
             "JOIN user ON user.account_id = account.id " +
-            "WHERE comment.track_id = ? " +
-            "ORDER BY comment.path, comment.date";
+            "WHERE comment.track_id = ?";
     private static final String FIND_BY_ID = "SELECT comment.id, comment.text, comment.date, comment.path, comment.track_id, comment.account_id, " +
             "user.account_id, first_name, last_name, email, subscription, account.id, login, password, role " +
             "FROM comment " +
@@ -42,6 +36,7 @@ public class CommentDaoImpl extends AbstractDao<Comment> {
     private static final String UPDATE_PATH = "UPDATE comment SET path = ? WHERE id = ?";
     private static final String SET_EMPTY_TEXT = "UPDATE comment SET text = '' WHERE id = ?";
     private static final String DELETE = "DELETE FROM comment WHERE id = ?";
+    private static final String DELETE_THREAD = "DELETE FROM comment WHERE path LIKE ?";
     private static final String NUMBER_OF_REPLIES = "SELECT COUNT(*) FROM comment WHERE path LIKE ?";
 
     public CommentDaoImpl(Connection connection) {
@@ -50,34 +45,22 @@ public class CommentDaoImpl extends AbstractDao<Comment> {
 
 
     @Override
-    public List<Comment> findAll() throws DaoException {
-        List<Comment> comments = new LinkedList<>();
-        Comment comment;
-        try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(FIND_ALL);
-            while (resultSet.next()) {
-                comment = new CommentBuilder().build(resultSet);
-                comments.add(comment);
-            }
-        } catch (SQLException | ServiceException e) {
-            throw new DaoException(e);
-        }
-        return comments;
+    public List<Comment> findAll() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Optional<Comment> findById(Integer id) throws DaoException {
-        Comment comment = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID)) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                comment = new CommentBuilder().build(resultSet);
+                return Optional.of(new CommentBuilder().build(resultSet));
             }
+            return Optional.empty();
         } catch (SQLException | ServiceException e) {
             throw new DaoException(e);
         }
-        return Optional.ofNullable(comment);
     }
 
     @Override
@@ -95,7 +78,7 @@ public class CommentDaoImpl extends AbstractDao<Comment> {
                     preparedStatement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
                     preparedStatement.setString(1, comment.getText());
                     preparedStatement.setTimestamp(2, new Timestamp(comment.getDate().getTime()));
-                    preparedStatement.setString(3, comment.getPath() + ConstantAttributes.PATH_DELIMITER);
+                    preparedStatement.setString(3, comment.getPath());
                     preparedStatement.setInt(4, comment.getTrack().getId());
                     preparedStatement.setInt(5, comment.getUser().getId());
                     preparedStatement.execute();
@@ -104,7 +87,7 @@ public class CommentDaoImpl extends AbstractDao<Comment> {
                         int generatedId = resultSet.getInt(1);
                         comment.setId(generatedId);
                         preparedStatement = connection.prepareStatement(UPDATE_PATH);
-                        String toPath = comment.getPath() + ConstantAttributes.PATH_DELIMITER + String.format("%04d" , generatedId);
+                        String toPath = comment.getPath() + generatedId + ConstantAttributes.PATH_DELIMITER;
                         preparedStatement.setString(1, toPath);
                         preparedStatement.setInt(2, generatedId);
                         preparedStatement.execute();
@@ -130,14 +113,24 @@ public class CommentDaoImpl extends AbstractDao<Comment> {
         return deleteObject(comment, DELETE);
     }
 
+    public boolean deleteThead(Comment comment) throws DaoException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_THREAD)) {
+            preparedStatement.setString(1, comment.getPath() + ConstantAttributes.PERCENT);
+            preparedStatement.execute();
+            return true;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
     public boolean setEmptyText(Comment comment) throws DaoException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SET_EMPTY_TEXT)) {
             preparedStatement.setInt(1, comment.getId());
             preparedStatement.executeUpdate();
+            return true;
         } catch (SQLException e) {
             throw new DaoException(e);
         }
-        return true;
     }
 
     public List<Comment> findAllByTrack(Integer trackId) throws DaoException {
@@ -153,19 +146,18 @@ public class CommentDaoImpl extends AbstractDao<Comment> {
         } catch (SQLException | ServiceException e) {
             throw new DaoException(e);
         }
+        comments.sort(new CommentByPathComparator());
         return comments;
     }
 
     public int calcNumberOfReplies(String path) throws DaoException {
-        int number;
         try (PreparedStatement preparedStatement = connection.prepareStatement(NUMBER_OF_REPLIES)) {
-            preparedStatement.setString(1, path + ConstantAttributes.PATH_DELIMITER + ConstantAttributes.PERCENT);
+            preparedStatement.setString(1, path + ConstantAttributes.PERCENT);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
-            number = resultSet.getInt(1);
+            return resultSet.getInt(1) - 1;
         } catch (SQLException e) {
             throw new DaoException(e);
         }
-        return number;
     }
 }

@@ -121,30 +121,43 @@
                                 <fmt:formatDate type="both" value='${comment.date}'/>
                             </p>
 
-                                <c:choose>
-                                    <c:when test="${empty comment.text}">
-                                        <p class="text-truncate text-muted font-sm"><fmt:message key="label.deletedComment" bundle="${loc}"/></p>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <p class="mb-2" id="comment${loop.index}">${comment.text}</p>
-                                    </c:otherwise>
-                                </c:choose>
+                            <c:choose>
+                                <c:when test="${empty comment.text}">
+                                    <p class="text-truncate text-muted font-sm"><fmt:message key="label.deletedComment"
+                                                                                             bundle="${loc}"/></p>
+                                </c:when>
+                                <c:otherwise>
+                                    <p class="mb-2" id="comment${loop.index}">${comment.text}</p>
+                                </c:otherwise>
+                            </c:choose>
 
-                            <input type="hidden" id="emptyText" value="${comment.text}" >
-                            <a onclick="copyValueTo('emptyText', 'replyComment'.concat(${loop.index}))" id="${loop.index}" class="chooserClass btn p-0" data-show="${loop.index}">
-                                <i class="la la-reply"></i>
-                                <fmt:message key="label.reply" bundle="${loc}"/>
-                            </a>
+                            <input type="hidden" id="emptyText" value="${comment.text}">
+                            <c:if test="${user.role != 'ADMIN'}">
+                                <a onclick="copyValueTo('emptyText', 'replyComment'.concat(${loop.index}))"
+                                   id="${loop.index}" class="chooserClass btn p-0" data-show="${loop.index}">
+                                    <i class="la la-reply"></i>
+                                    <fmt:message key="label.reply" bundle="${loc}"/>
+                                </a>
+                            </c:if>
                             <c:if test="${user.login == comment.user.login && not empty comment.text || user.role == 'ADMIN'}">
-                                <a href="${pageContext.servletContext.contextPath}/controller?command=deleteComment&commentId=${comment.id}" class="btn p-0">
+                                <a href="${pageContext.servletContext.contextPath}/controller?command=deleteComment&commentId=${comment.id}&thread=false"
+                                   class="btn p-0">
                                     <i class="la la-trash"></i>
                                     <fmt:message key="label.delete" bundle="${loc}"/>
                                 </a>
                             </c:if>
 
-                            <c:if test="${user.login == comment.user.login && not empty comment.text || user.role == 'ADMIN'}">
+                            <c:if test="${not loop.last && user.role == 'ADMIN' && requestScope.comments[loop.index+1].depth > comment.depth}">
+                                <a href="${pageContext.servletContext.contextPath}/controller?command=deleteComment&commentId=${comment.id}&thread=true"
+                                   class="btn p-0">
+                                    <i class="la la-trash"></i>
+                                    <fmt:message key="label.deleteThread" bundle="${loc}"/>
+                                </a>
+                            </c:if>
 
-                                <a onclick="copyValueTo('comment'.concat(${loop.index}), 'replyComment'.concat(${loop.index}))" id="${loop.index}" class="chooserClass btn p-0" data-show="${loop.index}">
+                            <c:if test="${user.login == comment.user.login && not empty comment.text || user.role == 'ADMIN'}">
+                                <a onclick="copyValueTo('comment'.concat(${loop.index}), 'replyComment'.concat(${loop.index}))"
+                                   id="${loop.index}" class="chooserClass btn p-0" data-show="${loop.index}">
                                     <i class="la la-edit"></i>
                                     <fmt:message key="label.edit" bundle="${loc}"/>
                                 </a>
@@ -154,10 +167,12 @@
                         <div id="d_${loop.index}" style="display: none">
                             <form action="${pageContext.servletContext.contextPath}/controller?command=addComment&commentId=${comment.id}&songId=${song.id}&parentId=${comment.id}"
                                   method="post">
-                                <textarea name="textComment" id="replyComment${loop.index}" cols="30" rows="5" class="form-control"
+                                <textarea name="textComment" id="replyComment${loop.index}" cols="30" rows="5"
+                                          class="form-control"
                                           maxlength="700"></textarea>
                                 <div class="text-right mt-2">
-                                    <button type="submit" class="btn btn-info"><fmt:message key="label.comment" bundle="${loc}"/></button>
+                                    <button type="submit" class="btn btn-info"><fmt:message key="label.comment"
+                                                                                            bundle="${loc}"/></button>
                                 </div>
                             </form>
                         </div>
@@ -166,16 +181,18 @@
                 </c:forEach>
 
 
-                <div class="mb-4">
-                    <form action="${pageContext.servletContext.contextPath}/controller?command=addComment&songId=${song.id}"
-                          method="post">
+                <c:if test="${user.role != 'ADMIN'}">
+                    <div class="mb-4">
+                        <form action="${pageContext.servletContext.contextPath}/controller?command=addComment&songId=${song.id}"
+                              method="post">
                         <textarea name="textComment" id="comment" cols="30" rows="5" class="form-control"
                                   maxlength="700"></textarea>
-                        <div class="text-right mt-2">
-                            <button class="btn btn-info">Comment</button>
-                        </div>
-                    </form>
-                </div>
+                            <div class="text-right mt-2">
+                                <button class="btn btn-info">Comment</button>
+                            </div>
+                        </form>
+                    </div>
+                </c:if>
 
             </div>
 

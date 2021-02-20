@@ -156,3 +156,25 @@ CREATE TABLE IF NOT EXISTS `music`.`subscriber` (
     REFERENCES `music`.`user` (`account_id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
+
+CREATE TABLE `comment` (
+   `id` int NOT NULL AUTO_INCREMENT,
+   `text` varchar(700) NOT NULL,
+   `date` datetime NOT NULL,
+   `path` varchar(255) NOT NULL,
+   `track_id` int NOT NULL,
+   `account_id` int NOT NULL,
+   PRIMARY KEY (`id`),
+     KEY `fk_com_track_id_idx` (`track_id`),
+     KEY `fk_com_account_id_idx` (`account_id`),
+     CONSTRAINT `fk_com_account_id`
+         FOREIGN KEY (`account_id`)
+         REFERENCES `account` (`id`)
+         ON DELETE CASCADE
+         ON UPDATE CASCADE,
+     CONSTRAINT `fk_com_track_id`
+         FOREIGN KEY (`track_id`)
+         REFERENCES `track` (`id`)
+         ON DELETE CASCADE
+         ON UPDATE CASCADE
+);

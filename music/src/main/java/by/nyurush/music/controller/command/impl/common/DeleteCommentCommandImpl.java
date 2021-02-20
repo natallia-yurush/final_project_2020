@@ -3,7 +3,6 @@ package by.nyurush.music.controller.command.impl.common;
 import by.nyurush.music.controller.command.Command;
 import by.nyurush.music.controller.command.CommandResult;
 import by.nyurush.music.entity.Comment;
-import by.nyurush.music.entity.Playlist;
 import by.nyurush.music.service.exception.ServiceException;
 import by.nyurush.music.service.impl.CommentService;
 import by.nyurush.music.service.impl.TrackService;
@@ -38,11 +37,11 @@ public class DeleteCommentCommandImpl implements Command {
         }
 
         Integer id = Integer.parseInt(idStr);
-        Integer trackId = null;
+        Integer trackId;
         Optional<Comment> comment = commentService.findById(id);
         if (comment.isPresent()) {
-            commentService.delete(comment.get());
             trackId = comment.get().getTrack().getId();
+            commentService.delete(comment.get(), Boolean.parseBoolean(req.getParameter(ConstantAttributes.THREAD)));
         } else {
             LOGGER.warn("Comment was not found");
             req.setAttribute(ERROR_MESSAGE, rb.getString(ConstantMessages.INVALID_FIND_COMMENT));
@@ -52,6 +51,7 @@ public class DeleteCommentCommandImpl implements Command {
         req.setAttribute(ConstantAttributes.COMMENTS, commentService.findAllByTrack(trackId));
         req.setAttribute(ConstantAttributes.SONG, trackService.findById(trackId).orElseThrow());
         req.setAttribute(SUCCESS_MESSAGE, rb.getString(ConstantMessages.SUCCESSFUL_DELETE_COMMENT));
-        return CommandResult.forward(ConstantPathPages.PATH_PAGE_COMMENTS);
+
+        return CommandResult.redirect(req.getServletPath() + ConstantPathPages.PATH_PAGE_REDIRECT_COMMENTS + trackId);
     }
 }

@@ -14,15 +14,6 @@ import java.util.Optional;
 public class CommentService {
     private final DaoHelperFactory daoHelperFactory = new DaoHelperFactory();
 
-    public List<Comment> findAll() throws ServiceException {
-        try (DaoHelper daoHelper = daoHelperFactory.create()) {
-            CommentDaoImpl commentDao = daoHelper.createCommentDao();
-            return commentDao.findAll();
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage());
-        }
-    }
-
     public Optional<Comment> findById(Integer id) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             CommentDaoImpl commentDao = daoHelper.createCommentDao();
@@ -45,9 +36,12 @@ public class CommentService {
         }
     }
 
-    public boolean delete(Comment comment) throws ServiceException {
+    public boolean delete(Comment comment, boolean thread) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.create()) {
             CommentDaoImpl commentDao = daoHelper.createCommentDao();
+            if(thread) {
+                return commentDao.deleteThead(comment);
+            }
             if(commentDao.calcNumberOfReplies(comment.getPath()) == 0) {
                 return commentDao.delete(comment);
             } else {

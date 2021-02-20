@@ -80,6 +80,7 @@ public final class ConstantAttributes {
     public static final String PARENT_ID = "parentId";
     public static final String TEXT_COMMENT = "textComment";
     public static final String COMMENT_ID = "commentId";
+    public static final String THREAD = "thread";
 
     public static final Integer FIRST_PAGE = 1;
     public static final Integer RECORDS_PER_PAGE = 10;

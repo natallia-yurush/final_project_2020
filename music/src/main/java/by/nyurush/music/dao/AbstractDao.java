@@ -29,15 +29,12 @@ public abstract class AbstractDao<T extends Entity> {
     protected boolean deleteObject(T t, String query) throws DaoException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             try {
-                connection.setAutoCommit(false);
                 preparedStatement.setInt(1, t.getId());
                 preparedStatement.executeUpdate();
                 connection.commit();
             } catch (SQLException e) {
                 connection.rollback();
                 throw new SQLException(e);
-            } finally {
-                connection.setAutoCommit(true);
             }
         } catch (SQLException e) {
             throw new DaoException(e);

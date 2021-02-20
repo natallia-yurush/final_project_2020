@@ -8766,6 +8766,7 @@ button.bg-brand:focus {
 
 .p-0 {
   padding: 0 !important;
+  margin-right: 15px;
 }
 
 .pt-0,
