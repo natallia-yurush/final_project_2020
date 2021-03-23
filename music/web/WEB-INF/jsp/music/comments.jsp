@@ -74,7 +74,6 @@
 
                 <c:set var="song" value="${requestScope.song}"/>
                 <div class="text-dark custom-card--inline">
-
                     <table>
                         <td>
                             <div class="custom-card--inline-img">
@@ -134,7 +133,7 @@
                             <input type="hidden" id="emptyText" value="${comment.text}">
                             <c:if test="${user.role != 'ADMIN'}">
                                 <a onclick="copyValueTo('emptyText', 'replyComment'.concat(${loop.index}))"
-                                   id="${loop.index}" class="chooserClass btn p-0" data-show="${loop.index}">
+                                   id="${loop.index}" class="chooserClassReply btn p-0" data-show="${loop.index}">
                                     <i class="la la-reply"></i>
                                     <fmt:message key="label.reply" bundle="${loc}"/>
                                 </a>
@@ -144,6 +143,12 @@
                                    class="btn p-0">
                                     <i class="la la-trash"></i>
                                     <fmt:message key="label.delete" bundle="${loc}"/>
+                                </a>
+
+                                <a onclick="copyValueTo('comment'.concat(${loop.index}), 'replyComment'.concat(${loop.index}))"
+                                   id="${loop.index}" class="chooserClass btn p-0" data-show="${loop.index}">
+                                    <i class="la la-edit"></i>
+                                    <fmt:message key="label.edit" bundle="${loc}"/>
                                 </a>
                             </c:if>
 
@@ -155,13 +160,6 @@
                                 </a>
                             </c:if>
 
-                            <c:if test="${user.login == comment.user.login && not empty comment.text || user.role == 'ADMIN'}">
-                                <a onclick="copyValueTo('comment'.concat(${loop.index}), 'replyComment'.concat(${loop.index}))"
-                                   id="${loop.index}" class="chooserClass btn p-0" data-show="${loop.index}">
-                                    <i class="la la-edit"></i>
-                                    <fmt:message key="label.edit" bundle="${loc}"/>
-                                </a>
-                            </c:if>
                         </div>
 
                         <div id="d_${loop.index}" style="display: none">
@@ -176,6 +174,20 @@
                                 </div>
                             </form>
                         </div>
+
+
+                        <div id="rep_${loop.index}" style="display: none">
+                        <form action="${pageContext.servletContext.contextPath}/controller?command=addComment&songId=${song.id}&parentId=${comment.id}"
+                              method="post">
+                                <textarea name="textComment" cols="30" rows="5"
+                                          class="form-control"
+                                          maxlength="700"></textarea>
+                            <div class="text-right mt-2">
+                                <button type="submit" class="btn btn-info"><fmt:message key="label.comment"
+                                                                                        bundle="${loc}"/></button>
+                            </div>
+                        </form>
+                    </div>
 
                     </div>
                 </c:forEach>
@@ -216,6 +228,18 @@
             var id = $(this).attr('id');
 
             var shadow = document.getElementById('d_'.concat(id));
+
+            if (shadow.style.display !== 'none') {
+                shadow.style.display = "none";
+            } else {
+                shadow.style.display = "block";
+            }
+        });
+
+        $(".chooserClassReply").click(function () {
+            var id = $(this).attr('id');
+
+            var shadow = document.getElementById('rep_'.concat(id));
 
             if (shadow.style.display !== 'none') {
                 shadow.style.display = "none";

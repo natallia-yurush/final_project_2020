@@ -92,7 +92,7 @@ public class AddSongCommandImpl implements Command {
 
         Album album;
         if (albumName.equalsIgnoreCase(SINGLE)) {
-            album = new Album(null, songName, null, 0, artistService.findByName(artistsName.get(0)).get(0));
+            album = new Album(null, songName, null, artistService.findByName(artistsName.get(0)).get(0));
             album = albumService.save(album);
         } else {
             Optional<Album> optionalAlbum = albumService.findByArtistAndAlbumName(artistsName.get(0), albumName);
@@ -105,7 +105,7 @@ public class AddSongCommandImpl implements Command {
             }
         }
 
-        Track track = new Track(id, songName, songFile, 0, genre, album);
+        Track track = new Track(id, songName, songFile, genre, album);
         if (trackService.save(track) != null) {
             req.setAttribute(SUCCESS_MESSAGE, rb.getString(ConstantMessages.SUCCESSFUL_SONG_SAVE_RESULT));
         } else {

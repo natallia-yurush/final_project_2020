@@ -20,12 +20,10 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static by.nyurush.music.util.constant.ConstantAttributes.ERROR_MESSAGE;
-import static by.nyurush.music.util.constant.ConstantAttributes.SUCCESS_MESSAGE;
 
 public class DeleteCommentCommandImpl implements Command {
     private static final Logger LOGGER = LogManager.getLogger(DeleteCommentCommandImpl.class);
     private static final CommentService commentService = new CommentService();
-    private final TrackService trackService = new TrackService();
 
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
@@ -47,11 +45,6 @@ public class DeleteCommentCommandImpl implements Command {
             req.setAttribute(ERROR_MESSAGE, rb.getString(ConstantMessages.INVALID_FIND_COMMENT));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_COMMENTS);
         }
-
-        req.setAttribute(ConstantAttributes.COMMENTS, commentService.findAllByTrack(trackId));
-        req.setAttribute(ConstantAttributes.SONG, trackService.findById(trackId).orElseThrow());
-        req.setAttribute(SUCCESS_MESSAGE, rb.getString(ConstantMessages.SUCCESSFUL_DELETE_COMMENT));
-
         return CommandResult.redirect(req.getServletPath() + ConstantPathPages.PATH_PAGE_REDIRECT_COMMENTS + trackId);
     }
 }

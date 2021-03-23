@@ -5,18 +5,16 @@ import java.util.Objects;
 public class Album extends Entity {
     private String albumName;
     private Integer year;
-    private Integer numberOfLikes;
     private Artist artist;
 
     public Album(Integer id) {
         super(id);
     }
 
-    public Album(Integer id, String albumName, Integer year, Integer numberOfLikes, Artist artist) {
+    public Album(Integer id, String albumName, Integer year, Artist artist) {
         super(id);
         this.albumName = albumName;
         this.year = year;
-        this.numberOfLikes = numberOfLikes;
         this.artist = artist;
     }
 
@@ -36,14 +34,6 @@ public class Album extends Entity {
         this.year = year;
     }
 
-    public Integer getNumberOfLikes() {
-        return numberOfLikes;
-    }
-
-    public void setNumberOfLikes(Integer numberOfLikes) {
-        this.numberOfLikes = numberOfLikes;
-    }
-
     public Artist getArtist() {
         return artist;
     }
@@ -59,13 +49,12 @@ public class Album extends Entity {
         Album album = (Album) o;
         return Objects.equals(albumName, album.albumName) &&
                 Objects.equals(year, album.year) &&
-                Objects.equals(numberOfLikes, album.numberOfLikes) &&
                 Objects.equals(artist, album.artist);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), albumName, year, numberOfLikes, artist);
+        return Objects.hash(super.hashCode(), albumName, year, artist);
     }
 
     @Override
@@ -73,7 +62,6 @@ public class Album extends Entity {
         return "Album{" +
                 "albumName='" + albumName + '\'' +
                 ", year=" + year +
-                ", numberOfLikes=" + numberOfLikes +
                 ", artist=" + artist +
                 '}';
     }

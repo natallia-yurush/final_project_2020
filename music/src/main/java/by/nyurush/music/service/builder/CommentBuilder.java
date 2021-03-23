@@ -7,9 +7,7 @@ import by.nyurush.music.service.exception.ServiceException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 public class CommentBuilder implements Builder<Comment> {
     @Override
@@ -19,8 +17,6 @@ public class CommentBuilder implements Builder<Comment> {
             Track track = new Track(resultSet.getInt("comment.track_id"));
             Integer id = resultSet.getInt("comment.id");
             String text = resultSet.getString("comment.text");
-            /*Calendar cal = Calendar.getInstance();
-            cal.setTimeZone(TimeZone.getTimeZone("UTC"));*/
             Date date = resultSet.getTimestamp("comment.date");
             String path = resultSet.getString("comment.path");
             return new Comment(id, text, date, path, track, user);

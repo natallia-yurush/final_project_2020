@@ -51,8 +51,6 @@ public class AddCommentCommandImpl implements Command {
         Comment comment = new Comment(commentId, text, date, parentId, new Track(trackId), user);
         commentService.save(comment);
 
-        req.setAttribute(ConstantAttributes.COMMENTS, commentService.findAllByTrack(trackId));
-        req.setAttribute(ConstantAttributes.SONG, trackService.findById(trackId).orElseThrow());
 
         return CommandResult.redirect(req.getServletPath() + ConstantPathPages.PATH_PAGE_REDIRECT_COMMENTS + trackId);
     }

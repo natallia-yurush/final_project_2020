@@ -17,20 +17,20 @@ import java.util.List;
 import java.util.Optional;
 
 public class AlbumDaoImpl extends AbstractDao<Album> {
-    private static final String FIND_ALL = "SELECT album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path " +
+    private static final String FIND_ALL = "SELECT album.id, album.name, album.year, artist.id, artist.name, artist.image_path " +
             "FROM album JOIN artist ON album.artist_id = artist.id";
-    private static final String FIND_BY_ID = "SELECT album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path  " +
+    private static final String FIND_BY_ID = "SELECT album.id, album.name, album.year, artist.id, artist.name, artist.image_path  " +
             "FROM album JOIN artist ON album.artist_id = artist.id WHERE album.id = ?";
-    private static final String FIND_BY_NAME = "SELECT album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path  " +
+    private static final String FIND_BY_NAME = "SELECT album.id, album.name, album.year, artist.id, artist.name, artist.image_path  " +
             "FROM album JOIN artist ON album.artist_id = artist.id WHERE album.name LIKE ?";
-    private static final String FIND_BY_YEAR = "SELECT album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path  " +
+    private static final String FIND_BY_YEAR = "SELECT album.id, album.name, album.year, artist.id, artist.name, artist.image_path  " +
             "FROM album JOIN artist ON album.artist_id = artist.id WHERE album.year = ?";
-    private static final String FIND_BY_ARTIST_AND_ALBUM_NAME = "SELECT album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path  " +
+    private static final String FIND_BY_ARTIST_AND_ALBUM_NAME = "SELECT album.id, album.name, album.year, artist.id, artist.name, artist.image_path  " +
             "FROM album JOIN artist ON album.artist_id = artist.id WHERE artist.name = ? AND album.name = ?";
-    private static final String FIND_BY_ARTIST_NAME = "SELECT album.id, album.name, album.year, album.number_of_likes, artist.id, artist.name, artist.image_path  " +
+    private static final String FIND_BY_ARTIST_NAME = "SELECT album.id, album.name, album.year, artist.id, artist.name, artist.image_path  " +
             "FROM album JOIN artist ON album.artist_id = artist.id WHERE artist.name = ?";
-    private static final String UPDATE = "UPDATE album SET name=?, year=?, number_of_likes=?, artist_id=? WHERE id=?";
-    private static final String CREATE = "INSERT INTO album (name, year, number_of_likes, artist_id) VALUES (?, ?, ?, ?)";
+    private static final String UPDATE = "UPDATE album SET name=?, year=?, artist_id=? WHERE id=?";
+    private static final String CREATE = "INSERT INTO album (name, year, artist_id) VALUES (?, ?, ?)";
     private static final String DELETE = "DELETE FROM album WHERE id=?";
     private static final String DELETE_ALL = "DELETE FROM album";
 
@@ -76,7 +76,7 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
             try {
                 if (album.getId() != null) {
                     preparedStatement = connection.prepareStatement(UPDATE, Statement.RETURN_GENERATED_KEYS);
-                    preparedStatement.setInt(5, album.getId());
+                    preparedStatement.setInt(4, album.getId());
                 } else {
                     preparedStatement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
                 }
@@ -85,8 +85,7 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
                     preparedStatement.setInt(2, album.getYear());
                 else
                     preparedStatement.setNull(2, Types.INTEGER);
-                preparedStatement.setInt(3, album.getNumberOfLikes());
-                preparedStatement.setInt(4, album.getArtist().getId());
+                preparedStatement.setInt(3, album.getArtist().getId());
                 preparedStatement.execute();
                 ResultSet resultSet = preparedStatement.getGeneratedKeys();
                 if (resultSet.next()) {

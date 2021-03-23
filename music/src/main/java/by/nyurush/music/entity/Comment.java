@@ -11,7 +11,6 @@ public class Comment extends Entity {
     private User user;
     private Integer depth;
 
-
     public Comment(Integer id, String text, Date date, String path, Track track, User user) {
         super(id);
         this.text = text;

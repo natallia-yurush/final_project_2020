@@ -37,7 +37,7 @@ public class AddAlbumCommandImpl implements Command {
             req.setAttribute(ConstantAttributes.INFO_MESSAGE, rb.getString(ConstantMessages.FILL_WITH_CORRECT_DATA));
             return CommandResult.forward(ConstantPathPages.PATH_PAGE_CREATE_ALBUM);
         }
-        if (albumService.save(new Album(null, albumName, year, 0, artistService.findByName(artistsName).get(0))) != null) {
+        if (albumService.save(new Album(null, albumName, year, artistService.findByName(artistsName).get(0))) != null) {
             req.setAttribute(ConstantAttributes.SUCCESS_MESSAGE, rb.getString(ConstantMessages.SUCCESSFUL_ALBUM_SAVE_RESULT));
         } else {
             req.setAttribute(ConstantAttributes.ERROR_MESSAGE, rb.getString(ConstantMessages.INVALID_ALBUM_SAVE_RESULT));

@@ -86,6 +86,6 @@ public class AlbumDaoImplTest {
     private Album createTestAlbum(ArtistDaoImpl artistDao) throws DaoException {
         Artist testArtist = new Artist(null, "test", "test");
         artistDao.save(testArtist);
-        return new Album(null, "test", 2020, 540, testArtist);
+        return new Album(null, "test", 2020, testArtist);
     }
 }

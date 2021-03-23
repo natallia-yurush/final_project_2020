@@ -14,8 +14,7 @@ public class AlbumBuilder implements Builder<Album> {
             Integer id = resultSet.getInt("id");
             String name = resultSet.getString("name");
             Integer year = resultSet.getInt("year");
-            Integer numberOfLikes = resultSet.getInt("number_of_likes");
-            return new Album(id, name, year, numberOfLikes, artist);
+            return new Album(id, name, year, artist);
         } catch (SQLException e) {
             throw new ServiceException(e.getMessage(), e);
         }

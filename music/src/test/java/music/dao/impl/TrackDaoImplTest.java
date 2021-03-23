@@ -102,7 +102,7 @@ public class TrackDaoImplTest {
         ArtistDaoImpl artistDao = daoHelper.createArtistDao();
         Artist testArtist = new Artist(null, "test", "test");
         Artist artist = artistDao.save(testArtist);
-        Album album = albumDao.save(new Album(null, "test", 2020, 100, artist));
-        return new Track(null, "test", "test", 100, "ROCK", album);
+        Album album = albumDao.save(new Album(null, "test", 2020, artist));
+        return new Track(null, "test", "test", "ROCK", album);
     }
 }
