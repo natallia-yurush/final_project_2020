@@ -1,4 +1,4 @@
-package by.nyurush.music.service.builder;
+package by.nyurush.music.service.mapper;
 
 import by.nyurush.music.entity.Comment;
 import by.nyurush.music.entity.Track;
@@ -9,11 +9,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-public class CommentBuilder implements Builder<Comment> {
+public class CommentMapper implements Mapper<Comment> {
     @Override
-    public Comment build(ResultSet resultSet) throws ServiceException {
+    public Comment map(ResultSet resultSet) throws ServiceException {
         try {
-            User user = new UserBuilder().build(resultSet);
+            User user = new UserMapper().map(resultSet);
             Track track = new Track(resultSet.getInt("comment.track_id"));
             Integer id = resultSet.getInt("comment.id");
             String text = resultSet.getString("comment.text");

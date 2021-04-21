@@ -3,7 +3,7 @@ package by.nyurush.music.dao.impl;
 import by.nyurush.music.dao.AbstractDao;
 import by.nyurush.music.dao.exception.DaoException;
 import by.nyurush.music.entity.Album;
-import by.nyurush.music.service.builder.AlbumBuilder;
+import by.nyurush.music.service.mapper.AlbumMapper;
 import by.nyurush.music.service.exception.ServiceException;
 
 import java.sql.Connection;
@@ -45,7 +45,7 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(FIND_ALL);
             while (resultSet.next()) {
-                album = new AlbumBuilder().build(resultSet);
+                album = new AlbumMapper().map(resultSet);
                 albumsList.add(album);
             }
         } catch (SQLException | ServiceException e) {
@@ -61,7 +61,7 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                album = new AlbumBuilder().build(resultSet);
+                album = new AlbumMapper().map(resultSet);
             }
         } catch (SQLException | ServiceException e) {
             throw new DaoException(e);
@@ -122,7 +122,7 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
             preparedStatement.setString(1, "%" + name + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                album = new AlbumBuilder().build(resultSet);
+                album = new AlbumMapper().map(resultSet);
                 albumsList.add(album);
             }
         } catch (SQLException | ServiceException e) {
@@ -138,7 +138,7 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
             preparedStatement.setInt(1, year);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                album = new AlbumBuilder().build(resultSet);
+                album = new AlbumMapper().map(resultSet);
                 albumsList.add(album);
             }
         } catch (SQLException | ServiceException e) {
@@ -154,7 +154,7 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
             preparedStatement.setString(2, albumName);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                album = new AlbumBuilder().build(resultSet);
+                album = new AlbumMapper().map(resultSet);
             }
         } catch (SQLException | ServiceException e) {
             throw new DaoException(e);
@@ -169,7 +169,7 @@ public class AlbumDaoImpl extends AbstractDao<Album> {
             preparedStatement.setString(1, artistName);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                album = new AlbumBuilder().build(resultSet);
+                album = new AlbumMapper().map(resultSet);
                 albumsList.add(album);
             }
         } catch (SQLException | ServiceException e) {

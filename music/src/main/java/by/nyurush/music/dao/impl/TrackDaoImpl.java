@@ -3,7 +3,7 @@ package by.nyurush.music.dao.impl;
 import by.nyurush.music.dao.AbstractDao;
 import by.nyurush.music.dao.exception.DaoException;
 import by.nyurush.music.entity.Track;
-import by.nyurush.music.service.builder.TrackBuilder;
+import by.nyurush.music.service.mapper.TrackMapper;
 import by.nyurush.music.service.exception.ServiceException;
 import by.nyurush.music.util.constant.ConstantAttributes;
 
@@ -113,7 +113,7 @@ public class TrackDaoImpl extends AbstractDao<Track> {
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(FIND_ALL);
             while (resultSet.next()) {
-                track = new TrackBuilder().build(resultSet);
+                track = new TrackMapper().map(resultSet);
                 tracksList.add(track);
             }
         } catch (SQLException | ServiceException e) {
@@ -129,7 +129,7 @@ public class TrackDaoImpl extends AbstractDao<Track> {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                track = new TrackBuilder().build(resultSet);
+                track = new TrackMapper().map(resultSet);
             }
         } catch (SQLException | ServiceException e) {
             throw new DaoException(e);
@@ -194,7 +194,7 @@ public class TrackDaoImpl extends AbstractDao<Track> {
             preparedStatement.setInt(3, recordsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                track = new TrackBuilder().build(resultSet);
+                track = new TrackMapper().map(resultSet);
                 tracksList.add(track);
             }
         } catch (SQLException | ServiceException e) {
@@ -216,7 +216,7 @@ public class TrackDaoImpl extends AbstractDao<Track> {
             preparedStatement.setInt(3, recordsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                track = new TrackBuilder().build(resultSet);
+                track = new TrackMapper().map(resultSet);
                 tracksList.add(track);
             }
         } catch (SQLException | ServiceException e) {
@@ -238,7 +238,7 @@ public class TrackDaoImpl extends AbstractDao<Track> {
             preparedStatement.setInt(3, recordsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                track = new TrackBuilder().build(resultSet);
+                track = new TrackMapper().map(resultSet);
                 tracksList.add(track);
             }
         } catch (SQLException | ServiceException e) {
@@ -254,7 +254,7 @@ public class TrackDaoImpl extends AbstractDao<Track> {
             preparedStatement.setInt(1, playlistId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                track = new TrackBuilder().build(resultSet);
+                track = new TrackMapper().map(resultSet);
                 tracksList.add(track);
             }
         } catch (SQLException | ServiceException e) {
@@ -288,7 +288,7 @@ public class TrackDaoImpl extends AbstractDao<Track> {
             preparedStatement.setInt(2, recordsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                track = new TrackBuilder().build(resultSet);
+                track = new TrackMapper().map(resultSet);
                 tracksList.add(track);
             }
         } catch (SQLException | ServiceException e) {
@@ -337,7 +337,7 @@ public class TrackDaoImpl extends AbstractDao<Track> {
             preparedStatement.setString(1, "%" + param + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                track = new TrackBuilder().build(resultSet);
+                track = new TrackMapper().map(resultSet);
                 tracksList.add(track);
             }
         } catch (SQLException | ServiceException e) {

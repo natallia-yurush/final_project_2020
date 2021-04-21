@@ -3,7 +3,7 @@ package by.nyurush.music.dao.impl;
 import by.nyurush.music.dao.AbstractDao;
 import by.nyurush.music.dao.exception.DaoException;
 import by.nyurush.music.entity.User;
-import by.nyurush.music.service.builder.UserBuilder;
+import by.nyurush.music.service.mapper.UserMapper;
 import by.nyurush.music.service.exception.ServiceException;
 
 import java.sql.*;
@@ -51,7 +51,7 @@ public class UserDaoImpl extends AbstractDao<User> {
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(FIND_ALL);
             while (resultSet.next()) {
-                user = new UserBuilder().build(resultSet);
+                user = new UserMapper().map(resultSet);
                 usersList.add(user);
             }
         } catch (SQLException | ServiceException e) {
@@ -67,7 +67,7 @@ public class UserDaoImpl extends AbstractDao<User> {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                user = new UserBuilder().build(resultSet);
+                user = new UserMapper().map(resultSet);
             }
         } catch (SQLException | ServiceException e) {
             throw new DaoException(e);
@@ -156,7 +156,7 @@ public class UserDaoImpl extends AbstractDao<User> {
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                user = new UserBuilder().build(resultSet);
+                user = new UserMapper().map(resultSet);
             }
         } catch (SQLException | ServiceException e) {
             throw new DaoException(e);
@@ -170,7 +170,7 @@ public class UserDaoImpl extends AbstractDao<User> {
             preparedStatement.setString(1, param);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                user = new UserBuilder().build(resultSet);
+                user = new UserMapper().map(resultSet);
             }
         } catch (SQLException | ServiceException e) {
             throw new DaoException(e);

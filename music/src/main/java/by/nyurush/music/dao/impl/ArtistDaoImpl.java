@@ -3,7 +3,7 @@ package by.nyurush.music.dao.impl;
 import by.nyurush.music.dao.AbstractDao;
 import by.nyurush.music.dao.exception.DaoException;
 import by.nyurush.music.entity.Artist;
-import by.nyurush.music.service.builder.ArtistBuilder;
+import by.nyurush.music.service.mapper.ArtistMapper;
 import by.nyurush.music.service.exception.ServiceException;
 
 import java.sql.*;
@@ -31,7 +31,7 @@ public class ArtistDaoImpl extends AbstractDao<Artist> {
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(FIND_ALL);
             while (resultSet.next()) {
-                artist = new ArtistBuilder().build(resultSet);
+                artist = new ArtistMapper().map(resultSet);
                 artistsList.add(artist);
             }
         } catch (SQLException | ServiceException e) {
@@ -47,7 +47,7 @@ public class ArtistDaoImpl extends AbstractDao<Artist> {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                artist = new ArtistBuilder().build(resultSet);
+                artist = new ArtistMapper().map(resultSet);
             }
         } catch (SQLException | ServiceException e) {
             throw new DaoException(e);
@@ -104,7 +104,7 @@ public class ArtistDaoImpl extends AbstractDao<Artist> {
             preparedStatement.setString(1, "%" + name + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                artist = new ArtistBuilder().build(resultSet);
+                artist = new ArtistMapper().map(resultSet);
                 artistsList.add(artist);
             }
         } catch (SQLException | ServiceException e) {

@@ -45,7 +45,7 @@ public class DeleteSongCommandImpl implements Command {
             req.setAttribute(ERROR_MESSAGE, rb.getString(ConstantMessages.INVALID_DELETE_SONG));
             LOGGER.warn("Track was not found");
         }
-        req.setAttribute(SUCCESS_MESSAGE, rb.getString(ConstantMessages.INVALID_DELETE_SONG));
+        req.setAttribute(SUCCESS_MESSAGE, rb.getString(ConstantMessages.SUCCESSFUL_DELETE_SONG));
         return CommandResult.forward(ConstantPathPages.PATH_PAGE_HOME);
     }
 }

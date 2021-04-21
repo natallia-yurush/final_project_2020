@@ -4,7 +4,7 @@ import by.nyurush.music.comparator.CommentByPathComparator;
 import by.nyurush.music.dao.AbstractDao;
 import by.nyurush.music.dao.exception.DaoException;
 import by.nyurush.music.entity.Comment;
-import by.nyurush.music.service.builder.CommentBuilder;
+import by.nyurush.music.service.mapper.CommentMapper;
 import by.nyurush.music.service.exception.ServiceException;
 import by.nyurush.music.util.constant.ConstantAttributes;
 
@@ -55,7 +55,7 @@ public class CommentDaoImpl extends AbstractDao<Comment> {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return Optional.of(new CommentBuilder().build(resultSet));
+                return Optional.of(new CommentMapper().map(resultSet));
             }
             return Optional.empty();
         } catch (SQLException | ServiceException e) {
@@ -140,7 +140,7 @@ public class CommentDaoImpl extends AbstractDao<Comment> {
             preparedStatement.setInt(1, trackId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                comment = new CommentBuilder().build(resultSet);
+                comment = new CommentMapper().map(resultSet);
                 comments.add(comment);
             }
         } catch (SQLException | ServiceException e) {

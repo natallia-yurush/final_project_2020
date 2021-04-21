@@ -4,7 +4,7 @@ import by.nyurush.music.dao.AbstractDao;
 import by.nyurush.music.dao.exception.DaoException;
 import by.nyurush.music.entity.Playlist;
 import by.nyurush.music.entity.Track;
-import by.nyurush.music.service.builder.PlaylistBuilder;
+import by.nyurush.music.service.mapper.PlaylistMapper;
 import by.nyurush.music.service.exception.ServiceException;
 
 import java.sql.*;
@@ -51,7 +51,7 @@ public class PlaylistDaoImpl extends AbstractDao<Playlist> {
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(FIND_ALL);
             while (resultSet.next()) {
-                playlist = new PlaylistBuilder().build(resultSet);
+                playlist = new PlaylistMapper().map(resultSet);
                 playlistsList.add(playlist);
             }
         } catch (SQLException | ServiceException e) {
@@ -67,7 +67,7 @@ public class PlaylistDaoImpl extends AbstractDao<Playlist> {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                playlist = new PlaylistBuilder().build(resultSet);
+                playlist = new PlaylistMapper().map(resultSet);
             }
         } catch (SQLException | ServiceException e) {
             throw new DaoException(e);
@@ -125,7 +125,7 @@ public class PlaylistDaoImpl extends AbstractDao<Playlist> {
             preparedStatement.setString(1, "%" + name + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                playlist = new PlaylistBuilder().build(resultSet);
+                playlist = new PlaylistMapper().map(resultSet);
                 playlistsList.add(playlist);
             }
         } catch (SQLException | ServiceException e) {
@@ -175,7 +175,7 @@ public class PlaylistDaoImpl extends AbstractDao<Playlist> {
             preparedStatement.setInt(1, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                playlist = new PlaylistBuilder().build(resultSet);
+                playlist = new PlaylistMapper().map(resultSet);
                 playlistsList.add(playlist);
             }
         } catch (SQLException | ServiceException e) {
@@ -191,7 +191,7 @@ public class PlaylistDaoImpl extends AbstractDao<Playlist> {
             preparedStatement.setInt(2, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                playlist = new PlaylistBuilder().build(resultSet);
+                playlist = new PlaylistMapper().map(resultSet);
             }
         } catch (SQLException | ServiceException e) {
             throw new DaoException(e);

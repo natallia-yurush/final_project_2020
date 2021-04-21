@@ -3,7 +3,7 @@ package by.nyurush.music.dao.impl;
 import by.nyurush.music.dao.AbstractDao;
 import by.nyurush.music.dao.exception.DaoException;
 import by.nyurush.music.entity.Account;
-import by.nyurush.music.service.builder.AccountBuilder;
+import by.nyurush.music.service.mapper.AccountMapper;
 import by.nyurush.music.service.exception.ServiceException;
 
 import java.sql.*;
@@ -33,7 +33,7 @@ public class AccountDaoImpl extends AbstractDao<Account> {
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(FIND_ALL);
             while (resultSet.next()) {
-                account = new AccountBuilder().build(resultSet);
+                account = new AccountMapper().map(resultSet);
                 accountsList.add(account);
             }
         } catch (SQLException | ServiceException e) {
@@ -49,7 +49,7 @@ public class AccountDaoImpl extends AbstractDao<Account> {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                account = new AccountBuilder().build(resultSet);
+                account = new AccountMapper().map(resultSet);
             }
         } catch (SQLException | ServiceException e) {
             throw new DaoException(e);
@@ -106,7 +106,7 @@ public class AccountDaoImpl extends AbstractDao<Account> {
             preparedStatement.setString(1, login);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                account = new AccountBuilder().build(resultSet);
+                account = new AccountMapper().map(resultSet);
             }
         } catch (SQLException | ServiceException e) {
             throw new DaoException(e);
@@ -121,7 +121,7 @@ public class AccountDaoImpl extends AbstractDao<Account> {
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                account = new AccountBuilder().build(resultSet);
+                account = new AccountMapper().map(resultSet);
             }
         } catch (SQLException | ServiceException e) {
             throw new DaoException(e);
@@ -134,7 +134,7 @@ public class AccountDaoImpl extends AbstractDao<Account> {
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_ADMIN)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                account = new AccountBuilder().build(resultSet);
+                account = new AccountMapper().map(resultSet);
             }
         } catch (SQLException | ServiceException e) {
             throw new DaoException(e);

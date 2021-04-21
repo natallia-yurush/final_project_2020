@@ -1,4 +1,4 @@
-package by.nyurush.music.service.builder;
+package by.nyurush.music.service.mapper;
 
 import by.nyurush.music.entity.*;
 import by.nyurush.music.service.exception.ServiceException;
@@ -6,11 +6,11 @@ import by.nyurush.music.service.exception.ServiceException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AlbumBuilder implements Builder<Album> {
+public class AlbumMapper implements Mapper<Album> {
     @Override
-    public Album build(ResultSet resultSet) throws ServiceException {
+    public Album map(ResultSet resultSet) throws ServiceException {
         try {
-            Artist artist = new ArtistBuilder().build(resultSet);
+            Artist artist = new ArtistMapper().map(resultSet);
             Integer id = resultSet.getInt("id");
             String name = resultSet.getString("name");
             Integer year = resultSet.getInt("year");
